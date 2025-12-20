@@ -71,7 +71,7 @@ export const learningPaths = {
     ],
   },
 
-  mobileApp Development: {
+  'mobileApp Development': {
     id: 'mobile-development',
     name: 'Mobile App Development',
     icon: '📱',
