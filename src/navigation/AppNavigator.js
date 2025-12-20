@@ -14,6 +14,7 @@ import FavoritesScreen from '../screens/FavoritesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import PlatformsScreen from '../screens/PlatformsScreen';
 import UIFrameworksScreen from '../screens/UIFrameworksScreen';
+import LearningScreen from '../screens/LearningScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -77,6 +78,11 @@ function BrowseStack() {
         name="UIFrameworks" 
         component={UIFrameworksScreen}
         options={{ title: '🎨 UI Frameworks' }}
+      />
+      <Stack.Screen 
+        name="Learning" 
+        component={LearningScreen}
+        options={{ title: '📚 Learning Resources' }}
       />
     </Stack.Navigator>
   );

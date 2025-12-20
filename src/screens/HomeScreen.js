@@ -82,7 +82,14 @@ export default function HomeScreen({ navigation }) {
               onPress={() => navigation.navigate('Search')}
             >
               <Text style={styles.quickAccessIcon}>🔍</Text>
-              <Text style={styles.quickAccessText}>Search All</Text>
+              <Text style={styles.quickAccessText}>Search</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('Learning')}
+            >
+              <Text style={styles.quickAccessIcon}>🎓</Text>
+              <Text style={styles.quickAccessText}>Learn</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
@@ -172,6 +179,15 @@ export default function HomeScreen({ navigation }) {
                 <Text style={styles.featureTitle}>Code Examples</Text>
                 <Text style={styles.featureDescription}>
                   100+ copy-paste ready examples with explanations
+                </Text>
+              </View>
+            </View>
+            <View style={styles.featureItem}>
+              <Text style={styles.featureIcon}>🎓</Text>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>Learning Paths & Resources</Text>
+                <Text style={styles.featureDescription}>
+                  Structured guides, best practices, tools, and career advice
                 </Text>
               </View>
             </View>
