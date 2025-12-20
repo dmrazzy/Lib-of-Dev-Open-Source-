@@ -1,7 +1,8 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { colors } from '../constants/theme';
 
 // Import screens
 import HomeScreen from '../screens/HomeScreen';
@@ -10,18 +11,46 @@ import CategoryScreen from '../screens/CategoryScreen';
 import CodeDetailScreen from '../screens/CodeDetailScreen';
 import SearchScreen from '../screens/SearchScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import PlatformsScreen from '../screens/PlatformsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+// Custom Dark Theme
+const CustomDarkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    primary: colors.primary,
+    background: colors.background,
+    card: colors.backgroundElevated,
+    text: colors.text,
+    border: colors.border,
+  },
+};
+
+// Stack Navigator Options
+const screenOptions = {
+  headerStyle: {
+    backgroundColor: colors.backgroundElevated,
+    borderBottomColor: colors.border,
+    borderBottomWidth: 1,
+  },
+  headerTintColor: colors.text,
+  headerTitleStyle: {
+    fontWeight: '600',
+  },
+};
+
 // Main stack for Browse tab
 function BrowseStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen 
         name="Home" 
         component={HomeScreen}
-        options={{ title: 'Lib of Dev' }}
+        options={{ title: 'Lib of Dev 💻' }}
       />
       <Stack.Screen 
         name="Language" 
@@ -38,6 +67,11 @@ function BrowseStack() {
         component={CodeDetailScreen}
         options={{ title: 'Code Reference' }}
       />
+      <Stack.Screen 
+        name="Platforms" 
+        component={PlatformsScreen}
+        options={{ title: '🚀 Platforms & Tools' }}
+      />
     </Stack.Navigator>
   );
 }
@@ -48,8 +82,13 @@ function TabNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#007AFF',
-        tabBarInactiveTintColor: '#8E8E93',
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textMuted,
+        tabBarStyle: {
+          backgroundColor: colors.backgroundElevated,
+          borderTopColor: colors.border,
+          borderTopWidth: 1,
+        },
       }}
     >
       <Tab.Screen 
@@ -66,6 +105,13 @@ function TabNavigator() {
         options={{
           tabBarLabel: 'Search',
           tabBarIcon: ({ color }) => '🔍',
+          headerShown: true,
+          headerTitle: '🔍 Search',
+          headerStyle: {
+            backgroundColor: colors.backgroundElevated,
+            borderBottomColor: colors.border,
+          },
+          headerTintColor: colors.text,
         }}
       />
       <Tab.Screen 
@@ -74,6 +120,28 @@ function TabNavigator() {
         options={{
           tabBarLabel: 'Favorites',
           tabBarIcon: ({ color }) => '⭐',
+          headerShown: true,
+          headerTitle: '⭐ Favorites',
+          headerStyle: {
+            backgroundColor: colors.backgroundElevated,
+            borderBottomColor: colors.border,
+          },
+          headerTintColor: colors.text,
+        }}
+      />
+      <Tab.Screen 
+        name="Settings" 
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: 'Settings',
+          tabBarIcon: ({ color }) => '⚙️',
+          headerShown: true,
+          headerTitle: '⚙️ Settings',
+          headerStyle: {
+            backgroundColor: colors.backgroundElevated,
+            borderBottomColor: colors.border,
+          },
+          headerTintColor: colors.text,
         }}
       />
     </Tab.Navigator>
@@ -83,7 +151,7 @@ function TabNavigator() {
 // Root Navigator
 export default function AppNavigator() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={CustomDarkTheme}>
       <TabNavigator />
     </NavigationContainer>
   );

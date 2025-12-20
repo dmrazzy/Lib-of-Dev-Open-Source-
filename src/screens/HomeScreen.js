@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,78 +6,185 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  TextInput,
 } from 'react-native';
 import { getAllLanguages } from '../data/languagesData';
+import { colors, spacing, borderRadius, shadows } from '../constants/theme';
+import { LanguageCard } from '../components/Card';
 
 export default function HomeScreen({ navigation }) {
   const languages = getAllLanguages();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredLanguages, setFilteredLanguages] = useState(languages);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query.trim() === '') {
+      setFilteredLanguages(languages);
+    } else {
+      const filtered = languages.filter(lang =>
+        lang.name.toLowerCase().includes(query.toLowerCase()) ||
+        lang.description.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredLanguages(filtered);
+    }
+  };
+
+  const getTotalExamples = (language) => {
+    let total = 0;
+    Object.values(language.categories).forEach(category => {
+      total += category.items.length;
+    });
+    return total;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
+        {/* Hero Section */}
         <View style={styles.header}>
-          <Text style={styles.title}>Welcome to Lib of Dev</Text>
+          <Text style={styles.title}>💻 Lib of Dev</Text>
           <Text style={styles.subtitle}>
-            Your comprehensive programming reference library
+            Your comprehensive developer reference library
+          </Text>
+          <Text style={styles.description}>
+            13 languages • 100+ examples • Design patterns • Deployment platforms
           </Text>
         </View>
 
+        {/* Search Bar */}
+        <View style={styles.searchContainer}>
+          <View style={styles.searchBox}>
+            <Text style={styles.searchIcon}>🔍</Text>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search languages, topics, or features..."
+              placeholderTextColor={colors.textMuted}
+              value={searchQuery}
+              onChangeText={handleSearch}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            {searchQuery.length > 0 && (
+              <TouchableOpacity onPress={() => handleSearch('')}>
+                <Text style={styles.clearButton}>✕</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+
+        {/* Quick Access Cards */}
+        <View style={styles.quickAccessContainer}>
+          <Text style={styles.sectionTitle}>⚡ Quick Access</Text>
+          <View style={styles.quickAccessGrid}>
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('Search')}
+            >
+              <Text style={styles.quickAccessIcon}>🔍</Text>
+              <Text style={styles.quickAccessText}>Search All</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('Platforms')}
+            >
+              <Text style={styles.quickAccessIcon}>🚀</Text>
+              <Text style={styles.quickAccessText}>Platforms</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('Favorites')}
+            >
+              <Text style={styles.quickAccessIcon}>⭐</Text>
+              <Text style={styles.quickAccessText}>Favorites</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('Settings')}
+            >
+              <Text style={styles.quickAccessIcon}>⚙️</Text>
+              <Text style={styles.quickAccessText}>Settings</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Languages List */}
         <View style={styles.languagesContainer}>
-          <Text style={styles.sectionTitle}>Programming Languages</Text>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>📚 Programming Languages</Text>
+            <Text style={styles.sectionCount}>{filteredLanguages.length} languages</Text>
+          </View>
           <Text style={styles.sectionSubtitle}>
-            Choose a language to explore commands, functions, and examples
+            Choose a language to explore syntax, functions, and examples
           </Text>
 
-          <View style={styles.languageGrid}>
-            {languages.map((language) => (
-              <TouchableOpacity
+          <View style={styles.languagesList}>
+            {filteredLanguages.map((language) => (
+              <LanguageCard
                 key={language.id}
-                style={[styles.languageCard, { borderLeftColor: language.color }]}
+                icon={language.icon}
+                name={language.name}
+                description={language.description}
+                color={language.color}
+                itemCount={getTotalExamples(language)}
                 onPress={() =>
                   navigation.navigate('Language', {
                     languageId: language.id,
                     languageName: language.name,
                   })
                 }
-              >
-                <Text style={styles.languageIcon}>{language.icon}</Text>
-                <View style={styles.languageInfo}>
-                  <Text style={styles.languageName}>{language.name}</Text>
-                  <Text style={styles.languageDescription}>
-                    {language.description}
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              />
             ))}
           </View>
+
+          {filteredLanguages.length === 0 && (
+            <View style={styles.emptyState}>
+              <Text style={styles.emptyIcon}>😕</Text>
+              <Text style={styles.emptyText}>No languages found</Text>
+              <Text style={styles.emptySubtext}>Try a different search term</Text>
+            </View>
+          )}
         </View>
 
+        {/* Features Section */}
         <View style={styles.featuresContainer}>
-          <Text style={styles.sectionTitle}>Features</Text>
+          <Text style={styles.sectionTitle}>✨ What's Inside</Text>
           <View style={styles.featuresList}>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>📖</Text>
-              <Text style={styles.featureText}>
-                Comprehensive syntax references
-              </Text>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>Comprehensive Syntax</Text>
+                <Text style={styles.featureDescription}>
+                  Detailed references for 13 programming languages
+                </Text>
+              </View>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>💡</Text>
-              <Text style={styles.featureText}>
-                Code examples with explanations
-              </Text>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>Code Examples</Text>
+                <Text style={styles.featureDescription}>
+                  100+ copy-paste ready examples with explanations
+                </Text>
+              </View>
             </View>
             <View style={styles.featureItem}>
-              <Text style={styles.featureIcon}>🔍</Text>
-              <Text style={styles.featureText}>
-                Search across all languages
-              </Text>
+              <Text style={styles.featureIcon}>🎨</Text>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>Design Patterns</Text>
+                <Text style={styles.featureDescription}>
+                  Common patterns and best practices
+                </Text>
+              </View>
             </View>
             <View style={styles.featureItem}>
-              <Text style={styles.featureIcon}>⭐</Text>
-              <Text style={styles.featureText}>
-                Save your favorite references
-              </Text>
+              <Text style={styles.featureIcon}>🚀</Text>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>Platform Guides</Text>
+                <Text style={styles.featureDescription}>
+                  Learn about Expo, Vercel, Cloudflare & more
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -89,95 +196,171 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
   },
   header: {
-    backgroundColor: '#007AFF',
-    padding: 24,
-    paddingTop: 16,
+    backgroundColor: colors.backgroundElevated,
+    padding: spacing.lg,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 8,
+    fontSize: 32,
+    fontWeight: '700',
+    color: colors.text,
+    marginBottom: spacing.xs,
   },
   subtitle: {
     fontSize: 16,
-    color: '#FFFFFF',
-    opacity: 0.9,
+    color: colors.textSecondary,
+    marginBottom: spacing.xs,
+  },
+  description: {
+    fontSize: 14,
+    color: colors.textMuted,
+  },
+  searchContainer: {
+    padding: spacing.md,
+    backgroundColor: colors.backgroundElevated,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  searchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.backgroundCard,
+    borderRadius: borderRadius.md,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  searchIcon: {
+    fontSize: 18,
+    marginRight: spacing.xs,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: colors.text,
+    paddingVertical: spacing.xs,
+  },
+  clearButton: {
+    fontSize: 18,
+    color: colors.textMuted,
+    padding: spacing.xs,
+  },
+  quickAccessContainer: {
+    padding: spacing.md,
+  },
+  quickAccessGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+    marginTop: spacing.sm,
+  },
+  quickAccessCard: {
+    flex: 1,
+    minWidth: '22%',
+    backgroundColor: colors.backgroundCard,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
+    ...shadows.small,
+  },
+  quickAccessIcon: {
+    fontSize: 32,
+    marginBottom: spacing.xs,
+  },
+  quickAccessText: {
+    fontSize: 12,
+    color: colors.text,
+    fontWeight: '600',
+    textAlign: 'center',
   },
   languagesContainer: {
-    padding: 16,
+    padding: spacing.md,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
   },
   sectionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000000',
-    marginBottom: 8,
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  sectionCount: {
+    fontSize: 14,
+    color: colors.textMuted,
+    fontWeight: '600',
   },
   sectionSubtitle: {
     fontSize: 14,
-    color: '#8E8E93',
-    marginBottom: 16,
+    color: colors.textSecondary,
+    marginBottom: spacing.md,
   },
-  languageGrid: {
-    gap: 12,
+  languagesList: {
+    gap: spacing.sm,
   },
-  languageCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    flexDirection: 'row',
+  emptyState: {
     alignItems: 'center',
-    borderLeftWidth: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    paddingVertical: spacing.xxl,
   },
-  languageIcon: {
-    fontSize: 40,
-    marginRight: 16,
+  emptyIcon: {
+    fontSize: 48,
+    marginBottom: spacing.sm,
   },
-  languageInfo: {
-    flex: 1,
-  },
-  languageName: {
-    fontSize: 20,
+  emptyText: {
+    fontSize: 18,
     fontWeight: '600',
-    color: '#000000',
-    marginBottom: 4,
+    color: colors.text,
+    marginBottom: spacing.xs,
   },
-  languageDescription: {
+  emptySubtext: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
   featuresContainer: {
-    padding: 16,
-    paddingTop: 0,
+    padding: spacing.md,
+    marginBottom: spacing.lg,
   },
   featuresList: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    gap: 16,
+    backgroundColor: colors.backgroundCard,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginTop: spacing.sm,
   },
   featureItem: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    marginBottom: spacing.md,
   },
   featureIcon: {
     fontSize: 24,
-    marginRight: 12,
+    marginRight: spacing.sm,
   },
-  featureText: {
-    fontSize: 16,
-    color: '#000000',
+  featureContent: {
     flex: 1,
+  },
+  featureTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 4,
+  },
+  featureDescription: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    lineHeight: 20,
   },
 });
