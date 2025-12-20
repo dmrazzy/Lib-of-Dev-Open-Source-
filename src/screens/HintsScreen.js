@@ -7,7 +7,7 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
-import { theme } from '../constants/theme';
+import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 import { developerHints, quickTips } from '../data/developerHintsData';
 
 export default function HintsScreen({ navigation }) {
@@ -151,26 +151,26 @@ export default function HintsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
   },
   header: {
     padding: 20,
-    backgroundColor: theme.colors.surface,
+    backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border,
+    borderBottomColor: colors.border,
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: theme.colors.text,
+    color: colors.text,
     marginBottom: 8,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: theme.colors.textSecondary,
+    color: colors.textSecondary,
   },
   section: {
     padding: 20,
@@ -178,25 +178,25 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: theme.colors.text,
+    color: colors.text,
     marginBottom: 8,
   },
   sectionSubtitle: {
     fontSize: 14,
-    color: theme.colors.textSecondary,
+    color: colors.textSecondary,
     marginBottom: 16,
   },
   tipsScroll: {
     marginTop: 8,
   },
   tipCard: {
-    backgroundColor: theme.colors.surface,
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 16,
     marginRight: 12,
     width: 200,
     borderWidth: 1,
-    borderColor: theme.colors.border,
+    borderColor: colors.border,
   },
   tipIcon: {
     fontSize: 32,
@@ -205,17 +205,17 @@ const styles = StyleSheet.create({
   tipTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: theme.colors.textSecondary,
+    color: colors.textSecondary,
     marginBottom: 8,
   },
   tipAnswer: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: theme.colors.text,
+    color: colors.text,
     marginBottom: 12,
   },
   tipBadge: {
-    backgroundColor: theme.colors.primary + '20',
+    backgroundColor: colors.primaryAlpha,
     borderRadius: 6,
     paddingHorizontal: 8,
     paddingVertical: 4,
@@ -224,17 +224,17 @@ const styles = StyleSheet.create({
   tipBadgeText: {
     fontSize: 11,
     fontWeight: '600',
-    color: theme.colors.primary,
+    color: colors.primary,
   },
   categoriesGrid: {
     gap: 12,
   },
   categoryCard: {
-    backgroundColor: theme.colors.surface,
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
-    borderColor: theme.colors.border,
+    borderColor: colors.border,
     borderLeftWidth: 4,
     flexDirection: 'row',
     alignItems: 'center',
@@ -247,31 +247,31 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontWeight: '600',
-    color: theme.colors.text,
+    color: colors.text,
   },
   categoryHintCount: {
     fontSize: 14,
-    color: theme.colors.textSecondary,
+    color: colors.textSecondary,
   },
   detailContainer: {
     flex: 1,
   },
   backButton: {
     padding: 16,
-    backgroundColor: theme.colors.surface,
+    backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border,
+    borderBottomColor: colors.border,
   },
   backButtonText: {
     fontSize: 16,
-    color: theme.colors.primary,
+    color: colors.primary,
     fontWeight: '600',
   },
   detailHeader: {
     padding: 20,
-    backgroundColor: theme.colors.surface,
+    backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border,
+    borderBottomColor: colors.border,
     alignItems: 'center',
   },
   detailIcon: {
@@ -281,24 +281,24 @@ const styles = StyleSheet.create({
   detailTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: theme.colors.text,
+    color: colors.text,
     marginBottom: 4,
   },
   detailCategory: {
     fontSize: 14,
-    color: theme.colors.textSecondary,
+    color: colors.textSecondary,
   },
   hintsContainer: {
     flex: 1,
     padding: 16,
   },
   hintCard: {
-    backgroundColor: theme.colors.surface,
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: theme.colors.border,
+    borderColor: colors.border,
   },
   hintHeader: {
     marginBottom: 12,
@@ -306,36 +306,36 @@ const styles = StyleSheet.create({
   hintScenario: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: theme.colors.text,
+    color: colors.text,
   },
   recommendationBox: {
-    backgroundColor: theme.colors.success + '15',
+    backgroundColor: colors.successAlpha,
     borderRadius: 8,
     padding: 12,
     marginBottom: 12,
     borderLeftWidth: 3,
-    borderLeftColor: theme.colors.success,
+    borderLeftColor: colors.success,
   },
   recommendationLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: theme.colors.success,
+    color: colors.success,
     marginBottom: 4,
   },
   recommendationText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: theme.colors.text,
+    color: colors.text,
   },
   reasonText: {
     fontSize: 14,
-    color: theme.colors.textSecondary,
+    color: colors.textSecondary,
     marginBottom: 12,
     lineHeight: 20,
   },
   reasonLabel: {
     fontWeight: '600',
-    color: theme.colors.text,
+    color: colors.text,
   },
   technologiesBox: {
     marginBottom: 12,
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
   technologiesLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: theme.colors.textSecondary,
+    color: colors.textSecondary,
     marginBottom: 8,
   },
   techTags: {
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   techTag: {
-    backgroundColor: theme.colors.primary + '20',
+    backgroundColor: colors.primaryAlpha,
     borderRadius: 6,
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -360,24 +360,24 @@ const styles = StyleSheet.create({
   techTagText: {
     fontSize: 12,
     fontWeight: '600',
-    color: theme.colors.primary,
+    color: colors.primary,
   },
   whenBox: {
-    backgroundColor: theme.colors.accent + '15',
+    backgroundColor: colors.accentAlpha,
     borderRadius: 8,
     padding: 12,
     borderLeftWidth: 3,
-    borderLeftColor: theme.colors.accent,
+    borderLeftColor: colors.accent,
   },
   whenLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: theme.colors.accent,
+    color: colors.accent,
     marginBottom: 4,
   },
   whenText: {
     fontSize: 13,
-    color: theme.colors.text,
+    color: colors.text,
     lineHeight: 18,
   },
   footer: {
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 13,
-    color: theme.colors.textSecondary,
+    color: colors.textSecondary,
     textAlign: 'center',
     fontStyle: 'italic',
   },

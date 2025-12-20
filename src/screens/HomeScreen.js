@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   tipBadge: {
-    backgroundColor: colors.primary + '20',
+    backgroundColor: colors.primaryAlpha,
     borderRadius: borderRadius.sm,
     paddingHorizontal: spacing.xs,
     paddingVertical: 4,
@@ -488,7 +488,7 @@ const styles = StyleSheet.create({
   viewAllCard: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primary + '15',
+    backgroundColor: colors.primaryAlpha,
     borderColor: colors.primary,
     borderWidth: 2,
     borderStyle: 'dashed',

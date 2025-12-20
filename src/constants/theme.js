@@ -74,6 +74,11 @@ export const colors = {
   popoverForeground: '#FAFAFA',
   card: '#18181B',
   cardForeground: '#FAFAFA',
+  
+  // Alpha variants for overlays and backgrounds
+  primaryAlpha: 'rgba(108, 92, 231, 0.2)',
+  successAlpha: 'rgba(34, 197, 94, 0.15)',
+  accentAlpha: 'rgba(253, 121, 168, 0.15)',
 };
 
 export const spacing = {
