@@ -53,7 +53,7 @@ export default function SettingsScreen() {
       if (savedInterests) setInterests(JSON.parse(savedInterests));
       if (savedLanguages) setSelectedLanguages(JSON.parse(savedLanguages));
     } catch (error) {
-      console.log('Error loading preferences:', error);
+      // Error loading preferences - will use defaults
     }
   };
 
@@ -62,7 +62,7 @@ export default function SettingsScreen() {
       await AsyncStorage.setItem('userInterests', JSON.stringify(newInterests));
       setInterests(newInterests);
     } catch (error) {
-      console.log('Error saving interests:', error);
+      // Error saving interests - changes not persisted
     }
   };
 
@@ -71,7 +71,7 @@ export default function SettingsScreen() {
       await AsyncStorage.setItem('userLanguages', JSON.stringify(newLanguages));
       setSelectedLanguages(newLanguages);
     } catch (error) {
-      console.log('Error saving languages:', error);
+      // Error saving languages - changes not persisted
     }
   };
 
@@ -116,7 +116,7 @@ export default function SettingsScreen() {
         );
       }
     } catch (error) {
-      console.log('Error requesting review:', error);
+      // Error requesting review - show fallback message
       Alert.alert(
         'Thanks for your interest!',
         'Store rating is not available at the moment. Please try again later.'
@@ -245,7 +245,7 @@ export default function SettingsScreen() {
               Lib of Dev (Open Source) v2.0.0
             </Text>
             <Text style={styles.aboutDescription}>
-              A comprehensive developer reference library with 13 programming languages, AI/ML, IoT, E-Commerce, 80+ hints, and 70+ official resource links
+              Your comprehensive developer companion covering programming languages, AI/ML, IoT/Hardware, E-Commerce, and more
             </Text>
           </View>
         </View>
