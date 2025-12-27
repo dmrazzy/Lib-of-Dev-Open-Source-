@@ -307,51 +307,51 @@ export default function SettingsScreen() {
           >
             <TouchableOpacity activeOpacity={1} onPress={(e) => e.stopPropagation()}>
               <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>🔑 {t('settings.groqApiKey')}</Text>
-            <Text style={styles.modalDescription}>
-              {t('settings.groqApiKeyDescription')}
-            </Text>
-            
-            <TouchableOpacity 
-              style={styles.helpButton}
-              onPress={() => Linking.openURL('https://console.groq.com/keys')}
-            >
-              <Text style={styles.helpButtonText}>
-                🌐 {t('settings.getApiKey')}
-              </Text>
-            </TouchableOpacity>
-
-            <TextInput
-              style={styles.modalInput}
-              value={apiKeyInput}
-              onChangeText={setApiKeyInput}
-              placeholder={t('settings.enterApiKey')}
-              placeholderTextColor={colors.textMuted}
-              autoCapitalize="none"
-              autoCorrect={false}
-              secureTextEntry={false}
-            />
-
-            <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={[styles.modalButton, styles.modalButtonCancel]}
-                onPress={() => {
-                  setApiKeyInput(apiKey);
-                  setShowApiKeyModal(false);
-                }}
-              >
-                <Text style={styles.modalButtonText}>{t('common.cancel')}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.modalButton, styles.modalButtonSave]}
-                onPress={saveApiKey}
-              >
-                <Text style={[styles.modalButtonText, styles.modalButtonTextSave]}>
-                  {t('common.save')}
+                <Text style={styles.modalTitle}>🔑 {t('settings.groqApiKey')}</Text>
+                <Text style={styles.modalDescription}>
+                  {t('settings.groqApiKeyDescription')}
                 </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+                
+                <TouchableOpacity 
+                  style={styles.helpButton}
+                  onPress={() => Linking.openURL('https://console.groq.com/keys')}
+                >
+                  <Text style={styles.helpButtonText}>
+                    🌐 {t('settings.getApiKey')}
+                  </Text>
+                </TouchableOpacity>
+
+                <TextInput
+                  style={styles.modalInput}
+                  value={apiKeyInput}
+                  onChangeText={setApiKeyInput}
+                  placeholder={t('settings.enterApiKey')}
+                  placeholderTextColor={colors.textMuted}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  secureTextEntry={false}
+                />
+
+                <View style={styles.modalButtons}>
+                  <TouchableOpacity
+                    style={[styles.modalButton, styles.modalButtonCancel]}
+                    onPress={() => {
+                      setApiKeyInput(apiKey);
+                      setShowApiKeyModal(false);
+                    }}
+                  >
+                    <Text style={styles.modalButtonText}>{t('common.cancel')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.modalButton, styles.modalButtonSave]}
+                    onPress={saveApiKey}
+                  >
+                    <Text style={[styles.modalButtonText, styles.modalButtonTextSave]}>
+                      {t('common.save')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </TouchableOpacity>
           </TouchableOpacity>
         </KeyboardAvoidingView>
