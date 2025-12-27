@@ -378,6 +378,9 @@
     "noApiKey": "Kein API-Schlüssel",
     "noApiKeyMessage": "Bitte setze deinen Groq API-Schlüssel in den Einstellungen, um den KI-Chat zu nutzen.",
     "goToSettings": "Zu Einstellungen",
-    "errorMessage": "Antwort konnte nicht abgerufen werden. Bitte überprüfe deinen API-Schlüssel und versuche es erneut."
+    "errorMessage": "Antwort konnte nicht abgerufen werden. Bitte überprüfe deinen API-Schlüssel und versuche es erneut.",
+    "modeShort": "Kurz",
+    "modeNormal": "Normal",
+    "modeDetailed": "Ausführlich"
   }
 }

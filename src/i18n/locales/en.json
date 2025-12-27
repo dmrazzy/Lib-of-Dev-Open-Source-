@@ -381,6 +381,9 @@
     "noApiKey": "No API Key",
     "noApiKeyMessage": "Please set your Groq API key in Settings to use AI chat.",
     "goToSettings": "Go to Settings",
-    "errorMessage": "Failed to get response. Please check your API key and try again."
+    "errorMessage": "Failed to get response. Please check your API key and try again.",
+    "modeShort": "Short",
+    "modeNormal": "Normal",
+    "modeDetailed": "Detailed"
   }
 }

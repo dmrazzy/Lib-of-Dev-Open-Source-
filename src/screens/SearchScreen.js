@@ -237,7 +237,11 @@ export default function SearchScreen({ navigation }) {
         </ScrollView>
       </View>
 
-      <ScrollView style={styles.scrollView}>
+      <ScrollView 
+        style={styles.scrollView}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+      >
         {searchQuery.trim().length === 0 && (
           <View style={styles.emptyState}>
             <Text style={styles.emptyIcon}>🔍</Text>

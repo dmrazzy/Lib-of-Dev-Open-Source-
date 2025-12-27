@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { Text } from 'react-native';
 import { colors } from '../constants/theme';
 
 // Import screens
@@ -131,7 +132,9 @@ function TabNavigator() {
         component={BrowseStack}
         options={{
           tabBarLabel: t('navigation.home'),
-          tabBarIcon: ({ color }) => '📚',
+          tabBarIcon: ({ color, size = 24 }) => (
+            <Text style={{ fontSize: size, color }}>📚</Text>
+          ),
         }}
       />
       <Tab.Screen 
@@ -139,7 +142,9 @@ function TabNavigator() {
         component={SearchScreen}
         options={{
           tabBarLabel: t('navigation.search'),
-          tabBarIcon: ({ color }) => '🔍',
+          tabBarIcon: ({ color, size = 24 }) => (
+            <Text style={{ fontSize: size, color }}>🔍</Text>
+          ),
           headerShown: true,
           headerTitle: `🔍 ${t('search.title')}`,
           headerStyle: {
@@ -154,7 +159,9 @@ function TabNavigator() {
         component={AskAIScreen}
         options={{
           tabBarLabel: t('navigation.askAI'),
-          tabBarIcon: ({ color }) => '🤖',
+          tabBarIcon: ({ color, size = 24 }) => (
+            <Text style={{ fontSize: size, color }}>🤖</Text>
+          ),
           headerShown: false,
         }}
       />
@@ -163,7 +170,9 @@ function TabNavigator() {
         component={FavoritesScreen}
         options={{
           tabBarLabel: t('navigation.favorites'),
-          tabBarIcon: ({ color }) => '⭐',
+          tabBarIcon: ({ color, size = 24 }) => (
+            <Text style={{ fontSize: size, color }}>⭐</Text>
+          ),
           headerShown: true,
           headerTitle: `⭐ ${t('favorites.title')}`,
           headerStyle: {
@@ -178,7 +187,9 @@ function TabNavigator() {
         component={SettingsScreen}
         options={{
           tabBarLabel: t('navigation.settings'),
-          tabBarIcon: ({ color }) => '⚙️',
+          tabBarIcon: ({ color, size = 24 }) => (
+            <Text style={{ fontSize: size, color }}>⚙️</Text>
+          ),
           headerShown: true,
           headerTitle: `⚙️ ${t('settings.title')}`,
           headerStyle: {

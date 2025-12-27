@@ -148,6 +148,8 @@ export default function ResourcesScreen() {
       <ScrollView
         style={styles.content}
         contentContainerStyle={styles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
       >
         {!searchQuery && selectedCategory === 'all' && featuredLinks.length > 0 && (
           <View style={styles.section}>

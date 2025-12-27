@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
@@ -27,12 +28,20 @@ export default function AskAIScreen({ navigation }) {
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [apiKey, setApiKey] = useState('');
+  const [responseMode, setResponseMode] = useState('normal'); // short, normal, detailed
   const scrollViewRef = useRef();
 
   useEffect(() => {
     loadChatHistory();
     loadApiKey();
   }, []);
+
+  // Reload API key when screen comes into focus
+  useFocusEffect(
+    React.useCallback(() => {
+      loadApiKey();
+    }, [])
+  );
 
   const loadApiKey = async () => {
     try {
@@ -94,6 +103,33 @@ export default function AskAIScreen({ navigation }) {
     setIsLoading(true);
 
     try {
+      // Create system prompt based on response mode
+      let systemPrompt = '';
+      let temperature = 0.7;
+      let maxTokens = 2048;
+
+      if (responseMode === 'short') {
+        systemPrompt = 'You are a helpful programming assistant. Be extremely concise and direct. Answer in 2-3 sentences maximum or use bullet points. Focus only on the core answer without explanations unless critical. Prioritize brevity while maintaining accuracy.';
+        temperature = 0.3;
+        maxTokens = 512;
+      } else if (responseMode === 'detailed') {
+        systemPrompt = 'You are a helpful programming assistant. Provide comprehensive, detailed explanations. Include multiple examples, best practices, edge cases, and additional context. Explain the "why" behind concepts, not just the "how".';
+        temperature = 0.7;
+        maxTokens = 4096;
+      } else {
+        systemPrompt = 'You are a helpful programming assistant. Provide clear, balanced answers with practical examples. Include key points and a brief code example when relevant.';
+        temperature: 0.7;
+        maxTokens = 2048;
+      }
+
+      const messagesWithSystem = [
+        { role: 'system', content: systemPrompt },
+        ...newMessages.map(msg => ({
+          role: msg.role,
+          content: msg.content,
+        }))
+      ];
+
       const response = await fetch(GROQ_API_URL, {
         method: 'POST',
         headers: {
@@ -101,13 +137,10 @@ export default function AskAIScreen({ navigation }) {
           'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: 'llama-3.1-70b-versatile',
-          messages: newMessages.map(msg => ({
-            role: msg.role,
-            content: msg.content,
-          })),
-          temperature: 0.7,
-          max_tokens: 2048,
+          model: 'llama-3.3-70b-versatile',
+          messages: messagesWithSystem,
+          temperature: temperature,
+          max_tokens: maxTokens,
         }),
       });
 
@@ -158,6 +191,25 @@ export default function AskAIScreen({ navigation }) {
     Alert.alert(t('common.success'), t('askAI.copiedToClipboard'));
   };
 
+  const formatMarkdown = (text) => {
+    // Convert **bold** to bold text with Text components
+    const parts = [];
+    const regex = /(\*\*.*?\*\*)/g;
+    const matches = text.split(regex);
+    
+    return matches.map((part, index) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        // Bold text
+        return (
+          <Text key={index} style={styles.boldText}>
+            {part.slice(2, -2)}
+          </Text>
+        );
+      }
+      return part;
+    });
+  };
+
   const renderMessage = (message, index) => {
     const isUser = message.role === 'user';
     
@@ -182,7 +234,9 @@ export default function AskAIScreen({ navigation }) {
             </TouchableOpacity>
           )}
         </View>
-        <Text style={styles.messageContent}>{message.content}</Text>
+        <Text style={styles.messageContent}>
+          {formatMarkdown(message.content)}
+        </Text>
       </View>
     );
   };
@@ -207,12 +261,42 @@ export default function AskAIScreen({ navigation }) {
           )}
         </View>
 
+        {/* Response Mode Selector */}
+        <View style={styles.modeContainer}>
+          <TouchableOpacity
+            style={[styles.modeButton, responseMode === 'short' && styles.modeButtonActive]}
+            onPress={() => setResponseMode('short')}
+          >
+            <Text style={[styles.modeButtonText, responseMode === 'short' && styles.modeButtonTextActive]}>
+              ⚡ {t('askAI.modeShort')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.modeButton, responseMode === 'normal' && styles.modeButtonActive]}
+            onPress={() => setResponseMode('normal')}
+          >
+            <Text style={[styles.modeButtonText, responseMode === 'normal' && styles.modeButtonTextActive]}>
+              💬 {t('askAI.modeNormal')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.modeButton, responseMode === 'detailed' && styles.modeButtonActive]}
+            onPress={() => setResponseMode('detailed')}
+          >
+            <Text style={[styles.modeButtonText, responseMode === 'detailed' && styles.modeButtonTextActive]}>
+              📖 {t('askAI.modeDetailed')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
         {/* Messages */}
         <ScrollView
           ref={scrollViewRef}
           style={styles.messagesContainer}
           contentContainerStyle={styles.messagesContent}
           onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="interactive"
         >
           {messages.length === 0 ? (
             <View style={styles.emptyState}>
@@ -311,6 +395,37 @@ const styles = StyleSheet.create({
   clearButtonText: {
     fontSize: 24,
   },
+  modeContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    gap: spacing.xs,
+    backgroundColor: colors.backgroundElevated,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  modeButton: {
+    flex: 1,
+    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.sm,
+    borderRadius: borderRadius.md,
+    backgroundColor: colors.backgroundCard,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+  },
+  modeButtonActive: {
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+  },
+  modeButtonText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  modeButtonTextActive: {
+    color: colors.buttonText,
+  },
   messagesContainer: {
     flex: 1,
   },
@@ -402,6 +517,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.text,
     lineHeight: 24,
+  },
+  boldText: {
+    fontWeight: 'bold',
+    color: colors.text,
   },
   inputContainer: {
     flexDirection: 'row',
