@@ -9,7 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import { getLanguageById } from '../data/languagesData';
 
 export default function CodeDetailScreen({ route }) {

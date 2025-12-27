@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as StoreReview from 'expo-store-review';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 const GITHUB_URL = 'https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-';
@@ -99,39 +98,20 @@ export default function SettingsScreen() {
     Linking.openURL(GITHUB_URL);
   };
 
-  const handleRateApp = async () => {
-    try {
-      const isAvailable = await StoreReview.isAvailableAsync();
-      
-      if (isAvailable) {
-        // Request in-app review (native prompt)
-        await StoreReview.requestReview();
-      } else {
-        // Fallback to opening store URL
-        Alert.alert(
-          t('settings.rateApp'),
-          t('settings.rateAppMessage'),
-          [
-            { text: t('common.cancel'), style: 'cancel' },
-            {
-              text: t('settings.rateNow'),
-              onPress: async () => {
-                const storeUrl = await StoreReview.storeUrl();
-                if (storeUrl) {
-                  Linking.openURL(storeUrl);
-                }
-              },
-            },
-          ]
-        );
-      }
-    } catch (error) {
-      // Error requesting review - show fallback message
-      Alert.alert(
-        t('settings.thanksForInterest'),
-        t('settings.ratingNotAvailable')
-      );
-    }
+  const handleRateApp = () => {
+    Alert.alert(
+      t('settings.rateApp'),
+      t('settings.rateAppMessage'),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('settings.rateNow'),
+          onPress: () => {
+            Linking.openURL(GITHUB_URL);
+          },
+        },
+      ]
+    );
   };
 
   return (
