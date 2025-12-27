@@ -193,7 +193,13 @@
     "technologies": "Technologien",
     "copyCode": "Code kopieren",
     "codeCopied": "Code in Zwischenablage kopiert!",
+    "bestPractices": "Best Practices",
+    "commonMistakes": "Häufige Fehler",
+    "performanceTips": "Performance-Tipps",
     "relatedTopics": "Verwandte Themen",
+    "tryItYourself": "Probiere es selbst",
+    "challenge": "Herausforderung",
+    "defaultChallenge": "Versuche dieses Beispiel zu ändern und experimentiere mit verschiedenen Werten!",
     "moreExamples": "Weitere Beispiele"
   },
   "hints": {

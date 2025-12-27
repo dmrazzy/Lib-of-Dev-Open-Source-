@@ -18,7 +18,25 @@ let name = "John";
 const PI = 3.14159;
 var oldStyle = "legacy";`,
             description: 'Variable declarations in JavaScript',
-            usage: 'Use let for reassignable variables, const for constants'
+            usage: 'Use let for reassignable variables, const for constants',
+            bestPractices: [
+              'Always use const by default, only use let when you need to reassign',
+              'Avoid var - it has function scope and can cause unexpected behavior',
+              'Use descriptive variable names (e.g., userName instead of x)',
+              'Declare variables at the top of their scope for better readability'
+            ],
+            commonMistakes: [
+              'Using var instead of let/const in modern JavaScript',
+              'Trying to reassign a const variable (causes TypeError)',
+              'Not initializing variables before use',
+              'Using keywords as variable names'
+            ],
+            performanceTips: [
+              'const and let have similar performance - use based on semantics',
+              'Avoid creating unnecessary variables in loops'
+            ],
+            relatedTopics: ['Scope', 'Hoisting', 'Temporal Dead Zone'],
+            challenge: 'Create three variables: one that should never change (const), one that will change (let), and explain why you chose each.'
           },
           {
             title: 'Data Types',
@@ -49,7 +67,27 @@ async function fetchData() {
   return data.json();
 }`,
             description: 'Different ways to declare functions',
-            usage: 'Choose the appropriate function type based on context'
+            usage: 'Choose the appropriate function type based on context',
+            bestPractices: [
+              'Use arrow functions for callbacks and when you need lexical this',
+              'Use function declarations for methods that need their own this context',
+              'Keep functions small and focused on a single task',
+              'Use descriptive function names that explain what they do',
+              'Always handle errors in async functions with try-catch'
+            ],
+            commonMistakes: [
+              'Forgetting to return a value from a function',
+              'Using arrow functions as methods (loses this context)',
+              'Not handling promise rejections in async functions',
+              'Creating functions inside loops (performance issue)'
+            ],
+            performanceTips: [
+              'Arrow functions are slightly faster but the difference is negligible',
+              'Avoid creating functions inside render loops',
+              'Use function memoization for expensive computations'
+            ],
+            relatedTopics: ['Closures', 'This Binding', 'Promises', 'Callbacks'],
+            challenge: 'Create a function that takes an array and returns a new array with doubled values. Try implementing it with both regular and arrow functions!'
           }
         ]
       },

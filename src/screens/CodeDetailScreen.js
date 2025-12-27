@@ -99,6 +99,76 @@ export default function CodeDetailScreen({ route }) {
           </View>
         </View>
 
+        {/* Best Practices */}
+        {item.bestPractices && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>✨ {t('codeDetail.bestPractices')}</Text>
+            <View style={styles.tipsBox}>
+              {item.bestPractices.map((practice, index) => (
+                <View key={index} style={styles.tipItem}>
+                  <Text style={styles.tipBullet}>✓</Text>
+                  <Text style={styles.tipText}>{practice}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {/* Common Mistakes */}
+        {item.commonMistakes && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>⚠️ {t('codeDetail.commonMistakes')}</Text>
+            <View style={styles.mistakesBox}>
+              {item.commonMistakes.map((mistake, index) => (
+                <View key={index} style={styles.mistakeItem}>
+                  <Text style={styles.mistakeBullet}>✗</Text>
+                  <Text style={styles.mistakeText}>{mistake}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {/* Performance Tips */}
+        {item.performanceTips && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>⚡ {t('codeDetail.performanceTips')}</Text>
+            <View style={styles.performanceBox}>
+              {item.performanceTips.map((tip, index) => (
+                <View key={index} style={styles.performanceItem}>
+                  <Text style={styles.performanceBullet}>⚡</Text>
+                  <Text style={styles.performanceText}>{tip}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {/* Related Topics */}
+        {item.relatedTopics && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🔗 {t('codeDetail.relatedTopics')}</Text>
+            <View style={styles.relatedBox}>
+              {item.relatedTopics.map((topic, index) => (
+                <View key={index} style={styles.relatedTag}>
+                  <Text style={styles.relatedText}>{topic}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {/* Try It Yourself */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>💡 {t('codeDetail.tryItYourself')}</Text>
+          <View style={styles.challengeBox}>
+            <Text style={styles.challengeTitle}>{t('codeDetail.challenge')}</Text>
+            <Text style={styles.challengeText}>
+              {item.challenge || t('codeDetail.defaultChallenge', { title: item.title })}
+            </Text>
+          </View>
+        </View>
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('codeDetail.keyPoints')}</Text>
           <View style={styles.keyPointsBox}>
@@ -243,6 +313,111 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.text,
     lineHeight: 24,
+  },
+  tipsBox: {
+    backgroundColor: colors.backgroundCard,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.success,
+  },
+  tipItem: {
+    flexDirection: 'row',
+    marginBottom: spacing.xs,
+  },
+  tipBullet: {
+    color: colors.success,
+    marginRight: spacing.sm,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  tipText: {
+    flex: 1,
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
+  },
+  mistakesBox: {
+    backgroundColor: colors.backgroundCard,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.error,
+  },
+  mistakeItem: {
+    flexDirection: 'row',
+    marginBottom: spacing.xs,
+  },
+  mistakeBullet: {
+    color: colors.error,
+    marginRight: spacing.sm,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  mistakeText: {
+    flex: 1,
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
+  },
+  performanceBox: {
+    backgroundColor: colors.backgroundCard,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.warning,
+  },
+  performanceItem: {
+    flexDirection: 'row',
+    marginBottom: spacing.xs,
+  },
+  performanceBullet: {
+    color: colors.warning,
+    marginRight: spacing.sm,
+    fontSize: 16,
+  },
+  performanceText: {
+    flex: 1,
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
+  },
+  relatedBox: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.xs,
+  },
+  relatedTag: {
+    backgroundColor: colors.primary + '20',
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.sm,
+    borderWidth: 1,
+    borderColor: colors.primary + '40',
+  },
+  relatedText: {
+    fontSize: 13,
+    color: colors.primary,
+    fontWeight: '500',
+  },
+  challengeBox: {
+    backgroundColor: colors.backgroundCard,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    borderStyle: 'dashed',
+  },
+  challengeTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.primary,
+    marginBottom: spacing.xs,
+  },
+  challengeText: {
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
   },
   errorText: {
     fontSize: 18,
