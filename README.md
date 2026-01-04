@@ -16,10 +16,10 @@ A massive, production-ready React Native/Expo mobile app serving as an **offline
 - **🌑 Beautiful Dark Mode** - shadcn/ui-inspired professional design throughout
 - **📚 30,000+ Lines of Content** - Meticulously curated for developers
 - **🤖 AI & Machine Learning** - Ollama, OpenAI, LangChain guides
-- **🔌 IoT & Hardware** - ESP32, Raspberry Pi, Arduino with real code
-- **🛒 E-Commerce** - Shopify, Stripe integration examples
-- **🐧 Linux & DevOps** - System administration, Proxmox virtualization
-- **💡 80+ Developer Hints** - Instant answers to "What should I use?"
+- **🔌 IoT & Hardware** - ESP32, Raspberry Pi, Arduino with 70+ real code examples
+- **🛒 E-Commerce** - Shopify, Stripe, PayPal integration with marketing analytics
+- **🐧 Linux & DevOps** - System administration, Docker, security with 40+ practical examples
+- **💡 115+ Developer Hints** - Instant answers to "What should I use?"
 - **🔗 70+ Official Links** - Direct access to documentation and resources
 - **100% Offline** - All content bundled, no internet required
 - **⭐ Production Ready** - Zero vulnerabilities, properly tested
@@ -45,31 +45,44 @@ Each with 100+ code examples, explanations, and best practices:
 - **AI Agents** - LangChain, LlamaIndex frameworks
 
 ### 🔌 **IoT & Hardware**
-Complete guides with 50+ working code examples:
+Complete guides with 70+ working code examples:
 
 - **ESP32/ESP8266** - WiFi setup, web servers, MQTT, sensors
 - **Raspberry Pi** - GPIO control, Pi Camera, web servers
 - **Arduino** - LED control, analog sensors, serial communication
-- **Sensors** - DHT22 temperature, HC-SR04 ultrasonic, and more
+- **Sensors & Components** - DHT22 temperature, HC-SR04 ultrasonic, PIR motion, BMP280 pressure, soil moisture, gas sensors (MQ-2)
+- **Actuators & Controls** - Servo motors, relay modules, stepper motors, LCD displays, RGB LEDs
 
 ### 🏠 **Home Assistant**
 - Configuration and automation examples
 - ESPHome integration for ESP devices
 - MQTT sensor integration
 - YAML configuration templates
+- Advanced automations: motion-activated lighting, climate control, security alerts, plant watering, presence detection, energy monitoring
 
 ### 🛒 **E-Commerce & Shopify**
 - Shopify Liquid templates
 - Shopify Node.js app development
 - Shopify Storefront API (GraphQL)
-- Stripe payment processing
+- Stripe payment processing with webhooks
+- PayPal checkout integration
+- Google Analytics e-commerce tracking
+- Facebook Pixel for retargeting
+- Email marketing with SendGrid
 - Headless commerce patterns
 
 ### 🐧 **Linux & System Administration**
 - Essential terminal commands
 - User & permission management
+- System information and monitoring
 - Nginx reverse proxy configuration
 - systemd service creation
+- Firewall configuration with UFW
+- Automated backups with cron
+- SSH key authentication
+- Docker container management
+- Log analysis with journalctl
+- Performance monitoring tools
 - Network troubleshooting
 
 ### 🖥️ **Proxmox Virtualization**
@@ -90,7 +103,7 @@ Complete guides with 50+ working code examples:
 - Docker - Containerization
 - Firebase - Backend as a Service
 
-### 💡 **Developer Hints** (80+ Scenarios)
+### 💡 **Developer Hints** (115+ Scenarios)
 Instant recommendations across 14 categories:
 
 - 🤖 **AI & ML** - When to use Ollama vs cloud APIs
@@ -101,13 +114,16 @@ Instant recommendations across 14 categories:
 - 💾 **Database** - PostgreSQL, MongoDB, Redis guidance
 - 🔄 **State Management** - React Hooks, Zustand, TanStack Query
 - 🎨 **Styling** - Tailwind CSS, shadcn/ui, CSS-in-JS
-- 🔐 **Authentication** - Clerk, NextAuth, Firebase
+- 🔐 **Authentication** - Clerk, NextAuth, Firebase, Supabase
 - 🧪 **Testing** - Vitest, Playwright, load testing
 - 🔍 **SEO & Marketing** - Google ranking, meta tags, analytics
 - 📊 **Analytics** - PostHog, Mixpanel, Sentry
 - 🎮 **Game Development** - Unity, Godot, Phaser
 - 📦 **Package Management** - npm, pnpm, Poetry
 - 🔄 **CI/CD** - GitHub Actions, Docker registries
+- 💳 **E-commerce** - Stripe, PayPal integration
+- 🔔 **Notifications** - Firebase, push notifications
+- 🤖 **AI Chatbots** - LangChain integration
 
 Each hint includes:
 - 💡 Scenario description
@@ -183,6 +199,8 @@ Direct links to official documentation:
 - Node.js (v18 or higher)
 - npm, yarn, or pnpm
 - Expo CLI (optional)
+- **For Android:** Android 7.0 (Nougat) or higher (API level 24+)
+- **For iOS:** iOS 13.4 or higher
 
 ### Installation
 
@@ -211,7 +229,9 @@ pnpm start
 ```
 
 4. **Run on your device:**
-   - **Mobile**: Scan QR code with Expo Go app (iOS/Android)
+   - **Mobile**: Scan QR code with Expo Go app
+     - iOS: Requires iOS 13.4 or higher
+     - Android: Requires Android 7.0 (Nougat/API 24) or higher
    - **Android Emulator**: Press `a`
    - **iOS Simulator**: Press `i` (macOS only)
    - **Web**: Press `w`
@@ -300,16 +320,19 @@ Lib-of-Dev-Open-Source-/
 - **30,000+ Lines** of curated content
 - **30+ Screens** with rich information
 - **13 Programming Languages** with 100+ examples each
-- **80+ Developer Hints** across 14 categories
+- **115+ Developer Hints** across 18 categories
+- **70+ Specialized Topics** (IoT, E-commerce, Linux, DevOps, Security, Testing)
 - **70+ Official Links** to documentation
 - **6 Deployment Platforms** with complete guides
 - **3 UI Frameworks** featured
 - **5 Specialized Topics** (IoT, E-Commerce, Linux, etc.)
 - **3 Learning Paths** with structured progression
-- **50+ Code Examples** for IoT/Hardware
+- **70+ Code Examples** for IoT/Hardware
 - **50+ Best Practices** for development
 - **20+ Developer Tools** documented
 - **0 Security Vulnerabilities** (CodeQL verified)
+- **Android Support:** Android 7.0 (API 24) and higher
+- **iOS Support:** iOS 13.4 and higher
 
 ---
 
@@ -331,6 +354,39 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
 - Adding official resource links
 - Adding IoT/Hardware examples
 - Code style and formatting
+
+---
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**Issue: App won't run on Android device**
+- Ensure your Android device is running Android 7.0 (API 24) or higher
+- Check that you have the latest version of Expo Go installed from Google Play Store
+- Try restarting the Expo development server with `npm start --clear`
+
+**Issue: Dependencies not installing correctly**
+- Delete `node_modules` folder and `package-lock.json`
+- Run `npm install` again
+- If issues persist, try using `npx expo install --check` to fix version mismatches
+
+**Issue: Metro bundler errors**
+- Clear Metro cache: `npx expo start --clear`
+- Reset React Native cache: `npx react-native start --reset-cache`
+
+**Issue: Content not displaying correctly**
+- Ensure all required dependencies are installed
+- Check console logs for any data loading errors
+- Verify AsyncStorage permissions if favorites aren't saving
+
+### System Requirements
+
+- **Minimum Android Version:** Android 7.0 (Nougat, API level 24)
+- **Minimum iOS Version:** iOS 13.4
+- **Node.js:** v18.0 or higher recommended
+- **RAM:** At least 4GB recommended for development
+- **Storage:** ~500MB for dependencies and build artifacts
 
 ---
 

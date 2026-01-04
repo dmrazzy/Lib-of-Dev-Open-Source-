@@ -300,6 +300,306 @@ void loop() {
             usage: 'Perfect for obstacle avoidance, parking sensors, liquid level detection.',
             technologies: ['HC-SR04', 'Ultrasonic', 'Distance'],
           },
+          {
+            title: 'PIR Motion Sensor',
+            code: `const int pirPin = 2;
+const int ledPin = 13;
+
+void setup() {
+  pinMode(pirPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int motionDetected = digitalRead(pirPin);
+  
+  if (motionDetected == HIGH) {
+    digitalWrite(ledPin, HIGH);
+    Serial.println("Motion detected!");
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+  
+  delay(100);
+}`,
+            description: 'Detect motion using PIR (Passive Infrared) sensor',
+            usage: 'Ideal for security systems, automatic lighting, occupancy detection.',
+            technologies: ['PIR', 'Motion Detection', 'Arduino'],
+          },
+          {
+            title: 'BMP280 Pressure Sensor',
+            code: `#include <Wire.h>
+#include <Adafruit_BMP280.h>
+
+Adafruit_BMP280 bmp;
+
+void setup() {
+  Serial.begin(9600);
+  
+  if (!bmp.begin(0x76)) {
+    Serial.println("BMP280 not found!");
+    while (1);
+  }
+}
+
+void loop() {
+  float temperature = bmp.readTemperature();
+  float pressure = bmp.readPressure() / 100.0; // hPa
+  float altitude = bmp.readAltitude(1013.25);  // Sea level pressure
+  
+  Serial.print("Temp: ");
+  Serial.print(temperature);
+  Serial.print("°C  Pressure: ");
+  Serial.print(pressure);
+  Serial.print(" hPa  Altitude: ");
+  Serial.print(altitude);
+  Serial.println(" m");
+  
+  delay(2000);
+}`,
+            description: 'Read temperature, pressure, and altitude from BMP280 sensor',
+            usage: 'Weather stations, altitude tracking, indoor air quality monitoring.',
+            technologies: ['BMP280', 'I2C', 'Pressure', 'Altitude'],
+          },
+          {
+            title: 'Soil Moisture Sensor',
+            code: `const int moisturePin = A0;
+const int pumpPin = 8;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(pumpPin, OUTPUT);
+  digitalWrite(pumpPin, LOW);
+}
+
+void loop() {
+  int moistureLevel = analogRead(moisturePin);
+  int moisturePercent = map(moistureLevel, 0, 1023, 0, 100);
+  
+  Serial.print("Moisture: ");
+  Serial.print(moisturePercent);
+  Serial.println("%");
+  
+  // Auto-water if soil is too dry
+  if (moisturePercent < 30) {
+    digitalWrite(pumpPin, HIGH);
+    Serial.println("Watering plant...");
+    delay(5000);
+    digitalWrite(pumpPin, LOW);
+  }
+  
+  delay(10000);
+}`,
+            description: 'Monitor soil moisture and auto-water plants',
+            usage: 'Smart garden automation, greenhouse monitoring, plant care systems.',
+            technologies: ['Soil Moisture', 'Arduino', 'Automation'],
+          },
+          {
+            title: 'Gas Sensor (MQ-2)',
+            code: `const int gasPin = A0;
+const int buzzerPin = 9;
+const int threshold = 400;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(buzzerPin, OUTPUT);
+  
+  Serial.println("MQ-2 Gas Sensor warming up...");
+  delay(20000); // Warm-up time
+  Serial.println("Ready!");
+}
+
+void loop() {
+  int gasLevel = analogRead(gasPin);
+  
+  Serial.print("Gas Level: ");
+  Serial.println(gasLevel);
+  
+  if (gasLevel > threshold) {
+    digitalWrite(buzzerPin, HIGH);
+    Serial.println("⚠️ GAS DETECTED!");
+  } else {
+    digitalWrite(buzzerPin, LOW);
+  }
+  
+  delay(1000);
+}`,
+            description: 'Detect smoke, LPG, methane, and other gases',
+            usage: 'Safety systems, air quality monitoring, leak detection.',
+            technologies: ['MQ-2', 'Gas Detection', 'Safety'],
+          },
+        ],
+      },
+      actuators: {
+        name: 'Actuators & Controls',
+        items: [
+          {
+            title: 'Servo Motor Control',
+            code: `#include <Servo.h>
+
+Servo myServo;
+
+void setup() {
+  myServo.attach(9);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Sweep from 0 to 180 degrees
+  for (int pos = 0; pos <= 180; pos++) {
+    myServo.write(pos);
+    Serial.print("Position: ");
+    Serial.println(pos);
+    delay(15);
+  }
+  
+  // Sweep back from 180 to 0 degrees
+  for (int pos = 180; pos >= 0; pos--) {
+    myServo.write(pos);
+    Serial.print("Position: ");
+    Serial.println(pos);
+    delay(15);
+  }
+}`,
+            description: 'Control servo motor position with precise angles',
+            usage: 'Robot arms, camera gimbals, door locks, automated blinds.',
+            technologies: ['Servo', 'PWM', 'Motor Control'],
+          },
+          {
+            title: 'Relay Module Control',
+            code: `const int relay1 = 7;
+const int relay2 = 8;
+
+void setup() {
+  pinMode(relay1, OUTPUT);
+  pinMode(relay2, OUTPUT);
+  Serial.begin(9600);
+  
+  // Ensure relays start OFF
+  digitalWrite(relay1, LOW);
+  digitalWrite(relay2, LOW);
+}
+
+void loop() {
+  // Turn on Relay 1 (e.g., light)
+  digitalWrite(relay1, HIGH);
+  Serial.println("Relay 1 ON");
+  delay(2000);
+  
+  // Turn on Relay 2 (e.g., fan)
+  digitalWrite(relay2, HIGH);
+  Serial.println("Relay 2 ON");
+  delay(2000);
+  
+  // Turn off both
+  digitalWrite(relay1, LOW);
+  digitalWrite(relay2, LOW);
+  Serial.println("Both OFF");
+  delay(2000);
+}`,
+            description: 'Control high-voltage devices with relay modules',
+            usage: 'Home automation, switching lights, fans, pumps, appliances.',
+            technologies: ['Relay', 'AC Control', 'High Voltage'],
+          },
+          {
+            title: 'Stepper Motor Control',
+            code: `#include <Stepper.h>
+
+const int stepsPerRevolution = 200;
+Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11);
+
+void setup() {
+  myStepper.setSpeed(60); // RPM
+  Serial.begin(9600);
+}
+
+void loop() {
+  Serial.println("Rotating clockwise...");
+  myStepper.step(stepsPerRevolution);
+  delay(1000);
+  
+  Serial.println("Rotating counter-clockwise...");
+  myStepper.step(-stepsPerRevolution);
+  delay(1000);
+}`,
+            description: 'Precise control of stepper motors for accurate positioning',
+            usage: '3D printers, CNC machines, automated curtains, linear actuators.',
+            technologies: ['Stepper Motor', '28BYJ-48', 'Precision Control'],
+          },
+          {
+            title: 'LCD Display (16x2)',
+            code: `#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup() {
+  lcd.begin(16, 2);
+  lcd.print("Hello, World!");
+}
+
+void loop() {
+  lcd.setCursor(0, 1);
+  lcd.print("Time: ");
+  lcd.print(millis() / 1000);
+  lcd.print("s  ");
+  delay(1000);
+}`,
+            description: 'Display text on 16x2 LCD screen',
+            usage: 'Status displays, sensor readings, user interfaces for IoT devices.',
+            technologies: ['LCD', '16x2', 'Display'],
+          },
+          {
+            title: 'RGB LED Control',
+            code: `const int redPin = 9;
+const int greenPin = 10;
+const int bluePin = 11;
+
+void setup() {
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+}
+
+void setColor(int red, int green, int blue) {
+  analogWrite(redPin, red);
+  analogWrite(greenPin, green);
+  analogWrite(bluePin, blue);
+}
+
+void loop() {
+  // Red
+  setColor(255, 0, 0);
+  delay(1000);
+  
+  // Green
+  setColor(0, 255, 0);
+  delay(1000);
+  
+  // Blue
+  setColor(0, 0, 255);
+  delay(1000);
+  
+  // Yellow
+  setColor(255, 255, 0);
+  delay(1000);
+  
+  // Cyan
+  setColor(0, 255, 255);
+  delay(1000);
+  
+  // Magenta
+  setColor(255, 0, 255);
+  delay(1000);
+  
+  // White
+  setColor(255, 255, 255);
+  delay(1000);
+}`,
+            description: 'Control RGB LED colors with PWM signals',
+            usage: 'Mood lighting, status indicators, decorative lighting, alerts.',
+            technologies: ['RGB LED', 'PWM', 'Color Mixing'],
+          },
         ],
       },
     },
@@ -410,6 +710,192 @@ sensor:
             description: 'Integrate MQTT sensors into Home Assistant',
             usage: 'MQTT is the standard protocol for IoT devices. Very flexible.',
             technologies: ['MQTT', 'Sensors', 'Integration'],
+          },
+        ],
+      },
+      automations: {
+        name: 'Advanced Automations',
+        items: [
+          {
+            title: 'Motion-Activated Lighting',
+            code: `# automations.yaml
+- alias: 'Motion Lights - Living Room'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.living_room_motion
+      to: 'on'
+  condition:
+    - condition: sun
+      after: sunset
+      before: sunrise
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.living_room
+      data:
+        brightness: 255
+        transition: 1
+    - delay: '00:05:00'
+    - service: light.turn_off
+      target:
+        entity_id: light.living_room
+      data:
+        transition: 5`,
+            description: 'Turn on lights when motion detected at night',
+            usage: 'Energy-efficient automatic lighting with motion sensors.',
+            technologies: ['Motion Detection', 'Automation', 'Lighting'],
+          },
+          {
+            title: 'Temperature-Based Climate Control',
+            code: `# automations.yaml
+- alias: 'Climate Control - Too Hot'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.living_room_temperature
+      above: 26
+  action:
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.ac_living_room
+      data:
+        temperature: 22
+    - service: notify.mobile_app
+      data:
+        message: "AC turned on - temperature above 26°C"
+
+- alias: 'Climate Control - Too Cold'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.living_room_temperature
+      below: 18
+  action:
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.heater_living_room
+      data:
+        temperature: 21`,
+            description: 'Automatically control heating/cooling based on temperature',
+            usage: 'Smart climate control for comfort and energy efficiency.',
+            technologies: ['Climate', 'Temperature', 'HVAC'],
+          },
+          {
+            title: 'Door/Window Alert System',
+            code: `# automations.yaml
+- alias: 'Security Alert - Door Open'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_door
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: 'armed_away'
+  action:
+    - service: notify.mobile_app
+      data:
+        message: "⚠️ Front door opened while alarm armed!"
+        title: "Security Alert"
+    - service: light.turn_on
+      target:
+        entity_id: light.all_lights
+      data:
+        flash: long
+    - service: alarm_control_panel.alarm_trigger
+      target:
+        entity_id: alarm_control_panel.home_alarm`,
+            description: 'Alert when doors/windows open while alarm is armed',
+            usage: 'Home security monitoring and intrusion detection.',
+            technologies: ['Security', 'Notifications', 'Alarm'],
+          },
+          {
+            title: 'Plant Watering Reminder',
+            code: `# automations.yaml
+- alias: 'Plant Watering Reminder'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.plant_moisture
+      below: 20
+      for:
+        hours: 2
+  action:
+    - service: notify.mobile_app
+      data:
+        message: "🌱 Your plants need watering! Moisture: {{ states('sensor.plant_moisture') }}%"
+        title: "Plant Care"
+    - service: switch.turn_on
+      target:
+        entity_id: switch.plant_water_pump
+    - delay: '00:00:30'
+    - service: switch.turn_off
+      target:
+        entity_id: switch.plant_water_pump`,
+            description: 'Automated plant watering based on soil moisture',
+            usage: 'Smart gardening with moisture sensors and water pumps.',
+            technologies: ['Gardening', 'Moisture', 'Automation'],
+          },
+          {
+            title: 'Presence-Based Actions',
+            code: `# automations.yaml
+- alias: 'Welcome Home'
+  trigger:
+    - platform: state
+      entity_id: person.john
+      from: 'not_home'
+      to: 'home'
+  action:
+    - service: light.turn_on
+      target:
+        entity_id: light.entrance
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.living_room
+      data:
+        temperature: 22
+    - service: media_player.play_media
+      target:
+        entity_id: media_player.living_room_speaker
+      data:
+        media_content_type: music
+        media_content_id: "spotify:playlist:welcome_home"
+    - service: notify.mobile_app
+      data:
+        message: "Welcome home! House is ready."`,
+            description: 'Trigger actions when someone arrives home',
+            usage: 'Personalized welcome routines based on presence detection.',
+            technologies: ['Presence', 'Person', 'Geolocation'],
+          },
+          {
+            title: 'Energy Monitoring Alert',
+            code: `# automations.yaml
+- alias: 'High Power Usage Alert'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.home_power_usage
+      above: 3000
+      for:
+        minutes: 10
+  action:
+    - service: notify.mobile_app
+      data:
+        message: "⚡ High power usage detected: {{ states('sensor.home_power_usage') }}W"
+        title: "Energy Alert"
+    - service: persistent_notification.create
+      data:
+        title: "High Energy Usage"
+        message: "Check for devices left on"
+
+- alias: 'Daily Energy Report'
+  trigger:
+    - platform: time
+      at: '20:00:00'
+  action:
+    - service: notify.mobile_app
+      data:
+        message: "Today's energy: {{ states('sensor.daily_energy') }} kWh"
+        title: "Daily Energy Report"`,
+            description: 'Monitor and report energy consumption',
+            usage: 'Track energy usage, identify issues, reduce electricity bills.',
+            technologies: ['Energy', 'Monitoring', 'Smart Meter'],
           },
         ],
       },
@@ -565,6 +1051,240 @@ return res.redirect(session.url);`,
             usage: 'Industry-standard payment processing. Easy to integrate, highly secure.',
             technologies: ['Stripe', 'Payments', 'Checkout'],
           },
+          {
+            title: 'Stripe Webhook Handler',
+            code: `import Stripe from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+export async function POST(req) {
+  const body = await req.text();
+  const sig = req.headers.get('stripe-signature');
+  
+  let event;
+  
+  try {
+    event = stripe.webhooks.constructEvent(
+      body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (err) {
+    return new Response(\`Webhook Error: \${err.message}\`, {
+      status: 400,
+    });
+  }
+  
+  // Handle the event
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntent = event.data.object;
+      console.log(\`Payment \${paymentIntent.id} succeeded!\`);
+      // Fulfill the order
+      await fulfillOrder(paymentIntent.id);
+      break;
+      
+    case 'payment_intent.payment_failed':
+      console.log('Payment failed');
+      // Notify customer
+      break;
+      
+    default:
+      console.log(\`Unhandled event type \${event.type}\`);
+  }
+  
+  return new Response(JSON.stringify({ received: true }));
+}`,
+            description: 'Handle Stripe webhook events for order fulfillment',
+            usage: 'Automatically process orders when payments succeed.',
+            technologies: ['Stripe', 'Webhooks', 'Event Processing'],
+          },
+          {
+            title: 'PayPal Checkout Integration',
+            code: `// Server-side order creation
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
+const createOrder = async (data, actions) => {
+  return actions.order.create({
+    purchase_units: [
+      {
+        amount: {
+          value: "100.00",
+          currency_code: "USD"
+        },
+        description: "Product Purchase"
+      }
+    ]
+  });
+};
+
+const onApprove = async (data, actions) => {
+  return actions.order.capture().then((details) => {
+    console.log('Transaction completed by', details.payer.name.given_name);
+    // Call your server to save the transaction
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        orderId: data.orderID,
+        payerId: data.payerID
+      })
+    });
+  });
+};
+
+// React component
+<PayPalButtons
+  createOrder={createOrder}
+  onApprove={onApprove}
+/>`,
+            description: 'Integrate PayPal checkout into your e-commerce site',
+            usage: 'Accept PayPal payments with official SDK.',
+            technologies: ['PayPal', 'React', 'Payment Gateway'],
+          },
+        ],
+      },
+      marketing: {
+        name: 'Marketing & Analytics',
+        items: [
+          {
+            title: 'Google Analytics E-commerce Tracking',
+            code: `// Track product views
+gtag('event', 'view_item', {
+  items: [
+    {
+      id: 'SKU_12345',
+      name: 'Premium T-Shirt',
+      category: 'Apparel/Shirts',
+      price: 29.99,
+      quantity: 1
+    }
+  ]
+});
+
+// Track add to cart
+gtag('event', 'add_to_cart', {
+  items: [
+    {
+      id: 'SKU_12345',
+      name: 'Premium T-Shirt',
+      price: 29.99,
+      quantity: 1
+    }
+  ]
+});
+
+// Track purchase
+gtag('event', 'purchase', {
+  transaction_id: 'T_12345',
+  value: 29.99,
+  currency: 'USD',
+  tax: 2.40,
+  shipping: 5.00,
+  items: [
+    {
+      id: 'SKU_12345',
+      name: 'Premium T-Shirt',
+      category: 'Apparel/Shirts',
+      price: 29.99,
+      quantity: 1
+    }
+  ]
+});`,
+            description: 'Track e-commerce events with Google Analytics',
+            usage: 'Measure product performance, conversion rates, revenue.',
+            technologies: ['Google Analytics', 'E-commerce', 'Tracking'],
+          },
+          {
+            title: 'Facebook Pixel for E-commerce',
+            code: `// Initialize Facebook Pixel
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+
+// Track events
+fbq('track', 'ViewContent', {
+  content_name: 'Premium T-Shirt',
+  content_ids: ['SKU_12345'],
+  content_type: 'product',
+  value: 29.99,
+  currency: 'USD'
+});
+
+fbq('track', 'AddToCart', {
+  content_ids: ['SKU_12345'],
+  content_type: 'product',
+  value: 29.99,
+  currency: 'USD'
+});
+
+fbq('track', 'Purchase', {
+  value: 29.99,
+  currency: 'USD',
+  contents: [
+    {id: 'SKU_12345', quantity: 1}
+  ]
+});`,
+            description: 'Track conversions and create retargeting audiences',
+            usage: 'Optimize Facebook/Instagram ads, measure ROAS.',
+            technologies: ['Facebook Pixel', 'Marketing', 'Retargeting'],
+          },
+          {
+            title: 'Email Marketing with SendGrid',
+            code: `import sgMail from '@sendgrid/mail';
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+// Abandoned cart email
+async function sendAbandonedCartEmail(customerEmail, cartItems) {
+  const msg = {
+    to: customerEmail,
+    from: 'store@example.com',
+    subject: '🛒 You left items in your cart!',
+    templateId: 'd-abandoned-cart-template-id',
+    dynamicTemplateData: {
+      customer_name: 'John',
+      cart_items: cartItems,
+      cart_total: cartItems.reduce((sum, item) => 
+        sum + (item.price * item.quantity), 0
+      ),
+      checkout_url: 'https://store.com/checkout'
+    }
+  };
+  
+  await sgMail.send(msg);
+}
+
+// Order confirmation
+async function sendOrderConfirmation(order) {
+  const msg = {
+    to: order.customer.email,
+    from: 'orders@example.com',
+    subject: \`✅ Order #\${order.id} Confirmed\`,
+    templateId: 'd-order-confirmation-template',
+    dynamicTemplateData: {
+      order_id: order.id,
+      customer_name: order.customer.name,
+      items: order.items,
+      total: order.total,
+      shipping_address: order.shipping_address,
+      estimated_delivery: order.estimated_delivery
+    }
+  };
+  
+  await sgMail.send(msg);
+}`,
+            description: 'Send transactional and marketing emails',
+            usage: 'Recover abandoned carts, send order confirmations, newsletters.',
+            technologies: ['SendGrid', 'Email Marketing', 'Transactional Email'],
+          },
         ],
       },
     },
@@ -717,6 +1437,227 @@ sudo journalctl -u myapp -f         # View logs`,
             description: 'Create systemd service for applications',
             usage: 'Run apps as services, auto-restart on failure, start on boot.',
             technologies: ['systemd', 'Linux', 'Service Management'],
+          },
+        ],
+      },
+      advanced: {
+        name: 'Advanced Administration',
+        items: [
+          {
+            title: 'Firewall with UFW',
+            code: `# Enable UFW
+sudo ufw enable
+
+# Default policies
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow SSH (IMPORTANT: do this first!)
+sudo ufw allow ssh
+sudo ufw allow 22/tcp
+
+# Allow HTTP/HTTPS
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+# Allow specific port
+sudo ufw allow 3000/tcp
+
+# Allow from specific IP
+sudo ufw allow from 192.168.1.100
+
+# Allow port range
+sudo ufw allow 6000:6010/tcp
+
+# Status and rules
+sudo ufw status verbose
+sudo ufw status numbered
+
+# Delete rule
+sudo ufw delete 2
+sudo ufw delete allow 80/tcp`,
+            description: 'Configure firewall with Uncomplicated Firewall (UFW)',
+            usage: 'Secure your server by controlling network access.',
+            technologies: ['UFW', 'Firewall', 'Security'],
+          },
+          {
+            title: 'Automated Backups with Cron',
+            code: `#!/bin/bash
+# backup-script.sh
+
+DATE=$(date +%Y%m%d_%H%M%S)
+BACKUP_DIR="/backups"
+SOURCE_DIR="/var/www"
+DB_NAME="myapp_db"
+
+# Create backup directory
+mkdir -p $BACKUP_DIR
+
+# Backup files
+tar -czf $BACKUP_DIR/files_$DATE.tar.gz $SOURCE_DIR
+
+# Backup database
+mysqldump -u root -p$DB_PASSWORD $DB_NAME > $BACKUP_DIR/db_$DATE.sql
+
+# Compress database backup
+gzip $BACKUP_DIR/db_$DATE.sql
+
+# Delete backups older than 30 days
+find $BACKUP_DIR -name "*.tar.gz" -mtime +30 -delete
+find $BACKUP_DIR -name "*.sql.gz" -mtime +30 -delete
+
+echo "Backup completed: $DATE"
+
+# Add to crontab for daily backups at 2 AM:
+# crontab -e
+# 0 2 * * * /opt/scripts/backup-script.sh >> /var/log/backup.log 2>&1`,
+            description: 'Automate file and database backups with cron',
+            usage: 'Protect your data with scheduled automated backups.',
+            technologies: ['Cron', 'Backup', 'Automation'],
+          },
+          {
+            title: 'SSH Key Authentication',
+            code: `# Generate SSH key pair (on local machine)
+ssh-keygen -t ed25519 -C "your_email@example.com"
+# Or for RSA:
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+# Copy public key to server
+ssh-copy-id user@server.com
+
+# Manual copy (if ssh-copy-id not available)
+cat ~/.ssh/id_ed25519.pub | ssh user@server.com "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+
+# Secure SSH configuration (on server)
+# Edit /etc/ssh/sshd_config:
+PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
+Port 2222  # Change default port
+
+# Restart SSH service
+sudo systemctl restart sshd
+
+# Connect with key
+ssh user@server.com
+ssh -i ~/.ssh/custom_key user@server.com -p 2222`,
+            description: 'Set up secure SSH key-based authentication',
+            usage: 'More secure than passwords, enable passwordless login.',
+            technologies: ['SSH', 'Security', 'Authentication'],
+          },
+          {
+            title: 'Docker Container Management',
+            code: `# Pull and run container
+docker pull nginx:latest
+docker run -d -p 80:80 --name webserver nginx
+
+# List containers
+docker ps                    # Running containers
+docker ps -a                 # All containers
+
+# Container operations
+docker start container_name
+docker stop container_name
+docker restart container_name
+docker rm container_name
+
+# View logs
+docker logs -f container_name
+
+# Execute command in container
+docker exec -it container_name bash
+
+# Build image from Dockerfile
+docker build -t myapp:1.0 .
+
+# Docker Compose
+docker-compose up -d         # Start services
+docker-compose down          # Stop services
+docker-compose logs -f       # View logs
+docker-compose ps            # List services
+
+# Cleanup
+docker system prune -a       # Remove unused data
+docker volume prune          # Remove unused volumes`,
+            description: 'Manage Docker containers and images',
+            usage: 'Deploy applications in isolated, portable containers.',
+            technologies: ['Docker', 'Containers', 'DevOps'],
+          },
+          {
+            title: 'Log Analysis with Journalctl',
+            code: `# View all logs
+journalctl
+
+# Follow logs (like tail -f)
+journalctl -f
+
+# Logs from specific service
+journalctl -u nginx.service
+journalctl -u nginx.service -f
+
+# Logs from specific time
+journalctl --since "2024-01-01"
+journalctl --since "1 hour ago"
+journalctl --since "2024-01-01" --until "2024-01-02"
+
+# Filter by priority
+journalctl -p err            # Errors only
+journalctl -p warning        # Warnings and above
+
+# Show kernel messages
+journalctl -k
+
+# Show boot logs
+journalctl -b                # Current boot
+journalctl -b -1             # Previous boot
+
+# Disk usage by logs
+journalctl --disk-usage
+
+# Clean old logs
+sudo journalctl --vacuum-time=7d   # Keep 7 days
+sudo journalctl --vacuum-size=1G   # Keep 1GB`,
+            description: 'Analyze system logs with journalctl',
+            usage: 'Troubleshoot issues, monitor system health, debug services.',
+            technologies: ['Journalctl', 'Systemd', 'Logging'],
+          },
+          {
+            title: 'Performance Monitoring',
+            code: `# CPU and memory monitoring
+top                          # Basic process monitor
+htop                         # Enhanced monitor
+vmstat 1                     # Virtual memory stats
+
+# Disk I/O
+iostat -x 1                  # I/O statistics
+iotop                        # I/O by process
+
+# Network monitoring
+iftop                        # Network bandwidth
+nethogs                      # Network by process
+tcpdump -i eth0              # Packet capture
+
+# System resource usage
+dstat                        # All-in-one monitoring
+nmon                         # Comprehensive monitor
+
+# Check system load
+uptime
+cat /proc/loadavg
+
+# Memory details
+free -h
+cat /proc/meminfo
+
+# Disk performance test
+dd if=/dev/zero of=test bs=1M count=1000 oflag=direct
+
+# Process CPU usage
+ps aux --sort=-%cpu | head
+ps aux --sort=-%mem | head`,
+            description: 'Monitor system performance and resource usage',
+            usage: 'Identify bottlenecks, optimize performance, troubleshoot slowness.',
+            technologies: ['Performance', 'Monitoring', 'Linux'],
           },
         ],
       },
