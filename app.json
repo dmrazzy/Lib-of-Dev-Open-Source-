@@ -22,7 +22,15 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0A0E1A"
       },
-      "package": "com.lenfi.libofdev"
+      "package": "com.lenfi.libofdev",
+      "minSdkVersion": 24,
+      "targetSdkVersion": 36,
+      "compileSdkVersion": 36,
+      "permissions": [
+        "INTERNET",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
