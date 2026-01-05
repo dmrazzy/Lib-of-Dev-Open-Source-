@@ -340,8 +340,9 @@ const styles = StyleSheet.create({
   },
   pathHeader: {
     flexDirection: 'row',
-    marginBottom: spacing.md,
-  },
+    marginBottom: spacing.md,    paddingBottom: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,  },
   pathIcon: {
     width: 48,
     height: 48,

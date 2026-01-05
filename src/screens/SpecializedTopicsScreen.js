@@ -19,7 +19,13 @@ export default function SpecializedTopicsScreen({ navigation }) {
     <TouchableOpacity
       key={topic.id}
       style={styles.topicCard}
-      onPress={() => navigation.navigate('Language', { language: topic })}
+      onPress={() => navigation.navigate('Category', { 
+        languageId: topic.id,
+        languageName: topic.name,
+        languageIcon: topic.icon,
+        languageColor: topic.color,
+        categories: topic.categories
+      })}
     >
       <View style={[styles.topicIcon, { backgroundColor: topic.color + '20' }]}>
         <Text style={styles.topicIconText}>{topic.icon}</Text>

@@ -15,19 +15,25 @@ import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 export default function CodeDetailScreen({ route }) {
   const { t } = useTranslation();
-  const { languageId, categoryId, itemIndex, languageName } = route.params;
-  const language = getLanguageById(languageId);
+  const { languageId, categoryId, itemIndex, languageName, categories } = route.params;
   const [isFavorite, setIsFavorite] = useState(false);
 
-  if (!language || !language.categories[categoryId]) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>{t('common.notFound')}</Text>
-      </SafeAreaView>
-    );
+  // Check if categories are passed directly (from Specialized Topics)
+  let category, item;
+  if (categories && categories[categoryId]) {
+    category = categories[categoryId];
+  } else {
+    // Otherwise, get from languagesData
+    const language = getLanguageById(languageId);
+    if (!language || !language.categories[categoryId]) {
+      return (
+        <SafeAreaView style={styles.container}>
+          <Text style={styles.errorText}>{t('common.notFound')}</Text>
+        </SafeAreaView>
+      );
+    }
+    category = language.categories[categoryId];
   }
-
-  const category = language.categories[categoryId];
   
   if (!category.items || !category.items[itemIndex]) {
     return (
@@ -37,7 +43,7 @@ export default function CodeDetailScreen({ route }) {
     );
   }
   
-  const item = category.items[itemIndex];
+  item = category.items[itemIndex];
 
   const copyToClipboard = () => {
     Clipboard.setString(item.code);

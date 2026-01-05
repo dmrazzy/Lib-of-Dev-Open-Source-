@@ -13,18 +13,60 @@ import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 export default function CategoryScreen({ route, navigation }) {
   const { t } = useTranslation();
-  const { languageId, categoryId, languageName } = route.params;
-  const language = getLanguageById(languageId);
-
-  if (!language || !language.categories[categoryId]) {
+  const { languageId, categoryId, languageName, categories } = route.params;
+  
+  // If no categoryId is provided, show category list (for Specialized Topics)
+  if (!categoryId && categories) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>{t('common.notFound')}</Text>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.header}>
+            <Text style={styles.breadcrumb}>{languageName}</Text>
+          </View>
+          
+          <View style={styles.itemsContainer}>
+            {Object.entries(categories).map(([catId, cat]) => (
+              <TouchableOpacity
+                key={catId}
+                style={styles.categoryCard}
+                onPress={() =>
+                  navigation.push('Category', {
+                    languageId,
+                    categoryId: catId,
+                    languageName,
+                    categories,
+                  })
+                }
+              >
+                <Text style={styles.categoryTitle}>{cat.name}</Text>
+                <Text style={styles.categoryCount}>
+                  {cat.items?.length || 0} {t('common.items')}
+                </Text>
+                <Text style={styles.itemArrow}>›</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
-
-  const category = language.categories[categoryId];
+  
+  // Check if categories are passed directly (from Specialized Topics)
+  let category;
+  if (categories && categories[categoryId]) {
+    category = categories[categoryId];
+  } else {
+    // Otherwise, get from languagesData
+    const language = getLanguageById(languageId);
+    if (!language || !language.categories[categoryId]) {
+      return (
+        <SafeAreaView style={styles.container}>
+          <Text style={styles.errorText}>{t('common.notFound')}</Text>
+        </SafeAreaView>
+      );
+    }
+    category = language.categories[categoryId];
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,6 +89,7 @@ export default function CategoryScreen({ route, navigation }) {
                   itemIndex: index,
                   itemTitle: item.title,
                   languageName,
+                  categories, // Pass categories forward
                 })
               }
             >
@@ -91,6 +134,28 @@ const styles = StyleSheet.create({
   itemsContainer: {
     padding: spacing.md,
     gap: spacing.md,
+  },
+  categoryCard: {
+    backgroundColor: colors.backgroundElevated,
+    borderRadius: borderRadius.lg,
+    padding: spacing.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    ...shadows.small,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  categoryTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text,
+    flex: 1,
+  },
+  categoryCount: {
+    fontSize: 14,
+    color: colors.textMuted,
+    marginRight: spacing.sm,
   },
   itemCard: {
     backgroundColor: colors.backgroundElevated,

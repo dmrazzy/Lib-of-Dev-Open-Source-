@@ -3633,6 +3633,600 @@ FROM metrics;`,
         ]
       }
     }
+  },
+
+  dart: {
+    id: 'dart',
+    name: 'Dart',
+    icon: '🎯',
+    color: '#0175C2',
+    description: 'Client-optimized language for mobile, desktop, server, and web',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Variables & Types',
+            code: `// Type inference
+var name = 'Bob';
+String explicitType = 'Alice';
+
+// Final and const
+final city = 'New York'; // Runtime constant
+const pi = 3.14159;      // Compile-time constant
+
+// Nullable types
+String? nullableName;
+int nonNullable = 42;
+
+// Late variables
+late String description;
+
+// Type checking
+if (name is String) {
+  print(name.toUpperCase());
+}`,
+            description: 'Dart variable declarations and type system',
+            usage: 'Dart has strong type safety with null safety'
+          },
+          {
+            title: 'Functions',
+            code: `// Regular function
+String greet(String name) {
+  return 'Hello, \$name!';
+}
+
+// Arrow function
+String greetShort(String name) => 'Hello, \$name!';
+
+// Optional parameters
+void printInfo(String name, [int? age]) {
+  print('Name: \$name, Age: \${age ?? 'unknown'}');
+}
+
+// Named parameters
+void createUser({required String name, int age = 0}) {
+  print('User: \$name, \$age');
+}
+
+// Async function
+Future<String> fetchData() async {
+  await Future.delayed(Duration(seconds: 1));
+  return 'Data loaded';
+}`,
+            description: 'Function declarations in Dart',
+            usage: 'Used extensively in Flutter development'
+          }
+        ]
+      },
+      flutter: {
+        name: 'Flutter Widgets',
+        items: [
+          {
+            title: 'StatelessWidget',
+            code: `import 'package:flutter/material.dart';
+
+class MyWidget extends StatelessWidget {
+  final String title;
+  
+  const MyWidget({Key? key, required this.title}) : super(key: key);
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 24),
+      ),
+    );
+  }
+}`,
+            description: 'Basic Flutter stateless widget',
+            usage: 'Use for widgets that don\'t need to change state'
+          },
+          {
+            title: 'StatefulWidget',
+            code: `class Counter extends StatefulWidget {
+  @override
+  _CounterState createState() => _CounterState();
+}
+
+class _CounterState extends State<Counter> {
+  int _count = 0;
+  
+  void _increment() {
+    setState(() {
+      _count++;
+    });
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('\$_count'),
+        ElevatedButton(
+          onPressed: _increment,
+          child: Text('Increment'),
+        ),
+      ],
+    );
+  }
+}`,
+            description: 'Stateful widget with state management',
+            usage: 'Use when widget needs to maintain state'
+          }
+        ]
+      }
+    }
+  },
+
+  scala: {
+    id: 'scala',
+    name: 'Scala',
+    icon: '🔺',
+    color: '#DC322F',
+    description: 'Functional and object-oriented language for the JVM',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Variables & Values',
+            code: `// Immutable (preferred)
+val name = "John"
+val age: Int = 30
+
+// Mutable
+var count = 0
+count += 1
+
+// Type inference
+val result = 1 + 2  // Int inferred
+
+// Lazy evaluation
+lazy val expensive = {
+  println("Computing...")
+  42
+}`,
+            description: 'Scala variable declarations',
+            usage: 'Prefer val over var for immutability'
+          },
+          {
+            title: 'Functions',
+            code: `// Function definition
+def add(a: Int, b: Int): Int = {
+  a + b
+}
+
+// Single expression
+def multiply(a: Int, b: Int): Int = a * b
+
+// Higher-order function
+def applyTwice(f: Int => Int, x: Int): Int = {
+  f(f(x))
+}
+
+// Anonymous function
+val square = (x: Int) => x * x
+
+// Currying
+def curriedAdd(a: Int)(b: Int): Int = a + b
+val addFive = curriedAdd(5)_
+println(addFive(3))  // 8`,
+            description: 'Scala function definitions',
+            usage: 'Scala supports functional programming paradigms'
+          }
+        ]
+      },
+      collections: {
+        name: 'Collections',
+        items: [
+          {
+            title: 'List Operations',
+            code: `// Immutable List
+val numbers = List(1, 2, 3, 4, 5)
+
+// Map
+val doubled = numbers.map(_ * 2)
+
+// Filter
+val evens = numbers.filter(_ % 2 == 0)
+
+// Fold/Reduce
+val sum = numbers.reduce(_ + _)
+val product = numbers.foldLeft(1)(_ * _)
+
+// FlatMap
+val nested = List(List(1, 2), List(3, 4))
+val flattened = nested.flatten
+
+// For comprehension
+val result = for {
+  x <- numbers
+  if x % 2 == 0
+} yield x * 2`,
+            description: 'Functional operations on collections',
+            usage: 'Scala collections are powerful and expressive'
+          }
+        ]
+      }
+    }
+  },
+
+  perl: {
+    id: 'perl',
+    name: 'Perl',
+    icon: '🐪',
+    color: '#39457E',
+    description: 'Highly capable text processing and system administration language',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Variables',
+            code: `# Scalars (single values)
+my $name = "John";
+my $age = 30;
+my $price = 19.99;
+
+# Arrays
+my @fruits = ("apple", "banana", "orange");
+push @fruits, "grape";
+my $first = $fruits[0];
+
+# Hashes (associative arrays)
+my %person = (
+    name => "John",
+    age => 30,
+    city => "NYC"
+);
+print $person{name};`,
+            description: 'Perl variable types',
+            usage: 'Sigils ($, @, %) indicate variable types'
+          },
+          {
+            title: 'Regular Expressions',
+            code: `# Pattern matching
+my $text = "Hello World";
+if ($text =~ /World/) {
+    print "Found!\\n";
+}
+
+# Substitution
+$text =~ s/World/Perl/;
+
+# Capture groups
+if ($text =~ /(\\w+)\\s+(\\w+)/) {
+    print "First: $1, Second: $2\\n";
+}
+
+# Global match
+my @words = $text =~ /(\\w+)/g;
+
+# Character classes
+my $email = 'user@example.com';
+if ($email =~ /[\\w\\.-]+@[\\w\\.-]+\\.\\w+/) {
+    print "Valid email\\n";
+}`,
+            description: 'Perl\'s powerful regex support',
+            usage: 'Perl excels at text processing with regex'
+          }
+        ]
+      }
+    }
+  },
+
+  lua: {
+    id: 'lua',
+    name: 'Lua',
+    icon: '🌙',
+    color: '#000080',
+    description: 'Lightweight, embeddable scripting language',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Variables & Types',
+            code: `-- Variables (global by default)
+name = "John"
+age = 30
+
+-- Local variables (preferred)
+local city = "NYC"
+local price = 19.99
+
+-- Tables (Lua's only data structure)
+local person = {
+    name = "John",
+    age = 30,
+    hobbies = {"coding", "gaming"}
+}
+
+-- Array-style table (1-indexed!)
+local fruits = {"apple", "banana", "orange"}
+print(fruits[1])  -- "apple"
+
+-- Nil (undefined)
+local nothing = nil`,
+            description: 'Lua basic syntax and types',
+            usage: 'Tables are Lua\'s universal data structure'
+          },
+          {
+            title: 'Functions',
+            code: `-- Function definition
+function greet(name)
+    return "Hello, " .. name
+end
+
+-- Local function
+local function add(a, b)
+    return a + b
+end
+
+-- Multiple return values
+function divide(a, b)
+    if b == 0 then
+        return nil, "Division by zero"
+    end
+    return a / b, nil
+end
+
+local result, err = divide(10, 2)
+
+-- Anonymous function
+local square = function(x)
+    return x * x
+end
+
+-- Closures
+function counter()
+    local count = 0
+    return function()
+        count = count + 1
+        return count
+    end
+end
+
+local c = counter()
+print(c())  -- 1
+print(c())  -- 2`,
+            description: 'Lua function syntax',
+            usage: 'Functions are first-class citizens in Lua'
+          }
+        ]
+      }
+    }
+  },
+
+  r: {
+    id: 'r',
+    name: 'R',
+    icon: '📊',
+    color: '#276DC3',
+    description: 'Language for statistical computing and graphics',
+    categories: {
+      basics: {
+        name: 'Basics & Data',
+        items: [
+          {
+            title: 'Vectors & Data Types',
+            code: `# Numeric vector
+numbers <- c(1, 2, 3, 4, 5)
+
+# Character vector
+names <- c("John", "Jane", "Bob")
+
+# Logical vector
+flags <- c(TRUE, FALSE, TRUE)
+
+# Factor (categorical data)
+categories <- factor(c("A", "B", "A", "C"))
+
+# Sequences
+seq1 <- 1:10
+seq2 <- seq(0, 1, by=0.1)
+
+# Vector operations
+doubled <- numbers * 2
+sum_val <- sum(numbers)
+mean_val <- mean(numbers)`,
+            description: 'R vector operations',
+            usage: 'Vectors are fundamental in R'
+          },
+          {
+            title: 'Data Frames',
+            code: `# Create data frame
+df <- data.frame(
+  name = c("John", "Jane", "Bob"),
+  age = c(30, 25, 35),
+  salary = c(50000, 60000, 55000)
+)
+
+# Access columns
+df$name
+df[["age"]]
+
+# Filter rows
+subset(df, age > 28)
+df[df$age > 28, ]
+
+# Add column
+df$bonus <- df$salary * 0.1
+
+# Summary statistics
+summary(df)
+str(df)`,
+            description: 'Working with data frames',
+            usage: 'Data frames are R\'s primary data structure'
+          }
+        ]
+      },
+      visualization: {
+        name: 'Data Visualization',
+        items: [
+          {
+            title: 'ggplot2',
+            code: `library(ggplot2)
+
+# Basic scatter plot
+ggplot(df, aes(x=age, y=salary)) +
+  geom_point() +
+  labs(title="Age vs Salary")
+
+# Bar plot
+ggplot(df, aes(x=name, y=salary, fill=name)) +
+  geom_bar(stat="identity") +
+  theme_minimal()
+
+# Line plot with groups
+ggplot(data, aes(x=date, y=value, color=category)) +
+  geom_line() +
+  facet_wrap(~category)
+
+# Histogram
+ggplot(df, aes(x=salary)) +
+  geom_histogram(bins=10, fill="steelblue")`,
+            description: 'Creating visualizations with ggplot2',
+            usage: 'ggplot2 is the standard for R graphics'
+          }
+        ]
+      }
+    }
+  },
+
+  elixir: {
+    id: 'elixir',
+    name: 'Elixir',
+    icon: '💧',
+    color: '#4B275F',
+    description: 'Functional language for building scalable applications',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Pattern Matching',
+            code: `# Basic pattern matching
+{:ok, result} = {:ok, 42}
+
+# List pattern matching
+[head | tail] = [1, 2, 3, 4]
+# head = 1, tail = [2, 3, 4]
+
+# Map pattern matching
+%{name: name, age: age} = %{name: "John", age: 30}
+
+# Function pattern matching
+def greet({:ok, name}), do: "Hello, #{name}!"
+def greet({:error, _}), do: "Error occurred"
+
+# Guard clauses
+def check(x) when x > 0, do: "positive"
+def check(x) when x < 0, do: "negative"
+def check(0), do: "zero"`,
+            description: 'Elixir\'s powerful pattern matching',
+            usage: 'Pattern matching is core to Elixir'
+          },
+          {
+            title: 'Pipe Operator',
+            code: `# Without pipe
+result = String.upcase(String.trim("  hello  "))
+
+# With pipe operator
+result = "  hello  "
+  |> String.trim()
+  |> String.upcase()
+
+# Chain multiple operations
+users
+  |> Enum.filter(&(&1.age > 18))
+  |> Enum.map(&(&1.name))
+  |> Enum.sort()
+
+# With functions
+def process_data(data) do
+  data
+  |> validate()
+  |> transform()
+  |> save()
+end`,
+            description: 'Pipe operator for chaining functions',
+            usage: 'Makes code more readable and functional'
+          }
+        ]
+      }
+    }
+  },
+
+  haskell: {
+    id: 'haskell',
+    name: 'Haskell',
+    icon: '𝝺',
+    color: '#5D4F85',
+    description: 'Pure functional programming language',
+    categories: {
+      basics: {
+        name: 'Basics & Functions',
+        items: [
+          {
+            title: 'Functions & Types',
+            code: `-- Type signatures
+add :: Int -> Int -> Int
+add x y = x + y
+
+-- Type inference
+double x = x * 2
+
+-- Pattern matching
+factorial :: Int -> Int
+factorial 0 = 1
+factorial n = n * factorial (n - 1)
+
+-- Guards
+absoluteValue :: Int -> Int
+absoluteValue n
+  | n < 0     = -n
+  | otherwise = n
+
+-- Higher-order functions
+applyTwice :: (a -> a) -> a -> a
+applyTwice f x = f (f x)
+
+-- Lambda
+square = \\x -> x * x`,
+            description: 'Haskell function definitions',
+            usage: 'Strong static typing with type inference'
+          },
+          {
+            title: 'List Comprehensions',
+            code: `-- Basic list comprehension
+squares = [x^2 | x <- [1..10]]
+
+-- With predicate
+evens = [x | x <- [1..20], even x]
+
+-- Multiple generators
+pairs = [(x, y) | x <- [1..3], y <- [1..3]]
+
+-- List functions
+take 5 [1..]
+filter (> 5) [1..10]
+map (*2) [1..5]
+foldr (+) 0 [1..10]
+
+-- Infinite lists
+naturals = [1..]
+fibonacci = 0 : 1 : zipWith (+) fibonacci (tail fibonacci)`,
+            description: 'Working with lists in Haskell',
+            usage: 'Lists are fundamental in Haskell'
+          }
+        ]
+      }
+    }
   }
 };
 

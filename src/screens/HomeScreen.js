@@ -80,6 +80,14 @@ export default function HomeScreen({ navigation }) {
           </View>
         </View>
 
+        {/* Info Banner */}
+        <View style={styles.infoBanner}>
+          <Text style={styles.bannerIcon}>🚀</Text>
+          <Text style={styles.bannerText}>
+            <Text style={styles.bannerBold}>Continuously improving</Text> - New features & content added regularly
+          </Text>
+        </View>
+
         {/* Quick Access Cards */}
         <View style={styles.quickAccessContainer}>
           <Text style={styles.sectionTitle}>⚡ {t('home.quickAccess')}</Text>
@@ -533,5 +541,31 @@ const styles = StyleSheet.create({
   viewAllSubtext: {
     fontSize: 12,
     color: colors.textSecondary,
+  },
+  infoBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#E8F4FD',
+    borderRadius: borderRadius.md,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.md,
+    borderLeftWidth: 3,
+    borderLeftColor: '#2196F3',
+  },
+  bannerIcon: {
+    fontSize: 20,
+    marginRight: spacing.sm,
+  },
+  bannerText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#37474F',
+    lineHeight: 18,
+  },
+  bannerBold: {
+    fontWeight: '600',
+    color: '#1565C0',
   },
 });

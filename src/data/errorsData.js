@@ -927,6 +927,731 @@ if (first != null) {
         ]
       }
     ]
+  },
+  
+  c: {
+    id: 'c',
+    name: 'C',
+    icon: '🔷',
+    color: '#A8B9CC',
+    commonErrors: [
+      {
+        id: 'c-segfault',
+        title: 'Segmentation Fault',
+        description: 'Program crashes when accessing invalid memory',
+        severity: 'high',
+        category: 'Runtime',
+        example: `// ERROR 1: Dereferencing null pointer
+int *ptr = NULL;
+printf("%d", *ptr);  // Segmentation fault!
+
+// ERROR 2: Array out of bounds
+int arr[5];
+arr[10] = 42;  // Segmentation fault!
+
+// ERROR 3: Accessing freed memory
+int *p = malloc(sizeof(int));
+free(p);
+*p = 10;  // Segmentation fault!`,
+        causes: [
+          'Dereferencing NULL pointers',
+          'Array index out of bounds',
+          'Using freed memory',
+          'Stack overflow',
+          'Invalid pointer arithmetic'
+        ],
+        solution: `// SOLUTION 1: Check for NULL
+int *ptr = malloc(sizeof(int));
+if (ptr != NULL) {
+    *ptr = 42;
+    free(ptr);
+}
+
+// SOLUTION 2: Bounds checking
+if (index >= 0 && index < ARRAY_SIZE) {
+    arr[index] = 42;
+}
+
+// SOLUTION 3: Set to NULL after free
+free(p);
+p = NULL;
+
+// SOLUTION 4: Use valgrind
+// $ valgrind ./program`,
+        prevention: [
+          'Always initialize pointers',
+          'Check malloc return values',
+          'Validate array indices',
+          'Use valgrind',
+          'Enable address sanitizer'
+        ],
+        relatedErrors: ['Memory Leak', 'Buffer Overflow']
+      }
+    ]
+  },
+  
+  go: {
+    id: 'go',
+    name: 'Go',
+    icon: '🐹',
+    color: '#00ADD8',
+    commonErrors: [
+      {
+        id: 'go-panic',
+        title: 'Panic: Runtime Error',
+        description: 'Program panics due to runtime error',
+        severity: 'high',
+        category: 'Runtime',
+        example: `// ERROR 1: Nil pointer
+var ptr *int
+fmt.Println(*ptr)  // panic!
+
+// ERROR 2: Index out of range
+arr := []int{1, 2, 3}
+fmt.Println(arr[5])  // panic!
+
+// ERROR 3: Type assertion
+var i interface{} = "hello"
+n := i.(int)  // panic!`,
+        causes: [
+          'Nil pointer dereference',
+          'Index out of range',
+          'Failed type assertion',
+          'Closing closed channel',
+          'Send on closed channel'
+        ],
+        solution: `// SOLUTION 1: Check for nil
+if ptr != nil {
+    fmt.Println(*ptr)
+}
+
+// SOLUTION 2: Bounds check
+if index < len(arr) {
+    fmt.Println(arr[index])
+}
+
+// SOLUTION 3: Safe assertion
+if n, ok := i.(int); ok {
+    fmt.Println(n)
+}
+
+// SOLUTION 4: Recover
+defer func() {
+    if r := recover(); r != nil {
+        fmt.Println("Recovered:", r)
+    }
+}()`,
+        prevention: [
+          'Check for nil',
+          'Validate indices',
+          'Use comma-ok idiom',
+          'Use defer with recover',
+          'Manage channel lifecycle'
+        ],
+        relatedErrors: ['Deadlock', 'Race Condition']
+      }
+    ]
+  },
+  
+  rust: {
+    id: 'rust',
+    name: 'Rust',
+    icon: '🦀',
+    color: '#CE412B',
+    commonErrors: [
+      {
+        id: 'rust-borrow',
+        title: 'Borrow Checker Error',
+        description: 'Cannot borrow value as mutable/immutable',
+        severity: 'high',
+        category: 'Compile',
+        example: `// ERROR 1: Multiple mutable borrows
+let mut s = String::from("hello");
+let r1 = &mut s;
+let r2 = &mut s;  // ERROR!
+println!("{}, {}", r1, r2);
+
+// ERROR 2: Mutable and immutable borrow
+let mut s = String::from("hello");
+let r1 = &s;
+let r2 = &mut s;  // ERROR!
+println!("{}, {}", r1, r2);
+
+// ERROR 3: Use after move
+let s1 = String::from("hello");
+let s2 = s1;
+println!("{}", s1);  // ERROR!`,
+        causes: [
+          'Multiple mutable borrows',
+          'Mixing mutable and immutable borrows',
+          'Using value after move',
+          'Returning reference to local',
+          'Lifetime violations'
+        ],
+        solution: `// SOLUTION 1: Scopes for borrows
+let mut s = String::from("hello");
+{
+    let r1 = &mut s;
+    r1.push_str(" world");
+}  // r1 goes out of scope
+let r2 = &mut s;
+
+// SOLUTION 2: Clone instead of move
+let s1 = String::from("hello");
+let s2 = s1.clone();
+println!("{}, {}", s1, s2);
+
+// SOLUTION 3: Use references
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+let s = String::from("hello");
+let len = calculate_length(&s);
+println!("{}", s);  // Still valid
+
+// SOLUTION 4: Return owned value
+fn create_string() -> String {
+    String::from("hello")
+}`,
+        prevention: [
+          'Understand borrowing rules',
+          'Use scopes strategically',
+          'Clone when needed',
+          'Use references properly',
+          'Understand ownership transfer'
+        ],
+        relatedErrors: ['Lifetime Error', 'Move Error']
+      }
+    ]
+  },
+  
+  swift: {
+    id: 'swift',
+    name: 'Swift',
+    icon: '🦅',
+    color: '#FA7343',
+    commonErrors: [
+      {
+        id: 'swift-nil',
+        title: 'Unexpectedly Found Nil',
+        description: 'Force unwrapping nil optional value',
+        severity: 'high',
+        category: 'Runtime',
+        example: `// ERROR 1: Force unwrap
+var name: String? = nil
+print(name!)  // Fatal error!
+
+// ERROR 2: Implicitly unwrapped
+var label: UILabel!
+label.text = "Hello"  // Fatal error if not set!
+
+// ERROR 3: Array access
+let numbers = [1, 2, 3]
+let value = numbers.first!  // OK
+let empty: [Int] = []
+let fail = empty.first!  // Fatal error!`,
+        causes: [
+          'Force unwrapping nil',
+          'Implicitly unwrapped nil',
+          'Failed optional cast',
+          'Dictionary key not found',
+          'Array first/last on empty'
+        ],
+        solution: `// SOLUTION 1: Optional binding
+if let name = name {
+    print(name)
+}
+
+// SOLUTION 2: Guard
+guard let name = name else {
+    return
+}
+print(name)
+
+// SOLUTION 3: Nil coalescing
+let displayName = name ?? "Unknown"
+
+// SOLUTION 4: Optional chaining
+let length = name?.count
+
+// SOLUTION 5: Safe array access
+if let first = numbers.first {
+    print(first)
+}`,
+        prevention: [
+          'Avoid force unwrapping',
+          'Use optional binding',
+          'Use guard statements',
+          'Use nil coalescing',
+          'Use optional chaining'
+        ],
+        relatedErrors: ['Index Out of Range', 'Type Cast Failed']
+      }
+    ]
+  },
+  
+  kotlin: {
+    id: 'kotlin',
+    name: 'Kotlin',
+    icon: '🟣',
+    color: '#7F52FF',
+    commonErrors: [
+      {
+        id: 'kotlin-npe',
+        title: 'NullPointerException',
+        description: 'Accessing null value incorrectly',
+        severity: 'high',
+        category: 'Runtime',
+        example: `// ERROR 1: Force non-null
+val name: String? = null
+println(name!!)  // NPE!
+
+// ERROR 2: Platform types
+val javaString = getJavaString()  // May be null
+println(javaString.length)  // NPE if null!
+
+// ERROR 3: Late init not initialized
+lateinit var config: Config
+println(config.value)  // NPE!`,
+        causes: [
+          'Force non-null assertion (!!)',
+          'Java interop without checks',
+          'lateinit not initialized',
+          'Unsafe casts',
+          'Mutable nullable changed to null'
+        ],
+        solution: `// SOLUTION 1: Safe call
+println(name?.length)
+
+// SOLUTION 2: Elvis operator
+val len = name?.length ?: 0
+
+// SOLUTION 3: Let function
+name?.let {
+    println(it.length)
+}
+
+// SOLUTION 4: Check lateinit
+if (::config.isInitialized) {
+    println(config.value)
+}
+
+// SOLUTION 5: Safe cast
+val str = value as? String
+println(str?.length)`,
+        prevention: [
+          'Avoid !! operator',
+          'Use safe calls (?.)' ,
+          'Use Elvis operator (?: )',
+          'Check lateinit initialization',
+          'Use safe casts (as?)'
+        ],
+        relatedErrors: ['UninitializedPropertyAccessException', 'TypeCastException']
+      }
+    ]
+  },
+  
+  ruby: {
+    id: 'ruby',
+    name: 'Ruby',
+    icon: '💎',
+    color: '#CC342D',
+    commonErrors: [
+      {
+        id: 'ruby-nomethod',
+        title: 'NoMethodError',
+        description: 'Calling undefined method on object',
+        severity: 'high',
+        category: 'Runtime',
+        example: `# ERROR 1: Nil method
+name = nil
+puts name.upcase  # NoMethodError!
+
+# ERROR 2: Wrong method name
+arr = [1, 2, 3]
+arr.lenght  # Typo! NoMethodError
+
+# ERROR 3: Wrong object type
+number = 42
+number.upcase  # NoMethodError`,
+        causes: [
+          'Calling method on nil',
+          'Typo in method name',
+          'Wrong object type',
+          'Method not defined',
+          'Private method called externally'
+        ],
+        solution: `# SOLUTION 1: Check for nil
+puts name.upcase if name
+
+# SOLUTION 2: Safe navigation (&.)
+puts name&.upcase
+
+# SOLUTION 3: respond_to?
+if arr.respond_to?(:upcase)
+    puts arr.upcase
+end
+
+# SOLUTION 4: Rescue
+begin
+    puts name.upcase
+rescue NoMethodError => e
+    puts "Error: #{e.message}"
+end
+
+# SOLUTION 5: Try (Rails)
+puts name.try(:upcase)`,
+        prevention: [
+          'Check for nil',
+          'Use safe navigation',
+          'Use respond_to?',
+          'Handle exceptions',
+          'Validate object types'
+        ],
+        relatedErrors: ['ArgumentError', 'TypeError']
+      }
+    ]
+  },
+  
+  sql: {
+    id: 'sql',
+    name: 'SQL',
+    icon: '🗄️',
+    color: '#00758F',
+    commonErrors: [
+      {
+        id: 'sql-syntax',
+        title: 'Syntax Error',
+        description: 'Invalid SQL syntax',
+        severity: 'high',
+        category: 'Syntax',
+        example: `-- ERROR 1: Missing comma
+SELECT name age FROM users;
+
+-- ERROR 2: Wrong keyword order
+SELECT * WHERE id = 1 FROM users;
+
+-- ERROR 3: Missing quotes
+SELECT * FROM users WHERE name = John;
+
+-- ERROR 4: Ambiguous column
+SELECT id, name FROM users u
+JOIN orders o ON u.id = o.user_id;`,
+        causes: [
+          'Missing commas',
+          'Wrong keyword order',
+          'Missing quotes',
+          'Ambiguous columns',
+          'Reserved keywords'
+        ],
+        solution: `-- SOLUTION 1: Add comma
+SELECT name, age FROM users;
+
+-- SOLUTION 2: Correct order
+SELECT * FROM users WHERE id = 1;
+
+-- SOLUTION 3: Add quotes
+SELECT * FROM users WHERE name = 'John';
+
+-- SOLUTION 4: Qualify columns
+SELECT u.id, u.name, o.total
+FROM users u
+JOIN orders o ON u.id = o.user_id;
+
+-- SOLUTION 5: Quote reserved words
+SELECT "order", "date" FROM orders;`,
+        prevention: [
+          'Use syntax highlighting',
+          'Qualify column names',
+          'Quote string values',
+          'Follow SQL standards',
+          'Use prepared statements'
+        ],
+        relatedErrors: ['Column Not Found', 'Table Not Exists']
+      }
+    ]
+  },
+  
+  dart: {
+    id: 'dart',
+    name: 'Dart',
+    icon: '🎯',
+    color: '#0175C2',
+    commonErrors: [
+      {
+        id: 'dart-null-1',
+        title: 'Null Check Operator',
+        description: 'Using null check operator (!) on null value',
+        category: 'Runtime Error',
+        severity: 'high',
+        example: `String? name;
+print(name!.length); // Error: Null check failed`,
+        causes: [
+          'Variable not initialized',
+          'Nullable type used without null check',
+          'Forcing non-null with !',
+          'Missing null safety'
+        ],
+        solutions: [
+          'Check for null before use: if (name != null) ...',
+          'Use null-aware operator: name?.length',
+          'Provide default: name ?? "default"',
+          'Use late keyword for delayed initialization',
+          'Initialize variable properly',
+          'Use null assertion only when certain',
+          'Enable sound null safety',
+          'Refactor to avoid nullable types'
+        ],
+        prevention: ['Enable null safety', 'Use proper checks', 'Initialize variables', 'Avoid null when possible'],
+        relatedErrors: ['dart-late-1']
+      },
+      {
+        id: 'dart-late-1',
+        title: 'LateInitializationError',
+        description: 'Accessing late variable before initialization',
+        category: 'Runtime Error',
+        severity: 'high',
+        example: `late String config;
+print(config); // Error: config not initialized`,
+        causes: [
+          'Late variable not initialized',
+          'Accessing before assignment',
+          'Logic error in initialization',
+          'Async initialization issue'
+        ],
+        solutions: [
+          'Initialize before use',
+          'Check initialization state',
+          'Use nullable type instead',
+          'Initialize in constructor',
+          'Use factory constructor',
+          'Add initialization guard',
+          'Use dependency injection',
+          'Document initialization requirements'
+        ],
+        prevention: ['Initialize late variables promptly', 'Use nullable types', 'Guard access', 'Document requirements'],
+        relatedErrors: ['dart-null-1']
+      }
+    ]
+  },
+  
+  scala: {
+    id: 'scala',
+    name: 'Scala',
+    icon: '🔺',
+    color: '#DC322F',
+    commonErrors: [
+      {
+        id: 'scala-match-1',
+        title: 'MatchError',
+        description: 'Pattern match not exhaustive',
+        category: 'Runtime Error',
+        severity: 'high',
+        example: `def describe(x: Int) = x match {
+  case 1 => "one"
+  case 2 => "two"
+}
+describe(3) // MatchError`,
+        causes: [
+          'Non-exhaustive pattern match',
+          'Missing default case',
+          'Not handling all cases',
+          'Runtime value not covered'
+        ],
+        solutions: [
+          'Add wildcard case: case _ => ...',
+          'Handle all cases explicitly',
+          'Use Option for partial matches',
+          'Add @unchecked annotation (with caution)',
+          'Use sealed traits for exhaustiveness',
+          'Enable compiler warnings',
+          'Test edge cases',
+          'Use Try for error handling'
+        ],
+        prevention: ['Always provide exhaustive matches', 'Use sealed traits', 'Enable warnings', 'Test thoroughly'],
+        relatedErrors: ['scala-type-1']
+      }
+    ]
+  },
+  
+  perl: {
+    id: 'perl',
+    name: 'Perl',
+    icon: '🐪',
+    color: '#39457E',
+    commonErrors: [
+      {
+        id: 'perl-undef-1',
+        title: 'Use of uninitialized value',
+        description: 'Using undefined variable in operation',
+        category: 'Runtime Warning',
+        severity: 'medium',
+        example: `my $name;
+print "Hello $name\\n"; # Warning: uninitialized`,
+        causes: [
+          'Variable not assigned',
+          'Hash key doesn\'t exist',
+          'Function returns undef',
+          'Array index out of bounds'
+        ],
+        solutions: [
+          'Initialize variables: my $name = "";',
+          'Check with defined(): if (defined $var)',
+          'Use // operator: $name // "default"',
+          'Use exists() for hashes',
+          'Enable strict and warnings',
+          'Check return values',
+          'Validate input data',
+          'Use default values'
+        ],
+        prevention: ['Always initialize variables', 'Use strict', 'Check with defined()', 'Validate returns'],
+        relatedErrors: ['perl-strict-1']
+      }
+    ]
+  },
+  
+  lua: {
+    id: 'lua',
+    name: 'Lua',
+    icon: '🌙',
+    color: '#000080',
+    commonErrors: [
+      {
+        id: 'lua-nil-1',
+        title: 'attempt to index a nil value',
+        description: 'Trying to access field of nil',
+        category: 'Runtime Error',
+        severity: 'high',
+        example: `local person
+print(person.name) -- Error: indexing nil`,
+        causes: [
+          'Variable is nil',
+          'Table not initialized',
+          'Function returns nil',
+          'Typo in variable name'
+        ],
+        solutions: [
+          'Initialize table: local person = {}',
+          'Check for nil: if person then',
+          'Use default values',
+          'Validate function returns',
+          'Use metatables for defaults',
+          'Add nil guards',
+          'Use proper table construction',
+          'Check variable scope'
+        ],
+        prevention: ['Initialize tables', 'Check for nil', 'Validate returns', 'Check scope'],
+        relatedErrors: ['lua-global-1']
+      }
+    ]
+  },
+  
+  r: {
+    id: 'r',
+    name: 'R',
+    icon: '📊',
+    color: '#276DC3',
+    commonErrors: [
+      {
+        id: 'r-na-1',
+        title: 'missing values (NA)',
+        description: 'Operations on NA values produce NA',
+        category: 'Data Error',
+        severity: 'medium',
+        example: `x <- c(1, 2, NA, 4)
+mean(x) # Returns NA`,
+        causes: [
+          'Missing data in dataset',
+          'NA propagation in calculations',
+          'Import issues',
+          'Incomplete data'
+        ],
+        solutions: [
+          'Remove NA: na.omit(x)',
+          'Use na.rm = TRUE: mean(x, na.rm = TRUE)',
+          'Replace NA: x[is.na(x)] <- 0',
+          'Filter complete cases',
+          'Use tidyr::drop_na()',
+          'Impute missing values',
+          'Check data quality',
+          'Handle NA explicitly'
+        ],
+        prevention: ['Handle missing values explicitly', 'Use na.rm parameter', 'Clean data', 'Validate imports'],
+        relatedErrors: ['r-vector-1']
+      }
+    ]
+  },
+  
+  elixir: {
+    id: 'elixir',
+    name: 'Elixir',
+    icon: '💧',
+    color: '#4B275F',
+    commonErrors: [
+      {
+        id: 'elixir-match-1',
+        title: 'MatchError',
+        description: 'Pattern match failed',
+        category: 'Runtime Error',
+        severity: 'high',
+        example: `{:ok, result} = {:error, "failed"}
+# MatchError: no match`,
+        causes: [
+          'Pattern doesn\'t match value',
+          'Wrong tuple structure',
+          'Unexpected return value',
+          'Missing pattern case'
+        ],
+        solutions: [
+          'Use case statement for multiple patterns',
+          'Handle all possible returns',
+          'Use with statement for happy path',
+          'Pattern match in function heads',
+          'Use guards for conditions',
+          'Return consistent data structures',
+          'Add error handling',
+          'Use Result type pattern'
+        ],
+        prevention: ['Handle all pattern cases', 'Use case statements', 'Guard pattern matches', 'Return consistent structures'],
+        relatedErrors: ['elixir-function-1']
+      }
+    ]
+  },
+  
+  haskell: {
+    id: 'haskell',
+    name: 'Haskell',
+    icon: '𝝺',
+    color: '#5D4F85',
+    commonErrors: [
+      {
+        id: 'haskell-type-1',
+        title: 'Type Mismatch',
+        description: 'Type doesn\'t match function signature',
+        category: 'Compile Error',
+        severity: 'high',
+        example: `add :: Int -> Int -> Int
+add x y = x ++ y -- Error: (++) expects [a]`,
+        causes: [
+          'Wrong function used',
+          'Type annotation mismatch',
+          'Operator type mismatch',
+          'Missing type class constraint'
+        ],
+        solutions: [
+          'Use correct function: (+) for Int',
+          'Check type signatures',
+          'Add type class constraints',
+          'Use type inference',
+          'Convert types explicitly',
+          'Check operator types',
+          'Use :type in GHCi',
+          'Read compiler errors carefully'
+        ],
+        prevention: ['Verify types match signatures', 'Use type inference', 'Check operators', 'Read errors carefully'],
+        relatedErrors: ['haskell-parse-1']
+      }
+    ]
   }
 };
 
