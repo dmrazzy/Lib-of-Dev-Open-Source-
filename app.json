@@ -41,7 +41,14 @@
       }
     },
     "plugins": [
-      "expo-asset"
+      "expo-asset",
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-5526801232554836~6275754332",
+          "iosAppId": "ca-app-pub-5526801232554836~6275754332"
+        }
+      ]
     ]
   }
 }

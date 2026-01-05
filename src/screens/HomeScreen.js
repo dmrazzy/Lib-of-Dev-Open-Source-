@@ -13,6 +13,7 @@ import { getAllLanguages } from '../data/languagesData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 import { LanguageCard } from '../components/Card';
 import { quickTips } from '../data/developerHintsData';
+import AdBanner from '../components/AdBanner';
 
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
@@ -199,6 +200,11 @@ export default function HomeScreen({ navigation }) {
               <Text style={styles.viewAllSubtext}>50+ {t('home.scenariosCovered')}</Text>
             </TouchableOpacity>
           </ScrollView>
+        </View>
+
+        {/* AdMob Banner */}
+        <View style={styles.adContainer}>
+          <AdBanner adUnitId="ca-app-pub-5526801232554836/5282576179" />
         </View>
 
         {/* Languages List */}
@@ -553,6 +559,12 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
     borderLeftWidth: 3,
     borderLeftColor: '#2196F3',
+  },
+  adContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: spacing.md,
+    paddingVertical: spacing.sm,
   },
   bannerIcon: {
     fontSize: 20,

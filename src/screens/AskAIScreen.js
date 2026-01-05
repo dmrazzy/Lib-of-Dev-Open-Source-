@@ -17,6 +17,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
+import AdBanner from '../components/AdBanner';
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const CHAT_HISTORY_KEY = '@ai_chat_history';
@@ -338,6 +339,11 @@ export default function AskAIScreen({ navigation }) {
           )}
         </ScrollView>
 
+        {/* AdMob Banner */}
+        <View style={styles.adContainer}>
+          <AdBanner adUnitId="ca-app-pub-5526801232554836/8545682699" />
+        </View>
+
         {/* Input */}
         <View style={styles.inputContainer}>
           <TextInput
@@ -521,6 +527,14 @@ const styles = StyleSheet.create({
   boldText: {
     fontWeight: 'bold',
     color: colors.text,
+  },
+  adContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: spacing.xs,
+    backgroundColor: colors.backgroundElevated,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
   },
   inputContainer: {
     flexDirection: 'row',

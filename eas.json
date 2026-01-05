@@ -20,9 +20,7 @@
       "autoIncrement": true,
       "node": "22.11.0",
       "android": {
-        "buildType": "aab",
-        "enableProguardInReleaseBuilds": true,
-        "gradleCommand": ":app:bundleRelease"
+        "buildType": "app-bundle"
       }
     }
   },
