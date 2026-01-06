@@ -21,7 +21,7 @@ A massive, production-ready React Native/Expo mobile app serving as an **offline
 - **🐧 Linux & DevOps** - System administration, Docker, security with 40+ practical examples
 - **💡 115+ Developer Hints** - Instant answers to "What should I use?"
 - **🔗 70+ Official Links** - Direct access to documentation and resources
-- **100% Offline** - All content bundled, no internet required
+- **100% Offline** - All content bundled, no internet required*
 - **⭐ Production Ready** - Zero vulnerabilities, properly tested
 
 ---
@@ -189,6 +189,9 @@ Direct links to official documentation:
 7. 🔗 **Links** - Official resources
 8. ⭐ **Favorites** - Saved references
 9. ⚙️ **Settings** - Personalization
+
+
+    *You can use the main parts of this App without internet. for a couple of features you will need a working network connection.
 
 ---
 
