@@ -600,6 +600,65 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+## 💰 Why Does This App Include Ads?
+
+### Supporting Free & Open Source Development
+
+Lib of Dev is **completely free** and **100% open source**. We believe quality developer tools should be accessible to everyone, regardless of budget. However, creating and maintaining an app of this scale requires significant time, effort, and resources.
+
+### Our Commitment
+
+**Minimal & Non-Intrusive**: We include only carefully placed banner ads that don't interfere with your learning experience. No pop-ups, no video ads, no interruptions while you're coding or reading.
+
+**Transparent Revenue Use**: Every dollar earned from ads goes directly back into:
+- 📚 **Content Creation** - Adding more programming languages, tutorials, and code examples
+- 🤖 **AI Features** - Improving and expanding the AI chat assistant
+- 🌐 **Internationalization** - Adding more language translations (French, Spanish, Italian coming soon)
+- 🔧 **Maintenance** - Keeping dependencies updated, fixing bugs, and ensuring compatibility
+- 🚀 **Infrastructure** - Server costs for AI API, hosting documentation, and services
+- ✨ **New Features** - Building the features you request in GitHub Discussions
+
+### Why Not Paid?
+
+We considered a paid model, but our mission is to make quality developer education accessible to **all developers worldwide**, including:
+- 🎓 Students learning to code
+- 🌍 Developers in regions where paid apps are less accessible
+- 💼 Professionals exploring new technologies
+- 🏢 Teams looking for quick reference materials
+
+By keeping the app free with minimal ads, we ensure that **anyone** can access 50,000+ lines of curated programming content, regardless of their financial situation.
+
+### Your Support Matters
+
+By using this free app, you're:
+- ✅ Supporting continued development
+- ✅ Helping us add new features and content
+- ✅ Enabling free access for developers worldwide
+- ✅ Contributing to the open source community
+
+### Alternative Ways to Support
+
+If you find this app valuable:
+- ⭐ **Star the repository** - Helps others discover the project
+- 📢 **Share with fellow developers** - Spread the word
+- 🐛 **Report bugs** - Help us improve quality
+- 💻 **Contribute code or content** - See [Contributing Guide](CONTRIBUTING.md)
+- 📝 **Write a review** - Share your experience
+- 💬 **Join discussions** - Help shape the future
+
+### Transparency
+
+We're committed to transparency:
+- All code is open source on GitHub
+- Ad implementation is visible in the codebase
+- Revenue goals and usage are shared with the community
+- No user data is sold or shared with advertisers
+- Only standard AdMob analytics are collected
+
+**Thank you for understanding and supporting free, quality developer education!** 🙏
+
+---
+
 ## 🎯 Roadmap
 
 - [x] AI Chat Assistant (Groq API) ✅

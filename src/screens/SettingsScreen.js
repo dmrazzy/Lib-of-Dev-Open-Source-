@@ -319,6 +319,36 @@ export default function SettingsScreen() {
             </Text>
           </View>
         </View>
+
+        {/* Advertising Info Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>💰 Why Ads?</Text>
+          <View style={styles.aboutCard}>
+            <Text style={styles.aboutTitle}>
+              Supporting Free & Open Source Development
+            </Text>
+            <Text style={styles.aboutDescription}>
+              This app is completely free and open source. We include minimal, 
+              non-intrusive ads to help fund the development and maintenance of 
+              this project and future features.
+            </Text>
+            <Text style={styles.aboutDescription}>
+              All revenue goes directly into:{"\n"}
+              • Adding new programming languages and tutorials{"\n"}
+              • Improving AI features and capabilities{"\n"}
+              • Maintaining servers and infrastructure{"\n"}
+              • Keeping the app updated with latest tech
+            </Text>
+            <Text style={styles.aboutDescription}>
+              We're committed to maintaining a great user experience with as few 
+              ads as possible. Your support by using this free app helps us continue 
+              providing quality content to developers worldwide.
+            </Text>
+            <Text style={styles.aboutHighlight}>
+              Thank you for your understanding! 🙏
+            </Text>
+          </View>
+        </View>
       </ScrollView>
 
       {/* API Key Modal */}
@@ -561,10 +591,24 @@ const styles = StyleSheet.create({
     color: colors.text,
     marginBottom: spacing.xs,
   },
+  aboutTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: spacing.sm,
+  },
   aboutDescription: {
     fontSize: 14,
     color: colors.textSecondary,
     lineHeight: 20,
+    marginBottom: spacing.sm,
+  },
+  aboutHighlight: {
+    fontSize: 14,
+    color: colors.primary,
+    fontWeight: '600',
+    marginTop: spacing.xs,
+    textAlign: 'center',
   },
   modalContainer: {
     flex: 1,
