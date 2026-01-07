@@ -16,6 +16,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as StoreReview from 'expo-store-review';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 // Try to import InterstitialAd from AdMob
@@ -34,6 +35,11 @@ try {
 const GITHUB_URL = 'https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-';
 const LANGUAGE_STORAGE_KEY = '@app_language';
 const GROQ_API_KEY_STORAGE = '@groq_api_key';
+const FIRST_INSTALL_KEY = '@first_install_date';
+const LAST_RATING_PROMPT_KEY = '@last_rating_prompt';
+const HAS_RATED_KEY = '@has_rated_app';
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.lenfi.libofdev';
+const APP_STORE_URL = 'https://apps.apple.com/app/id-placeholder';
 
 const LANGUAGES = [
   { code: 'en', name: 'English', nativeName: 'English' },
@@ -74,6 +80,7 @@ export default function SettingsScreen() {
   useEffect(() => {
     loadPreferences();
     loadApiKey();
+    checkAndPromptRating();
   }, []);
 
   const loadApiKey = async () => {
@@ -187,20 +194,92 @@ export default function SettingsScreen() {
     Linking.openURL(GITHUB_URL);
   };
 
-  const handleRateApp = () => {
+  // Check if app should prompt for rating (after 3 days)
+  const checkAndPromptRating = async () => {
+    try {
+      const hasRated = await AsyncStorage.getItem(HAS_RATED_KEY);
+      if (hasRated === 'true') return; // Already rated, don't prompt again
+
+      const firstInstall = await AsyncStorage.getItem(FIRST_INSTALL_KEY);
+      const lastPrompt = await AsyncStorage.getItem(LAST_RATING_PROMPT_KEY);
+      const now = Date.now();
+
+      // Set first install date if not set
+      if (!firstInstall) {
+        await AsyncStorage.setItem(FIRST_INSTALL_KEY, now.toString());
+        return; // Don't prompt on first launch
+      }
+
+      const daysSinceInstall = (now - parseInt(firstInstall)) / (1000 * 60 * 60 * 24);
+      
+      // Check if 3 days have passed since install
+      if (daysSinceInstall < 3) return;
+
+      // If already prompted, wait 7 days before asking again
+      if (lastPrompt) {
+        const daysSincePrompt = (now - parseInt(lastPrompt)) / (1000 * 60 * 60 * 24);
+        if (daysSincePrompt < 7) return;
+      }
+
+      // Show rating prompt
+      promptForRating();
+    } catch (error) {
+      console.log('Error checking rating prompt:', error);
+    }
+  };
+
+  const promptForRating = () => {
     Alert.alert(
-      t('settings.rateApp'),
       t('settings.rateAppMessage'),
+      t('settings.rateAppDescription'),
       [
-        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('settings.rateLater'),
+          style: 'cancel',
+          onPress: async () => {
+            // Save that we prompted, will ask again in 7 days
+            await AsyncStorage.setItem(LAST_RATING_PROMPT_KEY, Date.now().toString());
+          },
+        },
         {
           text: t('settings.rateNow'),
-          onPress: () => {
-            Linking.openURL(GITHUB_URL);
-          },
+          onPress: handleRateApp,
         },
       ]
     );
+  };
+
+  const handleRateApp = async () => {
+    try {
+      // Mark as rated so we don't ask again
+      await AsyncStorage.setItem(HAS_RATED_KEY, 'true');
+      
+      // Try to use native store review first
+      const isAvailable = await StoreReview.isAvailableAsync();
+      
+      if (isAvailable) {
+        // Show native in-app review (preferred)
+        await StoreReview.requestReview();
+      } else {
+        // Fallback to opening store URL
+        const storeUrl = Platform.select({
+          ios: APP_STORE_URL,
+          android: PLAY_STORE_URL,
+        });
+        
+        if (storeUrl) {
+          await Linking.openURL(storeUrl);
+        }
+      }
+      
+      // Show thank you message after a short delay
+      setTimeout(() => {
+        Alert.alert('', t('settings.thanksForRating'));
+      }, 1000);
+    } catch (error) {
+      console.log('Error opening store review:', error);
+      Alert.alert(t('common.error'), t('settings.ratingNotAvailable'));
+    }
   };
 
   return (
