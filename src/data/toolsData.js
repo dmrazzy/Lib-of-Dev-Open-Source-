@@ -3097,6 +3097,10 @@ export function getAllCategories() {
   }));
 }
 
+export function getAllTools() {
+  return toolsData;
+}
+
 export function searchTools(query) {
   const searchTerm = query.toLowerCase();
   return toolsData.filter(tool =>
