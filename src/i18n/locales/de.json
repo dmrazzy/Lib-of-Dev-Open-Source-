@@ -34,7 +34,10 @@
     "languagesSubtitle": "Wählen Sie eine Sprache, um Syntax, Funktionen und Beispiele zu erkunden",
     "examples": "Beispiele",
     "categories": "Kategorien",
-    "exploreLanguage": "Sprache erkunden"
+    "exploreLanguage": "Sprache erkunden",
+    "surveyTitle": "📋 Hilf uns zu verbessern!",
+    "surveyDescription": "Teile dein Feedback in unserer kurzen Umfrage (2 Min)",
+    "takeSurvey": "Zur Umfrage"
   },
   "navigation": {
     "home": "Start",
@@ -133,7 +136,11 @@
     "getApiKey": "Kostenlosen API-Schlüssel holen",
     "enterApiKey": "Gib deinen Groq API-Schlüssel ein",
     "apiKeySaved": "API-Schlüssel erfolgreich gespeichert!",
-    "apiKeySaveError": "Fehler beim Speichern des API-Schlüssels"
+    "apiKeySaveError": "Fehler beim Speichern des API-Schlüssels",
+    "communityFeedback": "Community Feedback",
+    "surveyTitle": "📋 Kurze Umfrage",
+    "surveyDescription": "Hilf uns zu verbessern! Teile deine Meinung (2 Min)",
+    "takeSurvey": "Zur Umfrage"
   },
   "languages": {
     "javascript": "JavaScript",

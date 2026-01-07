@@ -22,6 +22,15 @@ export default function HomeScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredLanguages, setFilteredLanguages] = useState(languages);
 
+  // Survey time window: 08.01.2026 00:01 CET to 14.01.2026 23:29 CET
+  const isSurveyActive = () => {
+    return true; // TEMP: Always show for testing - will be time-restricted later
+    // const now = new Date();
+    // const startDate = new Date('2026-01-08T00:01:00+01:00'); // CET
+    // const endDate = new Date('2026-01-14T23:29:00+01:00'); // CET
+    // return now >= startDate && now <= endDate;
+  };
+
   const handleSearch = useCallback((query) => {
     setSearchQuery(query);
     if (query.trim() === '') {
@@ -97,6 +106,26 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.bannerBold}>Continuously improving</Text> - New features & content added regularly
           </Text>
         </View>
+
+        {/* Survey Banner - Only visible during survey period */}
+        {isSurveyActive() && (
+          <TouchableOpacity
+            style={styles.surveyBanner}
+            onPress={() => Linking.openURL('https://docs.google.com/forms/d/e/1FAIpQLSeWI4_male0pU0zrKWldLKkygoih6AKAZ1mWA-O4EvsApg8Gg/viewform?usp=header')}
+            accessible={true}
+            accessibilityLabel={t('home.surveyTitle')}
+            accessibilityRole="button"
+          >
+            <View style={styles.surveyContent}>
+              <Text style={styles.surveyIcon}>📋</Text>
+              <View style={styles.surveyTextContainer}>
+                <Text style={styles.surveyTitle}>{t('home.surveyTitle')}</Text>
+                <Text style={styles.surveyDescription}>{t('home.surveyDescription')}</Text>
+              </View>
+              <Text style={styles.surveyArrow}>›</Text>
+            </View>
+          </TouchableOpacity>
+        )}
 
         {/* Quick Access Cards */}
         <View style={styles.quickAccessContainer}>
@@ -684,6 +713,44 @@ const styles = StyleSheet.create({
   bannerBold: {
     fontWeight: '600',
     color: '#1565C0',
+  },
+  surveyBanner: {
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.md,
+    backgroundColor: colors.primaryAlpha,
+    borderRadius: borderRadius.lg,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    overflow: 'hidden',
+    ...shadows.medium,
+  },
+  surveyContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.md,
+  },
+  surveyIcon: {
+    fontSize: 32,
+    marginRight: spacing.md,
+  },
+  surveyTextContainer: {
+    flex: 1,
+  },
+  surveyTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: 4,
+  },
+  surveyDescription: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    lineHeight: 18,
+  },
+  surveyArrow: {
+    fontSize: 28,
+    color: colors.primary,
+    marginLeft: spacing.sm,
   },
   getInvolvedContainer: {
     marginHorizontal: spacing.md,
