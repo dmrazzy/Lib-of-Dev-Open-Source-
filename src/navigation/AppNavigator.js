@@ -31,6 +31,8 @@ import ComponentsScreen from '../screens/ComponentsScreen';
 import AdvancedComponentsScreen from '../screens/AdvancedComponentsScreen';
 import LanguageLearningPathScreen from '../screens/LanguageLearningPathScreen';
 import CertificationsScreen from '../screens/CertificationsScreen';
+import ProjectsScreen from '../screens/ProjectsScreen';
+import ProjectDetailScreen from '../screens/ProjectDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -160,6 +162,16 @@ function BrowseStack() {
         name="AdvancedComponents" 
         component={AdvancedComponentsScreen}
         options={{ title: '🚀 Advanced Components' }}
+      />
+      <Stack.Screen 
+        name="Projects" 
+        component={ProjectsScreen}
+        options={{ title: '🚀 Project Tutorials' }}
+      />
+      <Stack.Screen 
+        name="ProjectDetail" 
+        component={ProjectDetailScreen}
+        options={{ title: '📋 Project Guide' }}
       />
     </Stack.Navigator>
   );
