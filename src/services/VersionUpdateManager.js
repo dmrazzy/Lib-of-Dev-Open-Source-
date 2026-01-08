@@ -20,6 +20,53 @@ export const UpdateStatus = {
 };
 
 /**
+ * Parst einen Versionscode in Datum und Revision
+ * Format: TagMonatJahrRevision (z.B. 080120263)
+ * 
+ * @param {string|number} code - Versionscode
+ * @returns {Object} Geparste Version
+ * @returns {Date} return.date - Datum der Version
+ * @returns {number} return.revision - Revisionsnummer
+ * @returns {number} return.numericCode - Numerischer Code für Rückgabe
+ */
+const parseVersionCode = (code) => {
+  const codeStr = code.toString().padStart(9, '0');
+  const day = parseInt(codeStr.substring(0, 2), 10);
+  const month = parseInt(codeStr.substring(2, 4), 10) - 1; // JS Monate sind 0-basiert (0=Jan, 11=Dez)
+  const year = parseInt(codeStr.substring(4, 8), 10);
+  const revision = parseInt(codeStr.substring(8), 10);
+  
+  return {
+    date: new Date(year, month, day),
+    revision,
+    numericCode: parseInt(code, 10),
+  };
+};
+
+/**
+ * Vergleicht zwei Versionscodes
+ * Vergleicht zuerst das Datum, dann die Revision bei gleichem Datum
+ * 
+ * @param {string|number} code1 - Erster Versionscode
+ * @param {string|number} code2 - Zweiter Versionscode
+ * @returns {number} -1 wenn code1 < code2, 0 wenn gleich, 1 wenn code1 > code2
+ */
+const compareVersionCodes = (code1, code2) => {
+  const v1 = parseVersionCode(code1);
+  const v2 = parseVersionCode(code2);
+  
+  // Vergleiche Datum
+  if (v1.date < v2.date) return -1;
+  if (v1.date > v2.date) return 1;
+  
+  // Bei gleichem Datum: Vergleiche Revision
+  if (v1.revision < v2.revision) return -1;
+  if (v1.revision > v2.revision) return 1;
+  
+  return 0; // Beide Versionen sind identisch
+};
+
+/**
  * Prüft die App-Version gegen den Server
  * 
  * @returns {Promise<Object>} Update-Informationen
@@ -78,24 +125,32 @@ export const checkAppVersion = async () => {
       updateUrliOS,
     } = appData;
     
-    // Versionscode-Vergleich (einfacher numerischer Vergleich)
-    let status = UpdateStatus.UP_TO_DATE;
+    // Parse Versionscodes für korrekte Datumsvergleiche
+    const currentParsed = parseVersionCode(CURRENT_VERSION_CODE);
+    const latestParsed = parseVersionCode(latestCode);
+    const minSupportedParsed = parseVersionCode(minSupportedCode);
     
-    // Konvertiere Versionscodes zu Numbers für Vergleich
-    const currentCodeNum = parseInt(CURRENT_VERSION_CODE, 10);
-    const latestCodeNum = parseInt(latestCode, 10);
-    const minSupportedCodeNum = parseInt(minSupportedCode, 10);
+    // Numerische Codes für Rückgabe (Kompatibilität)
+    const currentCodeNum = currentParsed.numericCode;
+    const latestCodeNum = latestParsed.numericCode;
+    const minSupportedCodeNum = minSupportedParsed.numericCode;
     
     console.log('🔢 Version-Vergleich:');
     console.log('  - Aktuell:', currentCodeNum, `(${formatVersionCode(CURRENT_VERSION_CODE)})`);
     console.log('  - Neueste:', latestCodeNum, `(${formatVersionCode(latestCode.toString())})`);
     console.log('  - Min. unterstützt:', minSupportedCodeNum, `(${formatVersionCode(minSupportedCode.toString())})`);
     
-    if (currentCodeNum < minSupportedCodeNum) {
+    // Versionscode-Vergleich basierend auf Datum + Revision
+    let status = UpdateStatus.UP_TO_DATE;
+    
+    const comparedToMin = compareVersionCodes(CURRENT_VERSION_CODE, minSupportedCode);
+    const comparedToLatest = compareVersionCodes(CURRENT_VERSION_CODE, latestCode);
+    
+    if (comparedToMin < 0) {
       // Version zu alt - Force Update erforderlich
       console.log('⚠️ FORCE UPDATE: Version zu alt');
       status = UpdateStatus.FORCE_UPDATE;
-    } else if (currentCodeNum < latestCodeNum) {
+    } else if (comparedToLatest < 0) {
       // Neuere Version verfügbar - optionales Update
       if (forceUpdate) {
         console.log('⚠️ FORCE UPDATE: Erzwungenes Update');
