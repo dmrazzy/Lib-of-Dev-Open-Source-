@@ -13,74 +13,74 @@ export const languages = {
         items: [
           {
             title: 'Variables',
-            code: `// 3 Arten Variablen zu deklarieren
+            code: `// 3 ways to declare variables
 
 // 1. const - CANNOT be reassigned (recommended!)
-const userName = "Max Mustermann";
+const userName = "Max Smith";
 const PI = 3.14159;
 const isLoggedIn = true;
-// userName = "Neuer Name"; // ❌ Fehler: Assignment to constant variable
+// userName = "New Name"; // ❌ Error: Assignment to constant variable
 
 // 2. let - Can be reassigned
 let counter = 0;
-counter = 1; // ✅ Funktioniert
-counter++; // ✅ Auch okay
+counter = 1; // ✅ Works
+counter++; // ✅ Also okay
 
-let email = "alt@email.com";
-email = "neu@email.com"; // ✅ Kein Problem
+let email = "old@email.com";
+email = "new@email.com"; // ✅ No problem
 
-// 3. var - VERALTET! Nutze es nicht mehr!
-var oldStyle = "legacy"; // ❌ Nicht empfohlen
+// 3. var - DEPRECATED! Don't use it anymore!
+var oldStyle = "legacy"; // ❌ Not recommended
 
-// Wichtig: Block Scope
+// Important: Block Scope
 {
-  const innerVar = "nur hier sichtbar";
-  let alsoInner = "auch nur hier";
+  const innerVar = "only visible here";
+  let alsoInner = "also only here";
 }
 // console.log(innerVar); // ❌ ReferenceError: not defined
 
-// Mehrere Variablen gleichzeitig
-const firstName = "Max", lastName = "Mustermann", age = 25;`,
+// Multiple variables at once
+const firstName = "Max", lastName = "Smith", age = 25;`,
             description: 'Variables are containers for data. JavaScript has 3 types: const (constant), let (changeable), and var (deprecated). Always use const as default - only use let when you really need to reassign.',
-            usage: 'Nutze const für alles was sich nicht ändert (90% der Fälle). let nur wenn du wirklich reassignen musst (z.B. Counter in Loops). var ist veraltet wegen Function Scope statt Block Scope.',
+            usage: 'Use const for everything that doesn\'t change (90% of cases). let only when you really need to reassign (e.g. Counter in Loops). var is deprecated due to Function Scope instead of Block Scope.',
             bestPractices: [
-              '✅ Immer const als Standard verwenden',
-              '✅ Nur let nutzen wenn Reassignment nötig ist',
-              '✅ Beschreibende Namen: userName statt x, totalPrice statt tp',
-              '✅ camelCase für Variablennamen: userLoginTime',
-              '✅ SCREAMING_SNAKE_CASE für Konstanten: MAX_RETRY_COUNT',
-              '❌ var komplett vermeiden (Function Scope Problem)',
-              '❌ Keine Keywords als Namen: let class = "test" ❌',
-              '❌ Keine Umlaute: let Größe - besser: groesse'
+              '✅ Always use const as default',
+              '✅ Only use let when reassignment is necessary',
+              '✅ Descriptive names: userName instead of x, totalPrice instead of tp',
+              '✅ camelCase for variable names: userLoginTime',
+              '✅ SCREAMING_SNAKE_CASE for constants: MAX_RETRY_COUNT',
+              '❌ Avoid var completely (Function Scope Problem)',
+              '❌ No keywords as names: let class = "test" ❌',
+              '❌ No special characters: use ASCII names'
             ],
             commonMistakes: [
-              '❌ const neu zuweisen: const x = 5; x = 10; // TypeError',
-              '❌ Variable ohne Deklaration: name = "Max"; // Globale Variable!',
-              '❌ var in Loops nutzen: Loop-Variable leckt in outer scope',
-              '❌ Variablen nicht initialisieren: let user; console.log(user); // undefined'
+              '❌ Reassigning const: const x = 5; x = 10; // TypeError',
+              '❌ Variable without declaration: name = "Max"; // Global Variable!',
+              '❌ Using var in Loops: Loop-Variable leaks into outer scope',
+              '❌ Not initializing variables: let user; console.log(user); // undefined'
             ],
             performanceTips: [
-              'const und let haben identische Performance',
-              'Nutze const für Semantik, nicht Performance',
-              'Vermeide globale Variablen (langsamer Zugriff)',
-              'Declare Variablen möglichst nah an ihrer Verwendung'
+              'const and let have identical performance',
+              'Use const for semantics, not performance',
+              'Avoid global variables (slower access)',
+              'Declare variables as close to their usage as possible'
             ],
             relatedTopics: ['Scope', 'Hoisting', 'Temporal Dead Zone', 'Memory Management'],
-            challenge: '💪 Erstelle: 1) Eine Konstante für dein Geburtsjahr, 2) Eine Variable für dein aktuelles Alter (ändert sich!), 3) Berechne das Jahr (Geburtsjahr + Alter)'
+            challenge: '💪 Create: 1) A constant for your birth year, 2) A variable for your current age (changes!), 3) Calculate the year (birth year + age)'
           },
           {
             title: 'Data Types',
-            code: `// JavaScript hat 8 Datentypen (7 Primitive + Object)
+            code: `// JavaScript has 8 data types (7 Primitives + Object)
 
 // 1. STRING - Text
-const name = "Max Mustermann";
-const greeting = 'Hallo Welt'; // Single quotes auch okay
-const template = \`Hallo \${name}!\`; // Template literals mit Backticks
-const multiline = \`Zeile 1
-Zeile 2
-Zeile 3\`;
+const name = "Max Smith";
+const greeting = 'Hello World'; // Single quotes also okay
+const template = \`Hello \${name}!\`; // Template literals with backticks
+const multiline = \`Line 1
+Line 2
+Line 3\`;
 
-// 2. NUMBER - Zahlen (Int und Float sind gleich!)
+// 2. NUMBER - Numbers (Int and Float are the same!)
 const age = 25; // Integer
 const price = 19.99; // Float
 const negative = -42;
@@ -88,35 +88,35 @@ const scientific = 1.5e6; // 1500000
 const infinity = Infinity;
 const notANumber = NaN; // Not a Number
 
-// 3. BOOLEAN - true oder false
+// 3. BOOLEAN - true or false
 const isLoggedIn = true;
 const hasAccess = false;
 const isAdult = age >= 18; // true
 
-// 4. UNDEFINED - Variable deklariert aber nicht zugewiesen
+// 4. UNDEFINED - Variable declared but not assigned
 let user; // undefined
 console.log(user); // undefined
 
-// 5. NULL - Absichtlich kein Wert
+// 5. NULL - Intentionally empty value
 const emptyValue = null;
-let result = null; // Explizit leer setzen
+let result = null; // Explicitly set to empty
 
-// 6. SYMBOL - Einzigartiger Identifier (Advanced)
+// 6. SYMBOL - Unique Identifier (Advanced)
 const id = Symbol('id');
 const anotherId = Symbol('id');
-// id !== anotherId // true! Jedes Symbol ist unique
+// id !== anotherId // true! Each Symbol is unique
 
-// 7. BIGINT - Sehr große Zahlen
-const bigNumber = 9007199254740991n; // 'n' am Ende!
+// 7. BIGINT - Very large numbers
+const bigNumber = 9007199254740991n; // 'n' at the end!
 const alsoBig = BigInt(9007199254740991);
 
-// 8. OBJECT - Komplexe Datenstrukturen
+// 8. OBJECT - Complex data structures
 const person = {
   name: "Max",
   age: 25
 };
-const numbers = [1, 2, 3]; // Arrays sind auch Objects!
-const func = function() {}; // Functions auch!
+const numbers = [1, 2, 3]; // Arrays are also Objects!
+const func = function() {}; // Functions too!
 
 // Type Checking
 typeof "text"; // "string"
@@ -127,91 +127,91 @@ typeof null; // "object" ⚠️ JavaScript Bug!
 typeof {}; // "object"
 typeof []; // "object" ⚠️ Use Array.isArray([])`,
             description: 'JavaScript has 8 data types: String (text), Number (numbers), Boolean (true/false), Undefined (not assigned), Null (empty), Symbol (unique IDs), BigInt (large numbers), and Object (complex data). The first 7 are "Primitives" (immutable), Object is complex.',
-            usage: 'Strings für Text, Numbers für Mathematik, Booleans für Bedingungen, Objects für strukturierte Daten. typeof prüft den Typ. Wichtig: JavaScript ist dynamisch typisiert - Variablen können ihren Typ ändern!',
+            usage: 'Strings for text, Numbers for math, Booleans for conditions, Objects for structured data. typeof checks the type. Important: JavaScript is dynamically typed - variables can change their type!',
             bestPractices: [
-              '✅ Template Literals \`${var}\` statt String Concatenation',
-              '✅ === statt == für Type-Safe Vergleiche',
-              '✅ Array.isArray() statt typeof für Arrays',
-              '✅ null für absichtlich leere Werte, undefined für nicht initialisiert',
-              '✅ Number.isNaN() statt isNaN() (letzteres konvertiert)',
-              '❌ Nicht == verwenden (macht Type Coercion)',
-              '❌ typeof null === "object" ist ein Bug - extra checken!'
+              '✅ Template Literals \`${var}\` instead of String Concatenation',
+              '✅ === instead of == for Type-Safe Comparisons',
+              '✅ Array.isArray() instead of typeof for Arrays',
+              '✅ null for intentionally empty values, undefined for not initialized',
+              '✅ Number.isNaN() instead of isNaN() (latter converts)',
+              '❌ Don\'t use == (does Type Coercion)',
+              '❌ typeof null === "object" is a bug - check explicitly!'
             ],
             commonMistakes: [
-              '❌ == statt === nutzen: "5" == 5 ist true (Type Coercion)',
-              '❌ NaN === NaN ist false! Nutze Number.isNaN()',
-              '❌ typeof [] gibt "object" - nutze Array.isArray()',
+              '❌ Using == instead of ===: "5" == 5 is true (Type Coercion)',
+              '❌ NaN === NaN is false! Use Number.isNaN()',
+              '❌ typeof [] returns "object" - use Array.isArray()',
               '❌ String + Number: "5" + 3 = "53" (String Concatenation!)',
-              '❌ undefined vs null verwechseln'
+              '❌ Confusing undefined vs null'
             ],
             performanceTips: [
-              'Primitive Types sind schneller als Objects',
-              'Template Literals sind schnell - nutze sie!',
-              'typeof ist sehr schnell',
-              'parseInt() ist langsamer als Number()'
+              'Primitive Types are faster than Objects',
+              'Template Literals are fast - use them!',
+              'typeof is very fast',
+              'parseInt() is slower than Number()'
             ],
             relatedTopics: ['Type Coercion', 'Type Conversion', 'Truthy/Falsy', 'NaN'],
-            challenge: '💪 Erstelle Variablen für: Name (string), Alter (number), isStudent (boolean). Nutze typeof um jeden Typ zu prüfen und console.log das Ergebnis!'
+            challenge: '💪 Create variables for: Name (string), Age (number), isStudent (boolean). Use typeof to check each type and console.log the result!'
           },
           {
-            title: 'Functions - Funktionen',
-            code: `// JavaScript hat mehrere Wege Funktionen zu definieren
+            title: 'Functions',
+            code: `// JavaScript has multiple ways to define functions
 
-// 1. FUNCTION DECLARATION - Klassische Funktion
+// 1. FUNCTION DECLARATION - Classic function
 function greet(name) {
-  return \`Hallo, \${name}!\`;
+  return \`Hello, \${name}!\`;
 }
-console.log(greet("Max")); // "Hallo, Max!"
+console.log(greet("Max")); // "Hello, Max!"
 
 // Hoisting: Function declarations can be called BEFORE their definition
-sayHi(); // ✅ Funktioniert!
+sayHi(); // ✅ Works!
 function sayHi() {
   console.log("Hi!");
 }
 
-// 2. FUNCTION EXPRESSION - Funktion als Wert
+// 2. FUNCTION EXPRESSION - Function as value
 const greetFunc = function(name) {
-  return \`Hallo, \${name}!\`;
+  return \`Hello, \${name}!\`;
 };
-// sayHi2(); // ❌ Fehler: Cannot access before initialization
+// sayHi2(); // ❌ Error: Cannot access before initialization
 const sayHi2 = function() {
   console.log("Hi!");
 };
 
-// 3. ARROW FUNCTIONS - Moderne Syntax (ES6+)
+// 3. ARROW FUNCTIONS - Modern syntax (ES6+)
 const greetArrow = (name) => {
-  return \`Hallo, \${name}!\`;
+  return \`Hello, \${name}!\`;
 };
 
-// Arrow Function - Verkürzt (wenn nur 1 Expression)
-const greetShort = name => \`Hallo, \${name}!\`; // Implicit return
-const double = x => x * 2; // Keine Klammern bei 1 Parameter
-const add = (a, b) => a + b; // Klammern bei mehreren Parametern
+// Arrow Function - Shorthand (when only 1 expression)
+const greetShort = name => \`Hello, \${name}!\`; // Implicit return
+const double = x => x * 2; // No parentheses with 1 parameter
+const add = (a, b) => a + b; // Parentheses with multiple parameters
 
-// Arrow Functions ohne Parameter
+// Arrow Functions without parameters
 const getTime = () => new Date().toLocaleTimeString();
 
 // 4. IIFE - Immediately Invoked Function Expression
 (function() {
-  console.log("Ich werde sofort ausgeführt!");
+  console.log("I'm executed immediately!");
 })();
 
-// 5. DEFAULT PARAMETERS - Standardwerte
-function greetWithDefault(name = "Gast", age = 18) {
-  return \`Hallo \${name}, du bist \${age} Jahre alt\`;
+// 5. DEFAULT PARAMETERS - Default values
+function greetWithDefault(name = "Guest", age = 18) {
+  return \`Hello \${name}, you are \${age} years old\`;
 }
-greetWithDefault(); // "Hallo Gast, du bist 18 Jahre alt"
-greetWithDefault("Max"); // "Hallo Max, du bist 18 Jahre alt"
-greetWithDefault("Max", 25); // "Hallo Max, du bist 25 Jahre alt"
+greetWithDefault(); // "Hello Guest, you are 18 years old"
+greetWithDefault("Max"); // "Hello Max, you are 18 years old"
+greetWithDefault("Max", 25); // "Hello Max, you are 25 years old"
 
-// 6. REST PARAMETERS - Beliebig viele Argumente
+// 6. REST PARAMETERS - Unlimited arguments
 function sum(...numbers) {
   return numbers.reduce((total, num) => total + num, 0);
 }
 sum(1, 2, 3); // 6
 sum(1, 2, 3, 4, 5); // 15
 
-// 7. CALLBACK FUNCTIONS - Funktionen als Argumente
+// 7. CALLBACK FUNCTIONS - Functions as arguments
 function processUser(name, callback) {
   console.log(\`Processing \${name}...\`);
   callback(name);
@@ -226,24 +226,24 @@ function multiplier(factor) {
     return number * factor;
   };
 }
-const double = multiplier(2);
+const doubleFunc = multiplier(2);
 const triple = multiplier(3);
-console.log(double(5)); // 10
+console.log(doubleFunc(5)); // 10
 console.log(triple(5)); // 15
 
-// 9. ASYNC FUNCTIONS - Für asynchronen Code
+// 9. ASYNC FUNCTIONS - For asynchronous code
 async function fetchData() {
   try {
     const response = await fetch('https://api.example.com/data');
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Fehler:', error);
+    console.error('Error:', error);
     throw error;
   }
 }
 
-// 10. GENERATOR FUNCTIONS - Pausierbare Funktionen
+// 10. GENERATOR FUNCTIONS - Pausable functions
 function* numberGenerator() {
   yield 1;
   yield 2;
@@ -253,47 +253,47 @@ const gen = numberGenerator();
 console.log(gen.next().value); // 1
 console.log(gen.next().value); // 2`,
             description: 'Functions are reusable code blocks. There are many types: Function Declarations (classic), Arrow Functions (modern), Async Functions (for Promises), Callbacks (as arguments), Higher Order Functions (return functions). Arrow Functions have no own "this".',
-            usage: 'Function Declarations für Methoden mit "this". Arrow Functions für Callbacks und wenn du lexical "this" brauchst. Async Functions für API Calls. Default Parameters für optionale Argumente. Rest Parameters für variable Anzahl.',
+            usage: 'Function Declarations for methods with "this". Arrow Functions for callbacks and when you need lexical "this". Async Functions for API calls. Default Parameters for optional arguments. Rest Parameters for variable number of args.',
             bestPractices: [
-              '✅ Arrow Functions für Callbacks: array.map(x => x * 2)',
-              '✅ Function Declarations für Object Methods (brauchen this)',
-              '✅ Kurze Arrow Functions ohne {} wenn nur 1 Expression',
-              '✅ Default Parameters statt || Operator',
-              '✅ Eine Funktion = Eine Aufgabe (Single Responsibility)',
-              '✅ Beschreibende Namen: getUserById() statt get()',
+              '✅ Arrow Functions for Callbacks: array.map(x => x * 2)',
+              '✅ Function Declarations for Object Methods (need this)',
+              '✅ Short Arrow Functions without {} when only 1 expression',
+              '✅ Default Parameters instead of || operator',
+              '✅ One Function = One Task (Single Responsibility)',
+              '✅ Descriptive names: getUserById() instead of get()',
               '✅ Try-Catch in async Functions',
-              '✅ Pure Functions bevorzugen (keine Side Effects)',
-              '❌ Nicht Arrow Functions als Object Methods (verlieren this)',
-              '❌ Funktionen nicht in Loops erstellen (Performance)',
-              '❌ Zu viele Parameter (max 3, sonst Object nutzen)'
+              '✅ Prefer Pure Functions (no Side Effects)',
+              '❌ Don\'t use Arrow Functions as Object Methods (lose this)',
+              '❌ Don\'t create Functions in Loops (Performance)',
+              '❌ Too many Parameters (max 3, otherwise use Object)'
             ],
             commonMistakes: [
-              '❌ Return vergessen: function add(a,b) { a + b } // undefined!',
-              '❌ Arrow Function als Method: obj = { func: () => this.x } // this ist falsch',
-              '❌ Async ohne await: async function() { fetch(url); } // Promise nicht abwarten',
-              '❌ Callback Hell: Zu viele verschachtelte Callbacks',
-              '❌ this in Arrow Functions falsch verstehen'
+              '❌ Forgetting return: function add(a,b) { a + b } // undefined!',
+              '❌ Arrow Function as Method: obj = { func: () => this.x } // this is wrong',
+              '❌ Async without await: async function() { fetch(url); } // Promise not awaited',
+              '❌ Callback Hell: Too many nested callbacks',
+              '❌ Misunderstanding this in Arrow Functions'
             ],
             performanceTips: [
-              'Arrow Functions sind minimal schneller als normale',
-              'Memoization für teure Berechnungen nutzen',
-              'Funktionen außerhalb von Loops definieren',
-              'Pure Functions sind leichter zu optimieren',
+              'Arrow Functions are marginally faster than regular ones',
+              'Use Memoization for expensive calculations',
+              'Define Functions outside of Loops',
+              'Pure Functions are easier to optimize',
               'Avoid creating functions in render methods (React)'
             ],
             relatedTopics: ['Closures', 'This Binding', 'Promises', 'Callbacks', 'Higher Order Functions', 'Pure Functions'],
-            challenge: '💪 Erstelle: 1) Eine Funktion die 2 Zahlen multipliziert, 2) Als Arrow Function, 3) Mit Default Parameter (falls keine Zahl = 1), 4) Teste mit verschiedenen Eingaben!'
+            challenge: '💪 Create: 1) A function that multiplies 2 numbers, 2) As Arrow Function, 3) With Default Parameter (if no number = 1), 4) Test with different inputs!'
           },
           {
             title: 'Operators - Operatoren',
             code: `// ARITHMETISCHE OPERATOREN
 let x = 10, y = 3;
 console.log(x + y); // 13 Addition
-console.log(x - y); // 7 Subtraktion
-console.log(x * y); // 30 Multiplikation
+console.log(x - y); // 7 Subtraction
+console.log(x * y); // 30 Multiplication
 console.log(x / y); // 3.333... Division
-console.log(x % y); // 1 Modulo (Rest)
-console.log(x ** y); // 1000 Potenz (10³)
+console.log(x % y); // 1 Modulo (Remainder)
+console.log(x ** y); // 1000 Exponentiation (10³)
 
 // INCREMENT / DECREMENT
 let count = 5;
@@ -302,40 +302,40 @@ count++; // 6 Post-increment
 count--; // 6 Post-decrement
 --count; // 5 Pre-decrement
 
-// VERGLEICHSOPERATOREN
-// == vs === !!! WICHTIG !!!
+// COMPARISON OPERATORS
+// == vs === !!! IMPORTANT !!!
 console.log(5 == "5"); // true ⚠️ Type Coercion!
 console.log(5 === "5"); // false ✅ Strict equality
 console.log(5 != "5"); // false
-console.log(5 !== "5"); // true ✅ Immer strict nutzen!
+console.log(5 !== "5"); // true ✅ Always use strict!
 
 console.log(10 > 5); // true
 console.log(10 < 5); // false
 console.log(10 >= 10); // true
 console.log(10 <= 5); // false
 
-// LOGISCHE OPERATOREN
+// LOGICAL OPERATORS
 const isAdult = true;
 const hasID = false;
 
-console.log(isAdult && hasID); // false (AND - beide müssen true sein)
-console.log(isAdult || hasID); // true (OR - einer muss true sein)
-console.log(!isAdult); // false (NOT - invertiert)
+console.log(isAdult && hasID); // false (AND - both must be true)
+console.log(isAdult || hasID); // true (OR - one must be true)
+console.log(!isAdult); // false (NOT - inverts)
 
 // SHORT CIRCUIT EVALUATION
 const user = null;
-const name = user && user.name; // null (stoppt bei null)
-const defaultName = name || "Gast"; // "Gast"
+const name = user && user.name; // null (stops at null)
+const defaultName = name || "Guest"; // "Guest"
 
 // NULLISH COALESCING (??)
 const count = 0;
-const value1 = count || 10; // 10 ⚠️ 0 ist falsy
-const value2 = count ?? 10; // 0 ✅ Nur bei null/undefined
+const value1 = count || 10; // 10 ⚠️ 0 is falsy
+const value2 = count ?? 10; // 0 ✅ Only null/undefined
 
 // OPTIONAL CHAINING (?.)
 const person = { address: { city: "Berlin" } };
 console.log(person.address?.city); // "Berlin"
-console.log(person.phone?.number); // undefined (kein Error!)
+console.log(person.phone?.number); // undefined (no Error!)
 
 // TERNARY OPERATOR (? :)
 const age = 20;
@@ -361,44 +361,44 @@ console.log(typeof 42); // "number"
 console.log(typeof "text"); // "string"
 console.log(typeof true); // "boolean"`,
             description: 'Operators perform operations on values. Arithmetic (+, -, *, /, %), Comparison (===, !==, <, >), Logical (&&, ||, !), Assignment (=, +=). Important: Use === instead of == for type-safe comparisons! Modern operators: ?? (Nullish Coalescing), ?. (Optional Chaining).',
-            usage: '=== für Vergleiche (nicht ==). && für "UND", || für "ODER". ?? statt || wenn 0 oder "" valide sind. ?. für sichere Property-Zugriffe. Ternary ?: für kurze if-else. Spread ... zum Kopieren/Mergen.',
+            usage: '=== for comparisons (not ==). && for "AND", || for "OR". ?? instead of || when 0 or "" are valid. ?. for safe property access. Ternary ?: for short if-else. Spread ... for copying/merging.',
             bestPractices: [
-              '✅ Immer === und !== nutzen (strict equality)',
-              '✅ ?? statt || wenn 0/"" valide Werte sind',
-              '✅ ?. für Optional Chaining (verhindert Errors)',
-              '✅ Ternary ?: für kurze Bedingungen',
-              '✅ Spread ... zum immutable Kopieren',
-              '❌ == und != vermeiden (Type Coercion)',
-              '❌ Nicht zu viele verschachtelte Ternaries'
+              '✅ Always use === and !== (strict equality)',
+              '✅ ?? instead of || when 0/"" are valid values',
+              '✅ ?. for Optional Chaining (prevents Errors)',
+              '✅ Ternary ?: for short conditions',
+              '✅ Spread ... for immutable copying',
+              '❌ Avoid == and != (Type Coercion)',
+              '❌ Not too many nested ternaries'
             ],
             commonMistakes: [
-              '❌ == statt ===: "5" == 5 ist true (Type Coercion)',
-              '❌ = statt ===: if (x = 5) setzt x statt zu vergleichen!',
-              '❌ || statt ??: value || default funktioniert nicht bei 0',
-              '❌ Vergessen dass && und || short-circuit evaluieren'
+              '❌ == instead of ===: "5" == 5 is true (Type Coercion)',
+              '❌ = instead of ===: if (x = 5) assigns x instead of comparing!',
+              '❌ || instead of ??: value || default doesn\'t work with 0',
+              '❌ Forgetting that && and || short-circuit evaluate'
             ],
             relatedTopics: ['Type Coercion', 'Truthy/Falsy', 'Short Circuit', 'Operator Precedence'],
-            challenge: '💪 Schreibe: 1) Check ob Zahl zwischen 10 und 20 liegt (&&), 2) Default Wert mit ??, 3) Ternary für "Even" oder "Odd"'
+            challenge: '💪 Write: 1) Check if number is between 10 and 20 (&&), 2) Default value with ??, 3) Ternary for "Even" or "Odd"'
           },
           {
-            title: 'Conditionals - Bedingungen',
+            title: 'Conditionals',
             code: `// IF - ELSE IF - ELSE
 const age = 20;
 
 if (age < 18) {
-  console.log("Minderjährig");
+  console.log("Minor");
 } else if (age < 65) {
-  console.log("Erwachsen");
+  console.log("Adult");
 } else {
   console.log("Senior");
 }
 
-// Nur IF
+// Only IF
 if (age >= 18) {
-  console.log("Volljährig!");
+  console.log("Of legal age!");
 }
 
-// TERNARY OPERATOR - Kurze Alternative
+// TERNARY OPERATOR - Short alternative
 const status = age >= 18 ? "Adult" : "Minor";
 console.log(status);
 
@@ -407,22 +407,22 @@ const day = "Monday";
 
 switch (day) {
   case "Monday":
-    console.log("Start der Woche");
+    console.log("Start of the week");
     break;
   case "Friday":
-    console.log("Fast Wochenende!");
+    console.log("Almost weekend!");
     break;
   case "Saturday":
   case "Sunday":
-    console.log("Wochenende! 🎉");
+    console.log("Weekend! 🎉");
     break;
   default:
-    console.log("Normaler Tag");
+    console.log("Regular day");
 }
 
-// TRUTHY und FALSY Values
+// TRUTHY and FALSY Values
 // Falsy: false, 0, "", null, undefined, NaN
-// Alles andere ist Truthy!
+// Everything else is Truthy!
 
 const value = 0;
 if (value) {
@@ -431,23 +431,23 @@ if (value) {
 
 const name = "Max";
 if (name) {
-  console.log("Name existiert"); // Will be executed
+  console.log("Name exists"); // Will be executed
 }
 
 // GUARD CLAUSES - Early Return Pattern
 function processUser(user) {
-  // Statt:
+  // Instead of:
   // if (user) {
   //   if (user.isActive) {
-  //     // Logik
+  //     // Logic
   //   }
   // }
   
-  // Besser: Early Returns
+  // Better: Early Returns
   if (!user) return;
   if (!user.isActive) return;
   
-  // Hauptlogik hier
+  // Main logic here
   console.log(\`Processing \${user.name}\`);
 }
 
@@ -455,7 +455,7 @@ function processUser(user) {
 const isWeekend = day === "Saturday" || day === "Sunday";
 const canVote = age >= 18 && hasID;
 
-// NULLISH COALESCING mit IF
+// NULLISH COALESCING with IF
 const username = user?.name ?? "Anonymous";
 
 // OPTIONAL CHAINING in Conditions
@@ -463,39 +463,39 @@ if (user?.address?.city === "Berlin") {
   console.log("Berliner!");
 }`,
             description: 'Conditionals control program flow. if/else for normal checks, ternary (? :) for short conditions, switch for many cases. Important: Know truthy/falsy values! Falsy: false, 0, "", null, undefined, NaN. Guard clauses (early returns) make code more readable.',
-            usage: 'if/else für komplexe Logik. Ternary für kurze Zuweisungen. switch wenn viele Fälle. Guard Clauses (early return) vermeiden Verschachtelung. Optional Chaining (?.) für sichere Property-Checks.',
+            usage: 'if/else for complex logic. Ternary for short assignments. switch when many cases. Guard Clauses (early return) avoid nesting. Optional Chaining (?.) for safe property checks.',
             bestPractices: [
-              '✅ Guard Clauses (early returns) statt tiefer Verschachtelung',
-              '✅ === in Bedingungen (strict)',
-              '✅ Ternary nur für kurze, lesbare Fälle',
-              '✅ switch mit break (außer bei fall-through)',
-              '✅ default case in switch immer definieren',
-              '❌ Zu viele verschachtelte if/else',
-              '❌ if (x === true) statt if (x)',
-              '❌ Ternary bei langer/komplexer Logik'
+              '✅ Guard Clauses (early returns) instead of deep nesting',
+              '✅ === in conditions (strict)',
+              '✅ Ternary only for short, readable cases',
+              '✅ switch with break (except for fall-through)',
+              '✅ Always define default case in switch',
+              '❌ Too many nested if/else',
+              '❌ if (x === true) instead of if (x)',
+              '❌ Ternary with long/complex logic'
             ],
             commonMistakes: [
-              '❌ if (x = 5) setzt Wert statt zu vergleichen!',
-              '❌ switch ohne break - fällt durch!',
-              '❌ Truthy/Falsy nicht verstehen: if (0) ist false',
-              '❌ == statt === in Bedingungen'
+              '❌ if (x = 5) assigns value instead of comparing!',
+              '❌ switch without break - falls through!',
+              '❌ Not understanding Truthy/Falsy: if (0) is false',
+              '❌ == instead of === in conditions'
             ],
             relatedTopics: ['Truthy/Falsy', 'Operators', 'Optional Chaining', 'Short Circuit'],
-            challenge: '💪 Schreibe: 1) Function mit Alters-Check (Kind/Jugend/Erwachsen/Senior), 2) Nutze Guard Clauses, 3) Switch für Wochentag'
+            challenge: '💪 Write: 1) Function with age check (Child/Teen/Adult/Senior), 2) Use Guard Clauses, 3) Switch for weekday'
           },
           {
-            title: 'Loops - Schleifen',
-            code: `// FOR LOOP - Klassisch
+            title: 'Loops',
+            code: `// FOR LOOP - Classic
 for (let i = 0; i < 5; i++) {
   console.log(i); // 0, 1, 2, 3, 4
 }
 
-// Rückwärts
+// Backwards
 for (let i = 10; i >= 0; i--) {
   console.log(i); // 10, 9, 8...0
 }
 
-// Schritt 2
+// Step 2
 for (let i = 0; i < 10; i += 2) {
   console.log(i); // 0, 2, 4, 6, 8
 }
@@ -507,14 +507,14 @@ while (count < 5) {
   count++;
 }
 
-// DO-WHILE - Läuft mindestens 1x
+// DO-WHILE - Runs at least once
 let num = 10;
 do {
   console.log(num); // Executed 1x
   num++;
 } while (num < 5);
 
-// FOR...OF - Über Arrays/Strings iterieren
+// FOR...OF - Iterate over Arrays/Strings
 const numbers = [1, 2, 3, 4, 5];
 for (const num of numbers) {
   console.log(num); // 1, 2, 3, 4, 5
@@ -525,47 +525,47 @@ for (const char of name) {
   console.log(char); // M, a, x
 }
 
-// FOR...IN - Über Object Keys iterieren
+// FOR...IN - Iterate over Object Keys
 const person = { name: "Max", age: 25, city: "Berlin" };
 for (const key in person) {
   console.log(\`\${key}: \${person[key]}\`);
   // name: Max, age: 25, city: Berlin
 }
 
-// BREAK - Schleife abbrechen
+// BREAK - Exit loop
 for (let i = 0; i < 10; i++) {
   if (i === 5) break;
   console.log(i); // 0, 1, 2, 3, 4
 }
 
-// CONTINUE - Iteration überspringen
+// CONTINUE - Skip iteration
 for (let i = 0; i < 5; i++) {
   if (i === 2) continue;
-  console.log(i); // 0, 1, 3, 4 (2 übersprungen)
+  console.log(i); // 0, 1, 3, 4 (2 skipped)
 }
 
-// ARRAY METHODS - Moderne Alternative zu Loops! ✅
+// ARRAY METHODS - Modern alternative to loops! ✅
 const arr = [1, 2, 3, 4, 5];
 
-// forEach - Über jedes Element
+// forEach - Over each element
 arr.forEach(num => console.log(num));
 
-// map - Transformieren
+// map - Transform
 const doubled = arr.map(num => num * 2); // [2, 4, 6, 8, 10]
 
-// filter - Filtern
+// filter - Filter
 const evens = arr.filter(num => num % 2 === 0); // [2, 4]
 
-// reduce - Aggregieren
+// reduce - Aggregate
 const sum = arr.reduce((total, num) => total + num, 0); // 15
 
-// find - Erstes Match
+// find - First match
 const found = arr.find(num => num > 3); // 4
 
-// some - Mindestens eins true
+// some - At least one true
 const hasEven = arr.some(num => num % 2 === 0); // true
 
-// every - Alle true
+// every - All true
 const allPositive = arr.every(num => num > 0); // true
 
 // NESTED LOOPS
@@ -575,43 +575,43 @@ for (let i = 1; i <= 3; i++) {
   }
 }
 
-// INFINITE LOOP - VORSICHT!
-// while (true) { } // ❌ Blockiert Browser!
+// INFINITE LOOP - CAUTION!
+// while (true) { } // ❌ Blocks browser!
 
-// Mit Break ist okay:
+// With break is okay:
 let counter = 0;
 while (true) {
   console.log(counter);
   counter++;
-  if (counter >= 5) break; // Wichtig!
+  if (counter >= 5) break; // Important!
 }`,
             description: 'Loops repeat code. for for fixed count, while for condition, for...of for Arrays/Strings, for...in for Objects. Modern alternative: Array methods (map, filter, forEach)! break ends loop, continue skips iteration. for...of is better than for...in for arrays.',
-            usage: 'for für klassische Counter-Loops. for...of für Arrays (besser als for i). while für unbekannte Anzahl. Array-Methoden (map, filter) sind moderner und lesbarer! break zum Abbrechen, continue zum Überspringen.',
+            usage: 'for for classic counter loops. for...of for arrays (better than for i). while for unknown count. Array methods (map, filter) are more modern and readable! break to exit, continue to skip.',
             bestPractices: [
-              '✅ Array-Methoden (map, filter) statt for-Loops',
-              '✅ for...of für Arrays, for...in für Objects',
-              '✅ const in for...of wenn nicht reassigned',
-              '✅ break um infinite loops zu vermeiden',
-              '✅ Aussagekräftige Loop-Variablen (nicht nur i)',
-              '❌ for...in für Arrays (unsortiert, inkl. Prototype)',
-              '❌ Modifiziere Array während Iteration',
-              '❌ Infinite Loops ohne break'
+              '✅ Array methods (map, filter) instead of for loops',
+              '✅ for...of for arrays, for...in for objects',
+              '✅ const in for...of when not reassigned',
+              '✅ break to avoid infinite loops',
+              '✅ Descriptive loop variables (not just i)',
+              '❌ for...in for arrays (unsorted, includes prototype)',
+              '❌ Modify array during iteration',
+              '❌ Infinite loops without break'
             ],
             commonMistakes: [
-              '❌ for...in für Arrays: falsche Reihenfolge möglich',
-              '❌ Off-by-one: i <= arr.length statt i < arr.length',
-              '❌ Infinite while: while(true) ohne break',
-              '❌ forEach mit return: Stoppt nicht die Loop!',
-              '❌ map ohne return: undefined Array'
+              '❌ for...in for arrays: wrong order possible',
+              '❌ Off-by-one: i <= arr.length instead of i < arr.length',
+              '❌ Infinite while: while(true) without break',
+              '❌ forEach with return: Doesn\'t stop the loop!',
+              '❌ map without return: undefined array'
             ],
             performanceTips: [
-              'for ist schnellste Loop (aber weniger lesbar)',
-              'Array-Methoden sind gut optimiert',
+              'for is fastest loop (but less readable)',
+              'Array methods are well optimized',
               'Cache array.length: for(let i=0, len=arr.length; i<len; i++)',
-              'Vermeide Nested Loops wo möglich (O(n²))'
+              'Avoid nested loops where possible (O(n²))'
             ],
             relatedTopics: ['Arrays', 'Iterators', 'Array Methods', 'Break/Continue'],
-            challenge: '💪 Erstelle: 1) Loop für 1-10, überspringt 5, 2) for...of über Namen-Array, 3) Nutze map um Zahlen zu verdoppeln'
+            challenge: '💪 Create: 1) Loop for 1-10, skips 5, 2) for...of over names array, 3) Use map to double numbers'
           }
         ]
       },
@@ -619,113 +619,113 @@ while (true) {
         name: 'Arrays & Iteration',
         items: [
           {
-            title: 'Arrays - Die Basics',
-            code: `// ARRAY ERSTELLEN
+            title: 'Arrays - The Basics',
+            code: `// CREATE ARRAY
 const numbers = [1, 2, 3, 4, 5];
 const mixed = [1, "text", true, null, { key: "value" }];
 const empty = [];
 
-// Mit Constructor (nicht empfohlen)
+// With Constructor (not recommended)
 const arr = new Array(5); // [empty × 5]
 const arr2 = Array.of(1, 2, 3); // [1, 2, 3]
 
-// Array aus String
+// Array from String
 const chars = Array.from("Hello"); // ["H", "e", "l", "l", "o"]
 
-// ZUGRIFF
+// ACCESS
 const fruits = ["Apple", "Banana", "Orange"];
 console.log(fruits[0]); // "Apple"
 console.log(fruits[2]); // "Orange"
-console.log(fruits[fruits.length - 1]); // "Orange" (letztes Element)
+console.log(fruits[fruits.length - 1]); // "Orange" (last element)
 
-// LÄNGE
+// LENGTH
 console.log(fruits.length); // 3
 
-// HINZUFÜGEN
-fruits.push("Grape"); // Am Ende hinzufügen
+// ADD
+fruits.push("Grape"); // Add at end
 console.log(fruits); // ["Apple", "Banana", "Orange", "Grape"]
 
-fruits.unshift("Mango"); // Am Anfang hinzufügen
+fruits.unshift("Mango"); // Add at start
 console.log(fruits); // ["Mango", "Apple", "Banana", "Orange", "Grape"]
 
-// ENTFERNEN
-const last = fruits.pop(); // Letztes entfernen
+// REMOVE
+const last = fruits.pop(); // Remove last
 console.log(last); // "Grape"
 console.log(fruits); // ["Mango", "Apple", "Banana", "Orange"]
 
-const first = fruits.shift(); // Erstes entfernen
+const first = fruits.shift(); // Remove first
 console.log(first); // "Mango"
 
-// ELEMENT ERSETZEN
+// REPLACE ELEMENT
 fruits[1] = "Strawberry";
 console.log(fruits); // ["Apple", "Strawberry", "Orange"]
 
-// PRÜFEN
+// CHECK
 console.log(fruits.includes("Apple")); // true
 console.log(fruits.indexOf("Orange")); // 2
-console.log(fruits.indexOf("Kiwi")); // -1 (nicht gefunden)
+console.log(fruits.indexOf("Kiwi")); // -1 (not found)
 
-// SUCHEN
+// SEARCH
 const nums = [5, 12, 8, 130, 44];
 const found = nums.find(n => n > 10); // 12
 const index = nums.findIndex(n => n > 10); // 1
 
-// KOPIEREN (Shallow Copy)
+// COPY (Shallow Copy)
 const copy = [...fruits]; // Spread
-const copy2 = fruits.slice(); // slice ohne Argumente
+const copy2 = fruits.slice(); // slice without arguments
 const copy3 = Array.from(fruits);`,
             description: 'Arrays are lists of values. Access via index (0-based). Length with .length. Add: push (end), unshift (start). Remove: pop (end), shift (start). Important: Arrays are objects, make copies with [...arr] or slice()!',
-            usage: 'push/pop für Stack (LIFO). shift/unshift für Queue (FIFO). includes() zum Prüfen. indexOf() für Position. [...arr] für Shallow Copy. Nie arr[arr.length] = x nutzen, besser push().',
+            usage: 'push/pop for Stack (LIFO). shift/unshift for Queue (FIFO). includes() to check. indexOf() for position. [...arr] for Shallow Copy. Never use arr[arr.length] = x, use push() instead.',
             bestPractices: [
-              '✅ [...arr] oder slice() für Kopien (immutable)',
-              '✅ push() statt arr[arr.length] = x',
-              '✅ includes() statt indexOf() !== -1',
-              '✅ at(-1) für letztes Element (modern)',
-              '✅ Array.from() oder [...iterable] für Conversions',
-              '❌ new Array(length) - macht holes',
-              '❌ arr.length = 0 zum Leeren (confusing)'
+              '✅ [...arr] or slice() for copies (immutable)',
+              '✅ push() instead of arr[arr.length] = x',
+              '✅ includes() instead of indexOf() !== -1',
+              '✅ at(-1) for last element (modern)',
+              '✅ Array.from() or [...iterable] for conversions',
+              '❌ new Array(length) - creates holes',
+              '❌ arr.length = 0 to clear (confusing)'
             ],
             commonMistakes: [
-              '❌ Out-of-bounds: arr[100] gibt undefined (kein Error!)',
-              '❌ arr.length verändert Array: arr.length = 2 löscht Rest',
-              '❌ Shallow Copy: const copy = arr; // Keine Kopie!',
-              '❌ arr[-1] funktioniert nicht (wie Python)'
+              '❌ Out-of-bounds: arr[100] returns undefined (no Error!)',
+              '❌ arr.length modifies array: arr.length = 2 deletes rest',
+              '❌ Shallow Copy: const copy = arr; // Not a copy!',
+              '❌ arr[-1] doesn\'t work (like Python)'
             ],
             relatedTopics: ['Array Methods', 'Spread Operator', 'Destructuring', 'Immutability'],
-            challenge: '💪 Erstelle Array mit 5 Früchten. Füge 2 hinzu (Anfang+Ende). Entferne mittleres Element. Prüfe ob "Apple" drin ist.'
+            challenge: '💪 Create array with 5 fruits. Add 2 (start+end). Remove middle element. Check if "Apple" is in it.'
           },
           {
             title: 'Array Methods - Map, Filter, Reduce',
             code: `const numbers = [1, 2, 3, 4, 5];
 
-// MAP - Transformiert jedes Element, returnt neues Array
+// MAP - Transforms each element, returns new array
 const doubled = numbers.map(num => num * 2);
 console.log(doubled); // [2, 4, 6, 8, 10]
 
 const squared = numbers.map(num => num ** 2);
 console.log(squared); // [1, 4, 9, 16, 25]
 
-// Mit Index
+// With Index
 const withIndex = numbers.map((num, i) => \`\${i}: \${num}\`);
 console.log(withIndex); // ["0: 1", "1: 2", ...]
 
-// FILTER - Filtert Elements, returnt neues Array
+// FILTER - Filters elements, returns new array
 const evens = numbers.filter(num => num % 2 === 0);
 console.log(evens); // [2, 4]
 
 const greaterThan2 = numbers.filter(num => num > 2);
 console.log(greaterThan2); // [3, 4, 5]
 
-// REDUCE - Reduziert zu einem Wert
+// REDUCE - Reduces to a single value
 const sum = numbers.reduce((total, num) => {
   return total + num;
-}, 0); // 0 ist Startwert
+}, 0); // 0 is initial value
 console.log(sum); // 15
 
 const product = numbers.reduce((acc, num) => acc * num, 1);
 console.log(product); // 120
 
-// Objekt bauen
+// Build object
 const users = ["Max", "Anna", "Tom"];
 const userObj = users.reduce((obj, name, i) => {
   obj[i] = name;
@@ -733,78 +733,78 @@ const userObj = users.reduce((obj, name, i) => {
 }, {});
 console.log(userObj); // {0: "Max", 1: "Anna", 2: "Tom"}
 
-// CHAINING - Methoden verketten!
+// CHAINING - Chain methods!
 const result = numbers
   .filter(n => n % 2 === 0) // [2, 4]
   .map(n => n * 3) // [6, 12]
   .reduce((sum, n) => sum + n, 0); // 18
 
-// FOREACH - Über jedes Element (kein return!)
+// FOREACH - Over each element (no return!)
 numbers.forEach((num, i) => {
   console.log(\`Index \${i}: \${num}\`);
 });
 
-// FIND - Erstes Element das Bedingung erfüllt
+// FIND - First element matching condition
 const found = numbers.find(n => n > 3); // 4
 const notFound = numbers.find(n => n > 10); // undefined
 
-// FINDINDEX - Index des ersten Matches
+// FINDINDEX - Index of first match
 const index = numbers.findIndex(n => n > 3); // 3
 const notFoundIndex = numbers.findIndex(n => n > 10); // -1
 
-// SOME - Mindestens ein Element erfüllt Bedingung
+// SOME - At least one element matches condition
 const hasEven = numbers.some(n => n % 2 === 0); // true
 const hasNegative = numbers.some(n => n < 0); // false
 
-// EVERY - Alle Elemente erfüllen Bedingung
+// EVERY - All elements match condition
 const allPositive = numbers.every(n => n > 0); // true
 const allEven = numbers.every(n => n % 2 === 0); // false
 
-// SORT - Sortieren (⚠️ verändert Original!)
+// SORT - Sort (⚠️ mutates original!)
 const nums = [3, 1, 4, 1, 5, 9, 2];
-nums.sort((a, b) => a - b); // Aufsteigend
+nums.sort((a, b) => a - b); // Ascending
 console.log(nums); // [1, 1, 2, 3, 4, 5, 9]
 
 // Immutable sort
-const sorted = [...nums].sort((a, b) => b - a); // Absteigend
+const sorted = [...nums].sort((a, b) => b - a); // Descending
 
-// REVERSE - Umkehren (⚠️ verändert Original!)
+// REVERSE - Reverse (⚠️ mutates original!)
 nums.reverse();
 
 // Immutable reverse
 const reversed = [...nums].reverse();`,
             description: 'Array methods are the heart of modern JavaScript development! map() transforms, filter() filters, reduce() aggregates. forEach() iterates without return. find() searches first match. some()/every() check conditions. Important: map/filter/reduce return NEW arrays (immutable)!',
-            usage: 'map() für Transformationen (Daten ändern). filter() für Subsets (Elemente entfernen). reduce() für Aggregationen (sum, product, objects bauen). Chaining kombiniert mehrere Operations. find() statt filter()[0]. some()/every() für Boolean-Checks.',
+            usage: 'map() for transformations (change data). filter() for subsets (remove elements). reduce() for aggregations (sum, product, build objects). Chaining combines multiple operations. find() instead of filter()[0]. some()/every() for boolean checks.',
             bestPractices: [
-              '✅ map/filter/reduce sind immutable (gut!)',
+              '✅ map/filter/reduce are immutable (good!)',
               '✅ Chain methods: arr.filter().map().reduce()',
-              '✅ Arrow functions für kurze Callbacks',
-              '✅ find() statt filter()[0]',
-              '✅ some()/every() statt manuelle Checks',
-              '✅ [...arr].sort() für immutable sort',
-              '❌ forEach mit return (macht nichts!)',
-              '❌ map ohne return (undefined array)',
-              '❌ sort() ohne Comparator für Numbers'
+              '✅ Arrow functions for short callbacks',
+              '✅ find() instead of filter()[0]',
+              '✅ some()/every() instead of manual checks',
+              '✅ [...arr].sort() for immutable sort',
+              '❌ forEach with return (does nothing!)',
+              '❌ map without return (undefined array)',
+              '❌ sort() without comparator for numbers'
             ],
             commonMistakes: [
-              '❌ map ohne return: arr.map(x => { x * 2 }) // undefined!',
-              '❌ forEach mit return: stoppt nicht!',
-              '❌ reduce ohne Initial Value bei leerem Array',
-              '❌ sort() ohne Comparator: ["10", "2", "1"] statt [1, 2, 10]',
-              '❌ filter() denken es modified original (tut es nicht)'
+              '❌ map without return: arr.map(x => { x * 2 }) // undefined!',
+              '❌ forEach with return: doesn\'t stop!',
+              '❌ reduce without initial value on empty array',
+              '❌ sort() without comparator: ["10", "2", "1"] instead of [1, 2, 10]',
+              '❌ Thinking filter() modifies original (it doesn\'t)'
             ],
             performanceTips: [
-              'for loop ist schneller, aber weniger lesbar',
-              'Chaining ist elegant aber bei großen Arrays langsam',
-              'reduce() kann komplexer sein als loop',
-              'some()/every() stoppen early (gut für Performance)'
+              'for loop is faster, but less readable',
+              'Chaining is elegant but slow on large arrays',
+              'reduce() can be more complex than loop',
+              'some()/every() stop early (good for performance)'
             ],
             relatedTopics: ['Higher Order Functions', 'Immutability', 'Functional Programming', 'Callbacks'],
-            challenge: '💪 Array [1-10]: 1) Filtere gerade Zahlen, 2) Verdopple sie, 3) Summiere mit reduce, 4) Als eine Chain!'
+            challenge: '💪 Array [1-10]: 1) Filter even numbers, 2) Double them, 3) Sum with reduce, 4) As one chain!'
           },
           {
             title: 'Array Destructuring & Spread',
-            code: `// DESTRUCTURING - Werte extrahieren
+            code: `// DESTRUCTURING - Extract values
 const fruits = ["Apple", "Banana", "Orange", "Grape"];
 
 const [first, second] = fruits;
@@ -816,7 +816,7 @@ const [head, ...rest] = fruits;
 console.log(head); // "Apple"
 console.log(rest); // ["Banana", "Orange", "Grape"]
 
-// Elemente überspringen
+// Skip elements
 const [a, , c] = fruits;
 console.log(a); // "Apple"
 console.log(c); // "Orange"
@@ -825,59 +825,59 @@ console.log(c); // "Orange"
 const [x, y, z = "Default"] = ["A", "B"];
 console.log(z); // "Default"
 
-// Swapping ohne temp Variable
+// Swapping without temp variable
 let num1 = 5, num2 = 10;
 [num1, num2] = [num2, num1];
 console.log(num1, num2); // 10, 5
 
-// SPREAD OPERATOR - Array ausbreiten
+// SPREAD OPERATOR - Spread array
 const arr1 = [1, 2, 3];
 const arr2 = [4, 5, 6];
 
-// Arrays zusammenführen
+// Merge arrays
 const combined = [...arr1, ...arr2]; // [1, 2, 3, 4, 5, 6]
 const withExtra = [0, ...arr1, 3.5, ...arr2]; // [0, 1, 2, 3, 3.5, 4, 5, 6]
 
-// Kopieren (Shallow Copy!)
+// Copy (Shallow Copy!)
 const copy = [...arr1];
-copy.push(4); // Original arr1 bleibt unverändert
+copy.push(4); // Original arr1 remains unchanged
 
-// Als Function Arguments
+// As Function Arguments
 const nums = [1, 5, 3];
-console.log(Math.max(...nums)); // 5 (statt Math.max(1, 5, 3))
+console.log(Math.max(...nums)); // 5 (instead of Math.max(1, 5, 3))
 
-// String zu Array
+// String to Array
 const word = "Hello";
 const chars = [...word]; // ["H", "e", "l", "l", "o"]
 
-// Set zu Array (Duplikate entfernen)
+// Set to Array (Remove duplicates)
 const withDupes = [1, 2, 2, 3, 3, 3, 4];
 const unique = [...new Set(withDupes)]; // [1, 2, 3, 4]
 
 // Array in Function Destructuring
 function printFirst([first, second]) {
-  console.log(\`Erste: \${first}, Zweite: \${second}\`);
+  console.log(\`First: \${first}, Second: \${second}\`);
 }
-printFirst(fruits); // "Erste: Apple, Zweite: Banana"`,
+printFirst(fruits); // "First: Apple, Second: Banana"`,
             description: 'Destructuring extracts values from arrays into variables. Spread (...) spreads array. Rest (...rest) collects remaining elements. Swapping without temp variable possible. Spread copies arrays (shallow!), merges arrays, converts iterables. Set removes duplicates.',
-            usage: 'Destructuring für kompakte Variablen-Zuweisungen. Rest für "alle anderen". Spread für Kopien, Merging, Function Args. [...new Set(arr)] entfernt Duplikate. Swapping: [a, b] = [b, a]. String zu Array: [...str].',
+            usage: 'Destructuring for compact variable assignments. Rest for "all others". Spread for copies, merging, function args. [...new Set(arr)] removes duplicates. Swapping: [a, b] = [b, a]. String to array: [...str].',
             bestPractices: [
-              '✅ [...arr] für Shallow Copies',
-              '✅ [a, b] = [b, a] für Swapping',
-              '✅ [...new Set(arr)] für Unique Values',
-              '✅ Rest Parameter für flexible Functions',
-              '✅ Default Values bei Destructuring',
-              '❌ Spread für Deep Copies (nur Shallow!)',
-              '❌ Zu viele Destructured Variablen (unübersichtlich)'
+              '✅ [...arr] for Shallow Copies',
+              '✅ [a, b] = [b, a] for swapping',
+              '✅ [...new Set(arr)] for unique values',
+              '✅ Rest parameter for flexible functions',
+              '✅ Default values with destructuring',
+              '❌ Spread for deep copies (only shallow!)',
+              '❌ Too many destructured variables (confusing)'
             ],
             commonMistakes: [
-              '❌ Spread macht nur Shallow Copy (Nested Objects bleiben referenziert)',
-              '❌ Destructuring mit undefined: const [x] = undefined // Error!',
-              '❌ Rest muss letztes Element sein: [...rest, last] ❌',
-              '❌ Spread in Object vs Array verwechseln'
+              '❌ Spread only makes shallow copy (nested objects remain referenced)',
+              '❌ Destructuring with undefined: const [x] = undefined // Error!',
+              '❌ Rest must be last element: [...rest, last] ❌',
+              '❌ Confusing spread in object vs array'
             ],
             relatedTopics: ['Spread Operator', 'Rest Parameters', 'Destructuring', 'Immutability'],
-            challenge: '💪 Array [1,2,3,4,5]: 1) Destructure first + rest, 2) Merge mit [6,7,8], 3) Entferne Duplikate aus [1,1,2,2,3]'
+            challenge: '💪 Array [1,2,3,4,5]: 1) Destructure first + rest, 2) Merge with [6,7,8], 3) Remove duplicates from [1,1,2,2,3]'
           }
         ]
       },
@@ -885,48 +885,48 @@ printFirst(fruits); // "Erste: Apple, Zweite: Banana"`,
         name: 'Objects & Classes',
         items: [
           {
-            title: 'Objects - Die Basics',
-            code: `// OBJECT LITERAL - Häufigste Art
+            title: 'Objects - The Basics',
+            code: `// OBJECT LITERAL - Most common way
 const person = {
-  name: "Max Mustermann",
+  name: "Max Smith",
   age: 25,
   city: "Berlin",
   isStudent: true
 };
 
-// Zugriff mit Dot Notation
-console.log(person.name); // "Max Mustermann"
+// Access with Dot Notation
+console.log(person.name); // "Max Smith"
 console.log(person.age); // 25
 
-// Zugriff mit Bracket Notation
-console.log(person["name"]); // "Max Mustermann"
+// Access with Bracket Notation
+console.log(person["name"]); // "Max Smith"
 const key = "age";
-console.log(person[key]); // 25 (dynamisch!)
+console.log(person[key]); // 25 (dynamic!)
 
-// Neues Property hinzufügen
+// Add new property
 person.email = "max@example.com";
 person["phone"] = "0123456789";
 
-// Property ändern
+// Change property
 person.age = 26;
 
-// Property löschen
+// Delete property
 delete person.isStudent;
 
-// Prüfen ob Property existiert
+// Check if property exists
 console.log("name" in person); // true
 console.log("country" in person); // false
 console.log(person.hasOwnProperty("name")); // true
 
-// METHODS - Funktionen in Objects
+// METHODS - Functions in objects
 const user = {
   firstName: "Max",
-  lastName: "Mustermann",
-  // Method (Kurzschreibweise)
+  lastName: "Smith",
+  // Method (shorthand)
   getFullName() {
     return \`\${this.firstName} \${this.lastName}\`;
   },
-  // Arrow Function (kein eigenes this!)
+  // Arrow Function (no own this!)
   getAge: () => {
     // return this.age; // ❌ this funktioniert hier nicht!
   }
@@ -980,25 +980,25 @@ console.log(company.employees[0].name); // "Max"
 console.log(company.address?.city); // "Berlin"
 console.log(company.location?.city); // undefined (kein Error!)`,
             description: 'Objects are key-value pairs (properties). Access with . (dot) or ["key"] (bracket). Methods are functions in objects. this references the object. Computed Properties: [key]. Property Shorthand when variable = property name. Optional Chaining (?.) for safe access.',
-            usage: 'Dot Notation für statische Keys. Bracket für dynamische Keys oder Spaces. Methods mit function() für this-Zugriff. Arrow Functions haben kein eigenes this! Optional Chaining (?.) verhindert "Cannot read property of undefined" Errors.',
+            usage: 'Dot Notation for static keys. Bracket for dynamic keys or spaces. Methods with function() for this access. Arrow Functions have no own this! Optional Chaining (?.) prevents "Cannot read property of undefined" errors.',
             bestPractices: [
-              '✅ Dot notation: obj.key (lesbar)',
-              '✅ Bracket für dynamische Keys: obj[variable]',
-              '✅ Property Shorthand: { name } statt { name: name }',
+              '✅ Dot notation: obj.key (readable)',
+              '✅ Bracket for dynamic keys: obj[variable]',
+              '✅ Property shorthand: { name } instead of { name: name }',
               '✅ Optional Chaining: obj?.prop?.nested',
-              '✅ Methods als function() für this',
-              '✅ const für Objects (Properties änderbar!)',
-              '❌ Arrow Functions als Methods (verlieren this)',
-              '❌ delete in Performance-critical Code'
+              '✅ Methods as function() for this',
+              '✅ const for objects (properties changeable!)',
+              '❌ Arrow functions as methods (lose this)',
+              '❌ delete in performance-critical code'
             ],
             commonMistakes: [
-              '❌ Arrow Function als Method: verliert this',
-              '❌ obj.key mit Spaces: obj.first name ❌',
-              '❌ Zugriff ohne Optional Chaining: obj.a.b.c // Error wenn a oder b undefined',
-              '❌ delete obj.prop ist langsam, besser obj.prop = undefined'
+              '❌ Arrow function as method: loses this',
+              '❌ obj.key with spaces: obj.first name ❌',
+              '❌ Access without optional chaining: obj.a.b.c // Error if a or b undefined',
+              '❌ delete obj.prop is slow, better obj.prop = undefined'
             ],
             relatedTopics: ['This Binding', 'Optional Chaining', 'Destructuring', 'Spread Operator'],
-            challenge: '💪 Erstelle Object "car" mit brand, model, year. Füge Method getInfo() hinzu. Nutze Optional Chaining für car.owner?.name'
+            challenge: '💪 Create object "car" with brand, model, year. Add method getInfo(). Use Optional Chaining for car.owner?.name'
           },
           {
             title: 'Object Methods & Manipulation',
@@ -1008,75 +1008,75 @@ console.log(company.location?.city); // undefined (kein Error!)`,
   city: "Berlin"
 };
 
-// OBJECT.KEYS() - Alle Keys als Array
+// OBJECT.KEYS() - All keys as array
 const keys = Object.keys(user);
 console.log(keys); // ["name", "age", "city"]
 
-// OBJECT.VALUES() - Alle Values als Array
+// OBJECT.VALUES() - All values as array
 const values = Object.values(user);
 console.log(values); // ["Max", 25, "Berlin"]
 
-// OBJECT.ENTRIES() - Key-Value Pairs als Arrays
+// OBJECT.ENTRIES() - Key-Value Pairs as arrays
 const entries = Object.entries(user);
 console.log(entries); 
 // [["name", "Max"], ["age", 25], ["city", "Berlin"]]
 
-// Über Object iterieren
+// Iterate over object
 for (const [key, value] of Object.entries(user)) {
   console.log(\`\${key}: \${value}\`);
 }
 
-// OBJECT.ASSIGN() - Objects mergen
-const defaults = { theme: "dark", lang: "de" };
+// OBJECT.ASSIGN() - Merge objects
+const defaults = { theme: "dark", lang: "en" };
 const settings = { theme: "light" };
 const config = Object.assign({}, defaults, settings);
-console.log(config); // { theme: "light", lang: "de" }
+console.log(config); // { theme: "light", lang: "en" }
 
-// SPREAD OPERATOR - Moderne Alternative zu assign
+// SPREAD OPERATOR - Modern alternative to assign
 const merged = { ...defaults, ...settings };
 
 // SHALLOW COPY
 const original = { name: "Max", address: { city: "Berlin" } };
 const copy1 = { ...original }; // Shallow!
-const copy2 = Object.assign({}, original); // Auch shallow!
+const copy2 = Object.assign({}, original); // Also shallow!
 
-copy1.name = "Anna"; // ✅ Ändert nur Copy
-copy1.address.city = "München"; // ⚠️ Ändert auch Original!
+copy1.name = "Anna"; // ✅ Changes only copy
+copy1.address.city = "Munich"; // ⚠️ Also changes original!
 
-// DEEP COPY - Für nested objects
+// DEEP COPY - For nested objects
 const deepCopy = JSON.parse(JSON.stringify(original));
-// ⚠️ Verliert Functions, Dates, undefined, Symbol!
+// ⚠️ Loses Functions, Dates, undefined, Symbol!
 
-// Moderne Alternative: structuredClone
+// Modern alternative: structuredClone
 const betterDeepCopy = structuredClone(original);
 
-// OBJECT.FREEZE() - Object unveränderbar machen
+// OBJECT.FREEZE() - Make object immutable
 const frozen = Object.freeze({ name: "Max" });
-frozen.name = "Anna"; // ❌ Keine Änderung (strict mode: Error)
-frozen.age = 25; // ❌ Keine Änderung
+frozen.name = "Anna"; // ❌ No change (strict mode: Error)
+frozen.age = 25; // ❌ No change
 
-// Shallow freeze! Nested Objects änderbar!
+// Shallow freeze! Nested objects changeable!
 const partialFrozen = Object.freeze({
   name: "Max",
   address: { city: "Berlin" }
 });
-partialFrozen.address.city = "München"; // ✅ Funktioniert!
+partialFrozen.address.city = "Munich"; // ✅ Works!
 
-// OBJECT.SEAL() - Keine neuen Properties, aber änderbar
+// OBJECT.SEAL() - No new properties, but changeable
 const sealed = Object.seal({ name: "Max" });
-sealed.name = "Anna"; // ✅ Funktioniert
-sealed.age = 25; // ❌ Keine neue Property
+sealed.name = "Anna"; // ✅ Works
+sealed.age = 25; // ❌ No new property
 
-// OBJECT.IS() - Vergleicht wie ===, aber besser für NaN und +/-0
-console.log(Object.is(NaN, NaN)); // true (NaN === NaN ist false!)
-console.log(Object.is(+0, -0)); // false (+0 === -0 ist true)
+// OBJECT.IS() - Compares like ===, but better for NaN and +/-0
+console.log(Object.is(NaN, NaN)); // true (NaN === NaN is false!)
+console.log(Object.is(+0, -0)); // false (+0 === -0 is true)
 
-// OBJECT.FROMENTRIES() - Aus Entries Object bauen
+// OBJECT.FROMENTRIES() - Build object from entries
 const pairs = [["name", "Max"], ["age", 25]];
 const obj = Object.fromEntries(pairs);
 console.log(obj); // { name: "Max", age: 25 }
 
-// OPTIONAL CHAINING mit NULLISH COALESCING
+// OPTIONAL CHAINING with NULLISH COALESCING
 const city = user.address?.city ?? "Unknown";
 
 // DELETE OPERATOR
@@ -1087,15 +1087,15 @@ console.log(user); // { name: "Max", city: "Berlin" }
 console.log("name" in user); // true
 console.log("age" in user); // false`,
             description: 'Object.keys/values/entries() for iteration. Object.assign() or {...spread} for merging. Shallow copy by default! Deep copy with structuredClone() or JSON.parse(JSON.stringify()). freeze() makes immutable. seal() prevents new properties. Object.is() for safe comparisons.',
-            usage: 'Object.keys() für Iteration. {...spread} für Merging/Copying. structuredClone() für Deep Copies. Object.freeze() für Immutability. Object.entries() + for...of zum Iterieren. Object.fromEntries() zum Transformieren von Arrays zu Objects.',
+            usage: 'Object.keys() for iteration. {...spread} for merging/copying. structuredClone() for deep copies. Object.freeze() for immutability. Object.entries() + for...of for iterating. Object.fromEntries() for transforming arrays to objects.',
             bestPractices: [
-              '✅ {...obj} für Shallow Copies',
-              '✅ structuredClone() für Deep Copies',
-              '✅ Object.freeze() für Constants',
-              '✅ Object.entries() + for...of für Iteration',
-              '✅ ?? mit ?. kombinieren',
-              '❌ JSON.parse/stringify für Deep Copy (verliert Functions)',
-              '❌ delete in Loops (langsam)'
+              '✅ {...obj} for shallow copies',
+              '✅ structuredClone() for deep copies',
+              '✅ Object.freeze() for constants',
+              '✅ Object.entries() + for...of for iteration',
+              '✅ Combine ?? with ?.',
+              '❌ JSON.parse/stringify for deep copy (loses functions)',
+              '❌ delete in loops (slow)'
             ],
             commonMistakes: [
               '❌ Shallow Copy für Nested: { ...obj } kopiert nicht Nested!',
@@ -1231,26 +1231,26 @@ class Config {
   }
 }`,
             description: 'Classes are templates for objects. constructor() is called at "new". Methods are functions. Getter/Setter with get/set. Static methods belong to class, not instance. extends for inheritance. super() calls parent. Private fields with #. instanceof checks type.',
-            usage: 'Classes für OOP (Objects mit gleicher Struktur). extends für Vererbung. super() in Child Constructor. Static für Utility Functions. Private # für Encapsulation. Getter/Setter für computed Properties. instanceof für Type Checks.',
+            usage: 'Classes for OOP (objects with same structure). extends for inheritance. super() in child constructor. Static for utility functions. Private # for encapsulation. Getter/Setter for computed properties. instanceof for type checks.',
             bestPractices: [
-              '✅ Classes für wiederverwendbare Object Types',
-              '✅ super() FIRST in Child Constructor',
-              '✅ Private # für interne State',
-              '✅ Static für Utility Functions',
-              '✅ Getter für computed Properties',
-              '✅ PascalCase für Class Namen: class UserAccount',
-              '❌ Arrow Functions als Methods (verlieren this)',
-              '❌ new vergessen: const x = Person() ❌'
+              '✅ Classes for reusable object types',
+              '✅ super() FIRST in child constructor',
+              '✅ Private # for internal state',
+              '✅ Static for utility functions',
+              '✅ Getter for computed properties',
+              '✅ PascalCase for class names: class UserAccount',
+              '❌ Arrow functions as methods (lose this)',
+              '❌ Forgetting new: const x = Person() ❌'
             ],
             commonMistakes: [
-              '❌ super() vergessen in Child Constructor',
-              '❌ this falsch verstehen in Methods',
-              '❌ Private # nur in Class Body, nicht außerhalb',
-              '❌ Static Method auf Instance aufrufen: instance.staticMethod() ❌',
-              '❌ Return im Constructor (nur bei Objects)'
+              '❌ Forgetting super() in child constructor',
+              '❌ Misunderstanding this in methods',
+              '❌ Private # only in class body, not outside',
+              '❌ Calling static method on instance: instance.staticMethod() ❌',
+              '❌ Return in constructor (only for objects)'
             ],
             relatedTopics: ['OOP', 'Inheritance', 'Encapsulation', 'This Binding', 'Prototypes'],
-            challenge: '💪 Erstelle: 1) Class Animal mit name, 2) Method speak(), 3) Class Dog extends Animal, 4) Override speak()'
+            challenge: '💪 Create: 1) Class Animal with name, 2) Method speak(), 3) Class Dog extends Animal, 4) Override speak()'
           }
         ]
       },
@@ -1258,40 +1258,40 @@ class Config {
         name: 'Async & Promises',
         items: [
           {
-            title: 'Promises verstehen',
+            title: 'Understanding Promises',
             code: `// PROMISE STATES
-// - Pending: Wartet noch
-// - Fulfilled: Erfolgreich (resolve)
-// - Rejected: Fehler (reject)
+// - Pending: Still waiting
+// - Fulfilled: Success (resolve)
+// - Rejected: Error (reject)
 
-// PROMISE ERSTELLEN
+// CREATE PROMISE
 const myPromise = new Promise((resolve, reject) => {
-  // Asynchrone Operation simulieren
+  // Simulate async operation
   setTimeout(() => {
     const success = true;
     
     if (success) {
-      resolve("Erfolg! 🎉"); // Fulfilled
+      resolve("Success! 🎉"); // Fulfilled
     } else {
-      reject("Fehler! ❌"); // Rejected
+      reject("Error! ❌"); // Rejected
     }
   }, 1000);
 });
 
-// PROMISE VERWENDEN
+// USE PROMISE
 myPromise
   .then(result => {
-    console.log(result); // "Erfolg! 🎉"
+    console.log(result); // "Success! 🎉"
     return result.toUpperCase(); // Chaining!
   })
   .then(upperResult => {
-    console.log(upperResult); // "ERFOLG! 🎉"
+    console.log(upperResult); // "SUCCESS! 🎉"
   })
   .catch(error => {
-    console.error(error); // Falls rejected
+    console.error(error); // If rejected
   })
   .finally(() => {
-    console.log("Fertig!"); // Immer ausgeführt
+    console.log("Done!"); // Always executed
   });
 
 // PROMISE CHAINING
@@ -1382,48 +1382,48 @@ async function fetchWithRetry(url, retries = 3) {
   }
 }`,
             description: 'Promises represent future values from asynchronous operations. 3 States: Pending (waiting), Fulfilled (success), Rejected (error). .then() for success, .catch() for errors, .finally() always. Promise.all() for parallel, Promise.race() for fastest. Chaining with return in .then().',
-            usage: '.then() für Success Handler. .catch() für Error Handler. .finally() für Cleanup. Promise.all() wartet auf alle (parallel). Promise.race() nimmt erste. Promise.allSettled() wartet auf alle, ignoriert Errors. Chaining: return in .then() für nächstes .then().',
+            usage: '.then() for success handler. .catch() for error handler. .finally() for cleanup. Promise.all() waits for all (parallel). Promise.race() takes first. Promise.allSettled() waits for all, ignores errors. Chaining: return in .then() for next .then().',
             bestPractices: [
-              '✅ Immer .catch() am Ende der Chain',
-              '✅ Return in .then() für Chaining',
-              '✅ Promise.all() für parallele Requests',
-              '✅ .finally() für Cleanup (Loading etc.)',
-              '✅ Promise.allSettled() wenn alle Resultate wichtig',
-              '❌ Nested Promises (Callback Hell)',
-              '❌ catch() vergessen (Unhandled Rejection)',
-              '❌ Return vergessen in .then() Chain'
+              '✅ Always .catch() at end of chain',
+              '✅ Return in .then() for chaining',
+              '✅ Promise.all() for parallel requests',
+              '✅ .finally() for cleanup (loading etc.)',
+              '✅ Promise.allSettled() when all results matter',
+              '❌ Nested promises (callback hell)',
+              '❌ Forgetting catch() (unhandled rejection)',
+              '❌ Forgetting return in .then() chain'
             ],
             commonMistakes: [
-              '❌ Kein catch(): Unhandled Promise Rejection',
-              '❌ Nested .then(): .then(() => { promise.then() }) // Callback Hell',
-              '❌ Return vergessen: .then(x => { getValue(x) }) // undefined!',
-              '❌ Promise.all() stoppt bei EINEM Fehler',
-              '❌ new Promise für bereits existierende Promises'
+              '❌ No catch(): Unhandled Promise Rejection',
+              '❌ Nested .then(): .then(() => { promise.then() }) // Callback hell',
+              '❌ Forgetting return: .then(x => { getValue(x) }) // undefined!',
+              '❌ Promise.all() stops at ONE error',
+              '❌ new Promise for existing promises'
             ],
             relatedTopics: ['Async/Await', 'Callbacks', 'Event Loop', 'Fetch API', 'Error Handling'],
-            challenge: '💪 Erstelle Promise die nach 2s resolved. Chain 3 .then()s. Nutze Promise.all() mit 3 Promises. Error Handling!'
+            challenge: '💪 Create promise that resolves after 2s. Chain 3 .then()s. Use Promise.all() with 3 promises. Error handling!'
           },
           {
-            title: 'Async/Await - Moderne Syntax',
-            code: `// ASYNC FUNCTION - Returnt immer Promise
+            title: 'Async/Await - Modern Syntax',
+            code: `// ASYNC FUNCTION - Always returns promise
 async function fetchUser(id) {
-  // await pausiert Funktion bis Promise resolved
+  // await pauses function until promise resolved
   const response = await fetch(\`/api/users/\${id}\`);
   const user = await response.json();
   return user; // Automatically wrapped in Promise
 }
 
-// Usage - ZWEI Wege:
-// 1. Mit await (in async Function)
+// Usage - TWO ways:
+// 1. With await (in async function)
 async function main() {
   const user = await fetchUser(1);
   console.log(user);
 }
 
-// 2. Mit .then() (außerhalb async)
+// 2. With .then() (outside async)
 fetchUser(1).then(user => console.log(user));
 
-// ERROR HANDLING mit try-catch
+// ERROR HANDLING with try-catch
 async function getUserData(id) {
   try {
     const response = await fetch(\`/api/users/\${id}\`);
@@ -1435,18 +1435,18 @@ async function getUserData(id) {
     const user = await response.json();
     return user;
   } catch (error) {
-    console.error("Fehler beim Laden:", error);
-    throw error; // Weitergeben oder
-    // return null; // Default zurückgeben
+    console.error("Error loading:", error);
+    throw error; // Pass on or
+    // return null; // Return default
   } finally {
-    console.log("Request abgeschlossen");
+    console.log("Request completed");
   }
 }
 
-// PARALLEL REQUESTS mit Promise.all
+// PARALLEL REQUESTS with Promise.all
 async function loadDashboard() {
   try {
-    // ❌ SEQUENTIELL - langsam!
+    // ❌ SEQUENTIAL - slow!
     const user = await fetch('/api/user').then(r => r.json());
     const posts = await fetch('/api/posts').then(r => r.json());
     const comments = await fetch('/api/comments').then(r => r.json());
@@ -1666,35 +1666,35 @@ const original = document.querySelector('.original');
 const clone = original.cloneNode(true); // true = deep (inkl. Children)
 document.body.appendChild(clone);`,
             description: 'DOM (Document Object Model) is the JavaScript representation of HTML. querySelector() for selection (CSS selectors). textContent for text, innerHTML for HTML. classList for classes. createElement() + appendChild() for adding. remove() for deleting. style for inline styles.',
-            usage: 'querySelector() statt getElementById (flexibler). textContent statt innerHTML (sicherer). classList.toggle() für UI States. appendChild()/remove() für dynamische Inhalte. parentElement/children für Navigation. cloneNode() für Templates.',
+            usage: 'querySelector() instead of getElementById (more flexible). textContent instead of innerHTML (safer). classList.toggle() for UI states. appendChild()/remove() for dynamic content. parentElement/children for navigation. cloneNode() for templates.',
             bestPractices: [
-              '✅ querySelector() statt getElementsBy* (moderner)',
-              '✅ textContent für Text (schneller, sicherer)',
-              '✅ classList statt className (einfacher)',
-              '✅ remove() statt removeChild() (kürzer)',
-              '✅ Cache DOM Queries in Variablen',
-              '❌ innerHTML mit User Input (XSS Gefahr!)',
-              '❌ Zu viele DOM Manipulationen in Loops'
+              '✅ querySelector() instead of getElementsBy* (modern)',
+              '✅ textContent for text (faster, safer)',
+              '✅ classList instead of className (easier)',
+              '✅ remove() instead of removeChild() (shorter)',
+              '✅ Cache DOM queries in variables',
+              '❌ innerHTML with user input (XSS danger!)',
+              '❌ Too many DOM manipulations in loops'
             ],
             commonMistakes: [
-              '❌ querySelectorAll returnt NodeList (kein Array!)',
-              '❌ innerHTML + User Input = XSS Sicherheitslücke',
-              '❌ style.background-color (falsch) - camelCase: backgroundColor',
-              '❌ DOM Queries in Loops (langsam)',
-              '❌ remove() auf null Element - vorher checken!'
+              '❌ querySelectorAll returns NodeList (not array!)',
+              '❌ innerHTML + user input = XSS security hole',
+              '❌ style.background-color (wrong) - camelCase: backgroundColor',
+              '❌ DOM queries in loops (slow)',
+              '❌ remove() on null element - check first!'
             ],
             performanceTips: [
               'Cache selectors: const el = query() ONCE',
-              'DocumentFragment für viele Elemente',
-              'textContent ist schneller als innerHTML',
-              'classList ist schneller als className manipulation'
+              'DocumentFragment for many elements',
+              'textContent is faster than innerHTML',
+              'classList is faster than className manipulation'
             ],
             relatedTopics: ['Events', 'querySelector', 'classList', 'innerHTML vs textContent'],
-            challenge: '💪 Erstelle: 1) Button mit JavaScript, 2) Füge CSS Class hinzu, 3) Append zu body, 4) Ändere Text bei Click'
+            challenge: '💪 Create: 1) Button with JavaScript, 2) Add CSS class, 3) Append to body, 4) Change text on click'
           },
           {
             title: 'Event Handling',
-            code: `// EVENT LISTENER HINZUFÜGEN
+            code: `// ADD EVENT LISTENER
 const button = document.querySelector('#myButton');
 
 // addEventListener - Modern & Best Practice
@@ -1836,26 +1836,26 @@ input.addEventListener('input', debounce((e) => {
   console.log('Search:', e.target.value);
 }, 300)); // Nach 300ms Pause`,
             description: 'Events are user interactions. addEventListener() adds event listeners. Important events: click, keydown, submit, input, scroll, resize. Event object has target (element), preventDefault() (stop default), stopPropagation() (stop bubbling). Event delegation for dynamic elements. Throttle/Debounce for performance.',
-            usage: 'addEventListener() mit Funktionsreferenz. e.preventDefault() bei Forms. Event Delegation bei Listen. Throttle bei scroll/resize. Debounce bei input/search. removeEventListener() mit gleicher Funktion. { once: true } für einmalige Events.',
+            usage: 'addEventListener() with function reference. e.preventDefault() for forms. Event Delegation for lists. Throttle for scroll/resize. Debounce for input/search. removeEventListener() with same function. { once: true } for one-time events.',
             bestPractices: [
-              '✅ addEventListener() statt onclick',
-              '✅ Event Delegation für dynamische Inhalte',
-              '✅ preventDefault() bei Forms',
-              '✅ Throttle/Debounce bei scroll/input',
-              '✅ removeEventListener() bei Cleanup',
-              '❌ onclick = func (überschreibt vorherige)',
-              '❌ Zu viele Event Listener (Memory Leak)',
-              '❌ Arrow Functions wenn removeEventListener() nötig'
+              '✅ addEventListener() instead of onclick',
+              '✅ Event Delegation for dynamic content',
+              '✅ preventDefault() for forms',
+              '✅ Throttle/Debounce for scroll/input',
+              '✅ removeEventListener() for cleanup',
+              '❌ onclick = func (overwrites previous)',
+              '❌ Too many event listeners (memory leak)',
+              '❌ Arrow functions when removeEventListener() needed'
             ],
             commonMistakes: [
-              '❌ removeEventListener mit Arrow Function (funktioniert nicht)',
-              '❌ Event Listener in Loops ohne Delegation',
-              '❌ preventDefault() vergessen bei Forms',
-              '❌ Kein throttle bei scroll/resize (Performance)',
-              '❌ event.target vs event.currentTarget verwechseln'
+              '❌ removeEventListener with arrow function (doesn\'t work)',
+              '❌ Event listeners in loops without delegation',
+              '❌ Forgetting preventDefault() for forms',
+              '❌ No throttle for scroll/resize (performance)',
+              '❌ Confusing event.target vs event.currentTarget'
             ],
             relatedTopics: ['DOM', 'Event Bubbling', 'Event Delegation', 'Throttle/Debounce'],
-            challenge: '💪 Todo List: 1) Click Event mit Event Delegation, 2) Form submit mit preventDefault, 3) Input mit debounce'
+            challenge: '💪 Todo List: 1) Click event with event delegation, 2) Form submit with preventDefault, 3) Input with debounce'
           }
         ]
       },
@@ -2034,10 +2034,10 @@ try {
   console.log('Cleanup Code');
 }
 
-// EIGENE FEHLER WERFEN
+// THROW CUSTOM ERRORS
 function divide(a, b) {
   if (b === 0) {
-    throw new Error('Division durch 0 nicht möglich!');
+    throw new Error('Division by 0 not possible!');
   }
   return a / b;
 }
@@ -2064,10 +2064,10 @@ class NetworkError extends Error {
   }
 }
 
-// Verwendung
+// Usage
 function validateEmail(email) {
   if (!email.includes('@')) {
-    throw new ValidationError('Ungültige Email');
+    throw new ValidationError('Invalid email');
   }
   return true;
 }
@@ -2183,21 +2183,21 @@ function validateUser(user) {
   return true;
 }`,
             description: 'Error handling prevents app crashes. try-catch catches errors. throw new Error() throws errors. Custom error classes (extends Error) for specific errors. async/await with try-catch. Promise .catch(). finally for cleanup. instanceof for error types. Global handlers for unhandled errors.',
-            usage: 'try-catch um riskanten Code. throw für Validation. Custom Errors (ValidationError, NetworkError). async mit try-catch. Promise mit .catch(). finally für Cleanup (DB close, Loading hide). Retry Logic mit Loop. Error Logging/Tracking.',
+            usage: 'try-catch around risky code. throw for validation. Custom errors (ValidationError, NetworkError). async with try-catch. Promise with .catch(). finally for cleanup (DB close, loading hide). Retry logic with loop. Error logging/tracking.',
             bestPractices: [
-              '✅ try-catch um async/await',
-              '✅ Custom Error Classes für Clarity',
-              '✅ finally für Cleanup',
-              '✅ instanceof für Error Typen',
-              '✅ Error Logging/Monitoring',
-              '✅ Spezifische Error Messages',
+              '✅ try-catch around async/await',
+              '✅ Custom error classes for clarity',
+              '✅ finally for cleanup',
+              '✅ instanceof for error types',
+              '✅ Error logging/monitoring',
+              '✅ Specific error messages',
               '❌ Empty catch blocks',
-              '❌ Errors verschlucken ohne Logging'
+              '❌ Swallowing errors without logging'
             ],
             commonMistakes: [
-              '❌ catch ohne Error Handling (silent fail)',
-              '❌ throw ohne try-catch (uncaught error)',
-              '❌ async ohne try-catch (unhandled rejection)',
+              '❌ catch without error handling (silent fail)',
+              '❌ throw without try-catch (uncaught error)',
+              '❌ async without try-catch (unhandled rejection)',
               '❌ finally mit return (überschreibt try return)',
               '❌ Zu generische Error Messages'
             ],
@@ -2918,44 +2918,44 @@ exports.add = add;
 const { add } = require('./math.js');
 const math = require('./math');`,
             description: 'ES6 Modules for code organization. export for public API. import to use. Named exports: export const/function. Default export: export default (only one per file). import { name } for named. import Name for default. import * as All for all. Dynamic import() for lazy loading. type="module" in HTML.',
-            usage: 'Named Exports für Utilities. Default Export für Haupt-Class/Component. import * as für Namespacing. Dynamic import() für Code Splitting. Re-exports für Barrel Files (index.js). Side-Effect Imports für Setup Code.',
+            usage: 'Named exports for utilities. Default export for main class/component. import * as for namespacing. Dynamic import() for code splitting. Re-exports for barrel files (index.js). Side-effect imports for setup code.',
             bestPractices: [
-              '✅ Named Exports für Utilities',
-              '✅ Default Export für Main Export',
-              '✅ Barrel Files (index.js) für Clean Imports',
-              '✅ Dynamic Import für Lazy Loading',
-              '✅ .js Extension in Imports',
-              '❌ Mix von CommonJS und ES Modules',
-              '❌ Circular Dependencies'
+              '✅ Named exports for utilities',
+              '✅ Default export for main export',
+              '✅ Barrel files (index.js) for clean imports',
+              '✅ Dynamic import for lazy loading',
+              '✅ .js extension in imports',
+              '❌ Mixing CommonJS and ES Modules',
+              '❌ Circular dependencies'
             ],
             commonMistakes: [
-              '❌ import User from "./user" ohne Default Export',
-              '❌ import { User } from "./user" bei Default Export',
-              '❌ File Extension vergessen: import from "./math"',
-              '❌ Circular Imports (A imports B, B imports A)',
-              '❌ type="module" in <script> vergessen'
+              '❌ import User from "./user" without default export',
+              '❌ import { User } from "./user" with default export',
+              '❌ Forgetting file extension: import from "./math"',
+              '❌ Circular imports (A imports B, B imports A)',
+              '❌ Forgetting type="module" in <script>'
             ],
             relatedTopics: ['Module Bundlers', 'Code Splitting', 'Tree Shaking', 'Dynamic Imports'],
-            challenge: '💪 Erstelle: 1) math.js mit Named Exports, 2) User.js mit Default, 3) Import beides in main.js'
+            challenge: '💪 Create: 1) math.js with named exports, 2) User.js with default, 3) Import both in main.js'
           },
           {
             title: 'Browser APIs - LocalStorage & Fetch',
             code: `// LOCALSTORAGE - Persistent Storage
-// Speichern
+// Save
 localStorage.setItem('username', 'Max');
 localStorage.setItem('theme', 'dark');
 
-// Lesen
+// Read
 const username = localStorage.getItem('username'); // "Max"
 const theme = localStorage.getItem('theme'); // "dark"
 
-// Löschen
+// Delete
 localStorage.removeItem('username');
 
-// Alles löschen
+// Delete all
 localStorage.clear();
 
-// Größe
+// Size
 console.log(localStorage.length);
 
 // Key by Index
@@ -2964,19 +2964,19 @@ for (let i = 0; i < localStorage.length; i++) {
   console.log(key, localStorage.getItem(key));
 }
 
-// Objects speichern (JSON!)
+// Store objects (JSON!)
 const user = { name: 'Max', age: 25 };
 localStorage.setItem('user', JSON.stringify(user));
 
 const stored = JSON.parse(localStorage.getItem('user'));
 console.log(stored.name); // "Max"
 
-// SESSIONSTORAGE - Nur für Session
+// SESSIONSTORAGE - Only for session
 sessionStorage.setItem('temp', 'value');
 // Deleted when tab is closed
 
-// COOKIES - Mit Expiration
-document.cookie = "username=Max; max-age=86400"; // 1 Tag
+// COOKIES - With expiration
+document.cookie = "username=Max; max-age=86400"; // 1 day
 document.cookie = "theme=dark; expires=Thu, 01 Jan 2025 00:00:00 UTC";
 
 // Lesen

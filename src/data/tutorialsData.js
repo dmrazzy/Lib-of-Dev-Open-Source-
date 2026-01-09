@@ -3193,6 +3193,573 @@ instance Show Color where
         ]
       }
     ]
+  },
+
+  // Modern Web Development & AI/ML Tutorials
+  nextjs: {
+    id: 'nextjs',
+    name: 'Next.js',
+    icon: '▲',
+    color: '#000000',
+    tutorials: [
+      {
+        id: 'nextjs-15',
+        title: 'Next.js 15 - App Router & Server Components',
+        level: 'Intermediate',
+        duration: '90 min',
+        description: 'Master Next.js 15 with App Router, Server Components, and modern patterns.',
+        topics: ['App Router', 'Server Components', 'Server Actions', 'Streaming', 'Metadata API'],
+        lessons: [
+          {
+            id: 1,
+            title: 'Next.js 15 Fundamentals',
+            duration: '90 min',
+            content: `Learn Next.js 15 - the most modern React framework for production.
+
+**Key Concepts:**
+- App Router (app/ directory)
+- Server Components vs Client Components
+- Server Actions for mutations
+- Streaming with Suspense
+- Dynamic Routes & Layouts`,
+            code: `// app/layout.js - Root Layout (Server Component)
+export const metadata = {
+  title: 'My App',
+  description: 'Built with Next.js 15'
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+
+// app/page.js - Home Page (Server Component)
+async function getData() {
+  const res = await fetch('https://api.example.com/data', {
+    next: { revalidate: 60 } // ISR - revalidate every 60s
+  });
+  return res.json();
+}
+
+export default async function HomePage() {
+  const data = await getData();
+  
+  return (
+    <main>
+      <h1>Server Component</h1>
+      <p>This renders on the server!</p>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </main>
+  );
+}
+
+// app/products/[id]/page.js - Dynamic Route
+export default async function ProductPage({ params }) {
+  const { id } = await params;
+  const product = await fetchProduct(id);
+  
+  return <div>Product: {product.name}</div>;
+}
+
+// app/actions.js - Server Actions
+'use server'
+
+export async function createUser(formData) {
+  const name = formData.get('name');
+  const email = formData.get('email');
+  
+  // Direct database access (no API needed!)
+  await db.users.create({
+    data: { name, email }
+  });
+  
+  revalidatePath('/users');
+}
+
+// app/form-client.js - Client Component
+'use client'
+
+import { createUser } from './actions';
+
+export default function UserForm() {
+  return (
+    <form action={createUser}>
+      <input name="name" required />
+      <input name="email" type="email" required />
+      <button type="submit">Create User</button>
+    </form>
+  );
+}
+
+// app/loading.js - Streaming UI
+export default function Loading() {
+  return <div>Loading...</div>;
+}
+
+// app/error.js - Error Handling
+'use client'
+
+export default function Error({ error, reset }) {
+  return (
+    <div>
+      <h2>Something went wrong!</h2>
+      <button onClick={reset}>Try again</button>
+    </div>
+  );
+}`,
+            exercise: 'Build a blog with App Router, Server Components, and Server Actions.',
+            solution: `// app/blog/page.js
+import { getPosts } from '@/lib/db';
+
+export default async function BlogPage() {
+  const posts = await getPosts();
+  
+  return (
+    <div>
+      <h1>Blog</h1>
+      {posts.map(post => (
+        <article key={post.id}>
+          <h2>{post.title}</h2>
+          <p>{post.excerpt}</p>
+        </article>
+      ))}
+    </div>
+  );
+}`
+          }
+        ]
+      }
+    ]
+  },
+
+  ai_ml: {
+    id: 'ai_ml',
+    name: 'AI & Machine Learning',
+    icon: '🤖',
+    color: '#FF6F00',
+    tutorials: [
+      {
+        id: 'pytorch-basics',
+        title: 'PyTorch - Neural Networks from Scratch',
+        level: 'Intermediate',
+        duration: '120 min',
+        description: 'Build neural networks with PyTorch for deep learning applications.',
+        topics: ['Tensors', 'Neural Networks', 'Training', 'CNN', 'Transfer Learning'],
+        lessons: [
+          {
+            id: 1,
+            title: 'PyTorch Fundamentals',
+            duration: '120 min',
+            content: `Master PyTorch for deep learning and AI applications.
+
+**Key Concepts:**
+- Tensors and GPU acceleration
+- Building neural networks
+- Training loops
+- Loss functions & optimizers
+- Model evaluation`,
+            code: `import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader
+import torchvision.transforms as transforms
+import torchvision.datasets as datasets
+
+# 1. Define Neural Network
+class SimpleNN(nn.Module):
+    def __init__(self):
+        super(SimpleNN, self).__init__()
+        self.fc1 = nn.Linear(784, 128)  # 28x28 images
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(128, 64)
+        self.fc3 = nn.Linear(64, 10)    # 10 classes
+        
+    def forward(self, x):
+        x = x.view(-1, 784)  # Flatten
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        x = self.relu(x)
+        x = self.fc3(x)
+        return x
+
+# 2. Setup device (GPU if available)
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f'Using device: {device}')
+
+# 3. Load MNIST dataset
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.5,), (0.5,))
+])
+
+train_dataset = datasets.MNIST(root='./data', train=True, 
+                               download=True, transform=transform)
+train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+
+# 4. Initialize model, loss, optimizer
+model = SimpleNN().to(device)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+# 5. Training Loop
+def train(model, loader, criterion, optimizer, epochs=5):
+    model.train()
+    for epoch in range(epochs):
+        total_loss = 0
+        for batch_idx, (data, target) in enumerate(loader):
+            # Move to device
+            data, target = data.to(device), target.to(device)
+            
+            # Zero gradients
+            optimizer.zero_grad()
+            
+            # Forward pass
+            output = model(data)
+            loss = criterion(output, target)
+            
+            # Backward pass
+            loss.backward()
+            optimizer.step()
+            
+            total_loss += loss.item()
+            
+            if batch_idx % 100 == 0:
+                print(f'Epoch {epoch+1}, Batch {batch_idx}, Loss: {loss.item():.4f}')
+        
+        avg_loss = total_loss / len(loader)
+        print(f'Epoch {epoch+1} completed, Avg Loss: {avg_loss:.4f}')
+
+# 6. Train the model
+train(model, train_loader, criterion, optimizer, epochs=5)
+
+# 7. Save model
+torch.save(model.state_dict(), 'model.pth')
+
+# 8. Inference
+model.eval()
+with torch.no_grad():
+    test_input = torch.randn(1, 1, 28, 28).to(device)
+    prediction = model(test_input)
+    predicted_class = prediction.argmax(dim=1)
+    print(f'Predicted class: {predicted_class.item()}')
+
+# CNN Example
+class CNN(nn.Module):
+    def __init__(self):
+        super(CNN, self).__init__()
+        self.conv1 = nn.Conv2d(1, 32, kernel_size=3)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.fc1 = nn.Linear(64 * 12 * 12, 128)
+        self.fc2 = nn.Linear(128, 10)
+        
+    def forward(self, x):
+        x = self.pool(torch.relu(self.conv1(x)))
+        x = self.pool(torch.relu(self.conv2(x)))
+        x = x.view(-1, 64 * 12 * 12)
+        x = torch.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
+# Transfer Learning with Pre-trained Model
+import torchvision.models as models
+
+# Load pre-trained ResNet
+resnet = models.resnet50(pretrained=True)
+
+# Freeze all layers
+for param in resnet.parameters():
+    param.requires_grad = False
+
+# Replace final layer
+num_features = resnet.fc.in_features
+resnet.fc = nn.Linear(num_features, 10)  # 10 classes
+
+# Only train final layer
+optimizer = optim.Adam(resnet.fc.parameters(), lr=0.001)`,
+            exercise: 'Build and train a CNN to classify CIFAR-10 images.',
+            solution: `# Full CIFAR-10 CNN solution
+class CIFAR10CNN(nn.Module):
+    def __init__(self):
+        super(CIFAR10CNN, self).__init__()
+        self.conv_layers = nn.Sequential(
+            nn.Conv2d(3, 64, 3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+            nn.Conv2d(64, 128, 3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+        )
+        self.fc_layers = nn.Sequential(
+            nn.Linear(128 * 8 * 8, 512),
+            nn.ReLU(),
+            nn.Dropout(0.5),
+            nn.Linear(512, 10)
+        )
+    
+    def forward(self, x):
+        x = self.conv_layers(x)
+        x = x.view(x.size(0), -1)
+        x = self.fc_layers(x)
+        return x`
+          }
+        ]
+      }
+    ]
+  },
+
+  docker: {
+    id: 'docker',
+    name: 'Docker & Kubernetes',
+    icon: '🐳',
+    color: '#2496ED',
+    tutorials: [
+      {
+        id: 'docker-k8s',
+        title: 'Docker & Kubernetes - Container Orchestration',
+        level: 'Advanced',
+        duration: '100 min',
+        description: 'Master containers, Docker, and Kubernetes for cloud-native applications.',
+        topics: ['Docker', 'Containers', 'Kubernetes', 'Microservices', 'Deployment'],
+        lessons: [
+          {
+            id: 1,
+            title: 'Docker & Kubernetes Complete Guide',
+            duration: '100 min',
+            content: `Learn Docker and Kubernetes for modern cloud-native development.
+
+**Key Concepts:**
+- Containers vs VMs
+- Dockerfile best practices
+- Docker Compose
+- Kubernetes architecture
+- Deployments & Services`,
+            code: `# Dockerfile - Node.js App
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production
+
+# Copy source code
+COPY . .
+
+# Build app
+RUN npm run build
+
+# Production image
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy from builder
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+
+# Run as non-root user
+USER node
+
+EXPOSE 3000
+
+CMD ["node", "dist/index.js"]
+
+# .dockerignore
+node_modules
+npm-debug.log
+.git
+.env
+*.md
+
+# docker-compose.yml - Multi-container app
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/myapp
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=myapp
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+
+networks:
+  app-network:
+    driver: bridge
+
+# Kubernetes Deployment - deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  labels:
+    app: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: myapp:v1.0.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: myapp-secrets
+              key: database-url
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+# Service - service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: myapp
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+
+---
+# Ingress - ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myapp-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+  - hosts:
+    - myapp.example.com
+    secretName: myapp-tls
+  rules:
+  - host: myapp.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: myapp-service
+            port:
+              number: 80
+
+# Docker Commands
+# Build image
+docker build -t myapp:v1.0.0 .
+
+# Run container
+docker run -d -p 3000:3000 --name myapp myapp:v1.0.0
+
+# View logs
+docker logs -f myapp
+
+# Execute command in container
+docker exec -it myapp sh
+
+# Docker Compose commands
+docker-compose up -d
+docker-compose ps
+docker-compose logs -f app
+docker-compose down
+
+# Kubernetes commands
+kubectl apply -f deployment.yaml
+kubectl get pods
+kubectl get services
+kubectl logs pod-name
+kubectl exec -it pod-name -- sh
+kubectl scale deployment myapp --replicas=5
+kubectl rollout status deployment/myapp
+kubectl rollout undo deployment/myapp`,
+            exercise: 'Deploy a microservices app with Docker Compose and migrate to Kubernetes.',
+            solution: `# Complete solution in code above
+# Steps:
+# 1. Create Dockerfile
+# 2. Create docker-compose.yml
+# 3. Test locally: docker-compose up
+# 4. Create K8s manifests
+# 5. Deploy: kubectl apply -f .
+# 6. Verify: kubectl get all`
+          }
+        ]
+      }
+    ]
   }
 };
 
