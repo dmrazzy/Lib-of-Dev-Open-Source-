@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { colors, spacing, borderRadius, shadows } from '../constants/theme';
+import { colors, spacing, borderRadius } from '../constants/theme';
 import { getAllProjects } from '../data/projectsData';
 import NativeAdView from '../components/NativeAdView';
 
@@ -324,7 +324,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
     borderWidth: 1,
     borderColor: colors.border,
-    ...shadows.md,
   },
   projectHeader: {
     flexDirection: 'row',
