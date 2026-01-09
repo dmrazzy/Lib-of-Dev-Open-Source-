@@ -27,6 +27,9 @@ export const ADMOB_CONFIG = {
     HOME: 'ca-app-pub-5526801232554836/5282576179',
     GROQ_CHAT: 'ca-app-pub-5526801232554836/8545682699',
   },
+  NATIVE_AD_IDS: {
+    PROJECTS: 'ca-app-pub-5526801232554836/9861336627',
+  },
   TEST_DEVICES: [],
 };
 

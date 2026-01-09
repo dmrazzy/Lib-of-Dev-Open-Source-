@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 import { getAllProjects } from '../data/projectsData';
-import AdBanner from '../components/AdBanner';
+import NativeAdView from '../components/NativeAdView';
 
 export default function ProjectsScreen({ navigation }) {
   const { t } = useTranslation();
@@ -76,9 +76,6 @@ export default function ProjectsScreen({ navigation }) {
           </Text>
         </View>
 
-        {/* Ad Banner */}
-        <AdBanner />
-
         {/* Search Bar */}
         <View style={styles.searchContainer}>
           <TextInput
@@ -120,64 +117,72 @@ export default function ProjectsScreen({ navigation }) {
         {/* Projects List */}
         <View style={styles.projectsContainer}>
           {filteredProjects.length > 0 ? (
-            filteredProjects.map((project) => (
-              <TouchableOpacity
-                key={project.id}
-                style={styles.projectCard}
-                onPress={() => navigation.navigate('ProjectDetail', { project })}
-                activeOpacity={0.7}
-              >
-                <View style={styles.projectHeader}>
-                  <Text style={styles.projectIcon}>{project.icon}</Text>
-                  <View style={styles.projectHeaderRight}>
-                    <View
-                      style={[
-                        styles.difficultyBadge,
-                        { backgroundColor: getDifficultyColor(project.difficulty) + '20' },
-                      ]}
-                    >
-                      <Text
+            filteredProjects.map((project, index) => (
+              <React.Fragment key={project.id}>
+                <TouchableOpacity
+                  style={styles.projectCard}
+                  onPress={() => navigation.navigate('ProjectDetail', { project })}
+                  activeOpacity={0.7}
+                >
+                  <View style={styles.projectHeader}>
+                    <Text style={styles.projectIcon}>{project.icon}</Text>
+                    <View style={styles.projectHeaderRight}>
+                      <View
                         style={[
-                          styles.difficultyText,
-                          { color: getDifficultyColor(project.difficulty) },
+                          styles.difficultyBadge,
+                          { backgroundColor: getDifficultyColor(project.difficulty) + '20' },
                         ]}
                       >
-                        {project.difficulty}
-                      </Text>
-                    </View>
-                    <View style={styles.durationBadge}>
-                      <Text style={styles.durationText}>⏱️ {project.duration}</Text>
+                        <Text
+                          style={[
+                            styles.difficultyText,
+                            { color: getDifficultyColor(project.difficulty) },
+                          ]}
+                        >
+                          {project.difficulty}
+                        </Text>
+                      </View>
+                      <View style={styles.durationBadge}>
+                        <Text style={styles.durationText}>⏱️ {project.duration}</Text>
+                      </View>
                     </View>
                   </View>
-                </View>
 
-                <Text style={styles.projectTitle}>{project.title}</Text>
-                <Text style={styles.projectDescription} numberOfLines={2}>
-                  {project.description}
-                </Text>
-
-                {/* Tags */}
-                <View style={styles.tagsContainer}>
-                  {project.tags.slice(0, 3).map((tag, index) => (
-                    <View key={index} style={styles.tag}>
-                      <Text style={styles.tagText}>{tag}</Text>
-                    </View>
-                  ))}
-                  {project.tags.length > 3 && (
-                    <View style={styles.tag}>
-                      <Text style={styles.tagText}>+{project.tags.length - 3}</Text>
-                    </View>
-                  )}
-                </View>
-
-                {/* Steps Count */}
-                <View style={styles.stepsInfo}>
-                  <Text style={styles.stepsText}>
-                    📋 {project.steps.length} Steps
+                  <Text style={styles.projectTitle}>{project.title}</Text>
+                  <Text style={styles.projectDescription} numberOfLines={2}>
+                    {project.description}
                   </Text>
-                  <Text style={styles.arrowText}>→</Text>
-                </View>
-              </TouchableOpacity>
+
+                  {/* Tags */}
+                  <View style={styles.tagsContainer}>
+                    {project.tags.slice(0, 3).map((tag, tagIndex) => (
+                      <View key={tagIndex} style={styles.tag}>
+                        <Text style={styles.tagText}>{tag}</Text>
+                      </View>
+                    ))}
+                    {project.tags.length > 3 && (
+                      <View style={styles.tag}>
+                        <Text style={styles.tagText}>+{project.tags.length - 3}</Text>
+                      </View>
+                    )}
+                  </View>
+
+                  {/* Steps Count */}
+                  <View style={styles.stepsInfo}>
+                    <Text style={styles.stepsText}>
+                      📋 {project.steps.length} Steps
+                    </Text>
+                    <Text style={styles.arrowText}>→</Text>
+                  </View>
+                </TouchableOpacity>
+
+                {/* Native Ad after 4th project */}
+                {index === 3 && (
+                  <View style={{ marginVertical: spacing.md }}>
+                    <NativeAdView adUnitId="ca-app-pub-5526801232554836/9861336627" />
+                  </View>
+                )}
+              </React.Fragment>
             ))
           ) : (
             <View style={styles.emptyState}>

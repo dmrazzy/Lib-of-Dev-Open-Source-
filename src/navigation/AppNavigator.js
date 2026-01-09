@@ -20,6 +20,7 @@ import UIFrameworksScreen from '../screens/UIFrameworksScreen';
 import LearningScreen from '../screens/LearningScreen';
 import HintsScreen from '../screens/HintsScreen';
 import SpecializedTopicsScreen from '../screens/SpecializedTopicsScreen';
+import HowToGuidesScreen from '../screens/HowToGuidesScreen';
 import ResourcesScreen from '../screens/ResourcesScreen';
 import AskAIScreen from '../screens/AskAIScreen';
 import TutorialsScreen from '../screens/TutorialsScreen';
@@ -112,6 +113,11 @@ function BrowseStack() {
         name="SpecializedTopics" 
         component={SpecializedTopicsScreen}
         options={{ title: `🔌 ${t('specializedTopics.title')}` }}
+      />
+      <Stack.Screen 
+        name="HowToGuides" 
+        component={HowToGuidesScreen}
+        options={{ title: '🎯 How-To Guides' }}
       />
       <Stack.Screen 
         name="Resources" 

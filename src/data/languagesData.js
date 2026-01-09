@@ -4918,6 +4918,1565 @@ end`,
         ]
       }
     }
+  },
+  cpp: {
+    id: 'cpp',
+    name: 'C++',
+    icon: '⚙️',
+    color: '#00599C',
+    description: 'Powerful general-purpose programming language with system-level capabilities',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Hello World',
+            code: `#include <iostream>
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}`,
+            description: 'Basic C++ program structure',
+            usage: 'Entry point of every C++ program',
+            bestPractices: [
+              'Always include necessary headers',
+              'Use std:: namespace prefix or using declarations',
+              'Return 0 from main() to indicate success',
+              'Use endl or \\n for line breaks'
+            ]
+          },
+          {
+            title: 'Variables & Data Types',
+            code: `#include <iostream>
+#include <string>
+
+int main() {
+    // Primitive types
+    int age = 25;
+    double pi = 3.14159;
+    char grade = 'A';
+    bool isActive = true;
+    
+    // String (from STL)
+    std::string name = "John Doe";
+    
+    // Auto type deduction (C++11)
+    auto count = 42;        // int
+    auto price = 19.99;     // double
+    
+    // Constants
+    const int MAX_SIZE = 100;
+    constexpr double RATIO = 1.618;
+    
+    std::cout << "Name: " << name << ", Age: " << age << std::endl;
+    
+    return 0;
+}`,
+            description: 'Variable declarations and data types in C++',
+            usage: 'Understanding C++ type system',
+            bestPractices: [
+              'Use auto when type is obvious from context',
+              'Prefer const/constexpr for values that don\'t change',
+              'Initialize variables at declaration',
+              'Use meaningful variable names',
+              'Prefer std::string over C-style char arrays'
+            ]
+          },
+          {
+            title: 'Pointers & References',
+            code: `#include <iostream>
+
+int main() {
+    int value = 42;
+    
+    // Pointer
+    int* ptr = &value;
+    std::cout << "Value: " << value << std::endl;
+    std::cout << "Address: " << &value << std::endl;
+    std::cout << "Pointer: " << ptr << std::endl;
+    std::cout << "Dereferenced: " << *ptr << std::endl;
+    
+    // Reference
+    int& ref = value;
+    ref = 100;  // Changes value
+    std::cout << "Value: " << value << std::endl;
+    
+    // Null pointer (C++11)
+    int* nullPtr = nullptr;
+    
+    return 0;
+}`,
+            description: 'Understanding pointers and references',
+            usage: 'Memory management and efficient data passing',
+            bestPractices: [
+              'Use references for function parameters when possible',
+              'Initialize pointers to nullptr if not immediately assigned',
+              'Check for nullptr before dereferencing',
+              'Prefer smart pointers (unique_ptr, shared_ptr) over raw pointers'
+            ]
+          }
+        ]
+      },
+      oop: {
+        name: 'Object-Oriented Programming',
+        items: [
+          {
+            title: 'Classes & Objects',
+            code: `#include <iostream>
+#include <string>
+
+class Person {
+private:
+    std::string name;
+    int age;
+    
+public:
+    // Constructor
+    Person(std::string n, int a) : name(n), age(a) {}
+    
+    // Getter methods
+    std::string getName() const { return name; }
+    int getAge() const { return age; }
+    
+    // Setter methods
+    void setName(const std::string& n) { name = n; }
+    void setAge(int a) { 
+        if (a >= 0) age = a; 
+    }
+    
+    // Member function
+    void introduce() const {
+        std::cout << "Hi, I'm " << name 
+                  << " and I'm " << age 
+                  << " years old." << std::endl;
+    }
+};
+
+int main() {
+    Person person("Alice", 30);
+    person.introduce();
+    
+    person.setAge(31);
+    std::cout << person.getName() << " is now " 
+              << person.getAge() << std::endl;
+    
+    return 0;
+}`,
+            description: 'Basic class definition and usage',
+            usage: 'Creating objects and encapsulation',
+            bestPractices: [
+              'Use member initializer lists in constructors',
+              'Make member variables private',
+              'Provide public getter/setter methods as needed',
+              'Mark const methods that don\'t modify state',
+              'Use const references for string parameters'
+            ]
+          },
+          {
+            title: 'Inheritance & Polymorphism',
+            code: `#include <iostream>
+#include <string>
+#include <memory>
+
+// Base class
+class Animal {
+protected:
+    std::string name;
+    
+public:
+    Animal(const std::string& n) : name(n) {}
+    
+    // Virtual function for polymorphism
+    virtual void makeSound() const {
+        std::cout << name << " makes a sound" << std::endl;
+    }
+    
+    // Virtual destructor (important!)
+    virtual ~Animal() {}
+};
+
+// Derived classes
+class Dog : public Animal {
+public:
+    Dog(const std::string& n) : Animal(n) {}
+    
+    void makeSound() const override {
+        std::cout << name << " barks: Woof!" << std::endl;
+    }
+};
+
+class Cat : public Animal {
+public:
+    Cat(const std::string& n) : Animal(n) {}
+    
+    void makeSound() const override {
+        std::cout << name << " meows: Meow!" << std::endl;
+    }
+};
+
+int main() {
+    // Using smart pointers
+    std::unique_ptr<Animal> dog = std::make_unique<Dog>("Buddy");
+    std::unique_ptr<Animal> cat = std::make_unique<Cat>("Whiskers");
+    
+    dog->makeSound();
+    cat->makeSound();
+    
+    return 0;
+}`,
+            description: 'Inheritance and runtime polymorphism',
+            usage: 'Creating class hierarchies and virtual functions',
+            bestPractices: [
+              'Always make base class destructor virtual',
+              'Use override keyword in derived classes',
+              'Prefer composition over inheritance when possible',
+              'Use smart pointers for polymorphic objects',
+              'Make functions final if they shouldn\'t be overridden'
+            ]
+          }
+        ]
+      },
+      stl: {
+        name: 'Standard Template Library',
+        items: [
+          {
+            title: 'Vectors',
+            code: `#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+    // Create vector
+    std::vector<int> numbers = {1, 2, 3, 4, 5};
+    
+    // Add elements
+    numbers.push_back(6);
+    numbers.insert(numbers.begin(), 0);
+    
+    // Access elements
+    std::cout << "First: " << numbers.front() << std::endl;
+    std::cout << "Last: " << numbers.back() << std::endl;
+    std::cout << "At index 2: " << numbers[2] << std::endl;
+    
+    // Iterate
+    for (int num : numbers) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+    
+    // Size and capacity
+    std::cout << "Size: " << numbers.size() << std::endl;
+    std::cout << "Capacity: " << numbers.capacity() << std::endl;
+    
+    // Algorithms
+    std::sort(numbers.begin(), numbers.end());
+    auto it = std::find(numbers.begin(), numbers.end(), 3);
+    
+    return 0;
+}`,
+            description: 'Dynamic arrays with std::vector',
+            usage: 'Most commonly used container in C++',
+            bestPractices: [
+              'Reserve capacity if you know the size',
+              'Use emplace_back instead of push_back for complex types',
+              'Prefer range-based for loops',
+              'Use algorithms from <algorithm> header'
+            ]
+          },
+          {
+            title: 'Smart Pointers',
+            code: `#include <iostream>
+#include <memory>
+#include <string>
+
+class Resource {
+private:
+    std::string name;
+public:
+    Resource(const std::string& n) : name(n) {
+        std::cout << "Resource " << name << " created" << std::endl;
+    }
+    ~Resource() {
+        std::cout << "Resource " << name << " destroyed" << std::endl;
+    }
+    void use() { std::cout << "Using " << name << std::endl; }
+};
+
+int main() {
+    // unique_ptr - exclusive ownership
+    {
+        std::unique_ptr<Resource> ptr1 = std::make_unique<Resource>("A");
+        ptr1->use();
+        
+        // Move ownership
+        std::unique_ptr<Resource> ptr2 = std::move(ptr1);
+        // ptr1 is now nullptr
+    } // ptr2 automatically deleted here
+    
+    // shared_ptr - shared ownership
+    {
+        std::shared_ptr<Resource> ptr1 = std::make_shared<Resource>("B");
+        {
+            std::shared_ptr<Resource> ptr2 = ptr1;
+            std::cout << "Reference count: " << ptr1.use_count() << std::endl;
+        }
+        std::cout << "Reference count: " << ptr1.use_count() << std::endl;
+    } // Deleted when last shared_ptr goes out of scope
+    
+    // weak_ptr - non-owning reference
+    std::shared_ptr<Resource> shared = std::make_shared<Resource>("C");
+    std::weak_ptr<Resource> weak = shared;
+    
+    if (auto ptr = weak.lock()) {
+        ptr->use();
+    }
+    
+    return 0;
+}`,
+            description: 'Automatic memory management with smart pointers',
+            usage: 'RAII and safe memory management',
+            bestPractices: [
+              'Prefer unique_ptr by default',
+              'Use shared_ptr when you need shared ownership',
+              'Use weak_ptr to break circular references',
+              'Use make_unique/make_shared for creation',
+              'Avoid mixing smart pointers with raw pointers'
+            ]
+          }
+        ]
+      },
+      modern: {
+        name: 'Modern C++ (C++11/14/17/20)',
+        items: [
+          {
+            title: 'Lambda Functions',
+            code: `#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+    std::vector<int> numbers = {1, 2, 3, 4, 5};
+    
+    // Simple lambda
+    auto print = [](int n) { std::cout << n << " "; };
+    std::for_each(numbers.begin(), numbers.end(), print);
+    std::cout << std::endl;
+    
+    // Lambda with capture
+    int multiplier = 2;
+    auto multiply = [multiplier](int n) { return n * multiplier; };
+    
+    // Transform with lambda
+    std::vector<int> doubled(numbers.size());
+    std::transform(numbers.begin(), numbers.end(), 
+                   doubled.begin(), multiply);
+    
+    // Mutable lambda
+    int count = 0;
+    auto counter = [count]() mutable { return ++count; };
+    
+    // Generic lambda (C++14)
+    auto generic = [](auto a, auto b) { return a + b; };
+    std::cout << generic(5, 3) << std::endl;
+    std::cout << generic(2.5, 1.5) << std::endl;
+    
+    return 0;
+}`,
+            description: 'Lambda expressions for inline functions',
+            usage: 'Functional programming and callbacks',
+            bestPractices: [
+              'Capture by reference [&] when modifying external variables',
+              'Capture by value [=] for immutable access',
+              'Be specific with captures [x, &y] when possible',
+              'Use auto for lambda types',
+              'Consider std::function for storing lambdas'
+            ]
+          },
+          {
+            title: 'Move Semantics',
+            code: `#include <iostream>
+#include <vector>
+#include <string>
+#include <utility>
+
+class BigData {
+private:
+    std::vector<int> data;
+    std::string name;
+    
+public:
+    // Constructor
+    BigData(const std::string& n, size_t size) 
+        : name(n), data(size, 0) {
+        std::cout << "Constructed " << name << std::endl;
+    }
+    
+    // Copy constructor
+    BigData(const BigData& other) 
+        : name(other.name), data(other.data) {
+        std::cout << "Copied " << name << std::endl;
+    }
+    
+    // Move constructor
+    BigData(BigData&& other) noexcept
+        : name(std::move(other.name)), 
+          data(std::move(other.data)) {
+        std::cout << "Moved " << name << std::endl;
+    }
+    
+    // Copy assignment
+    BigData& operator=(const BigData& other) {
+        if (this != &other) {
+            name = other.name;
+            data = other.data;
+            std::cout << "Copy assigned " << name << std::endl;
+        }
+        return *this;
+    }
+    
+    // Move assignment
+    BigData& operator=(BigData&& other) noexcept {
+        if (this != &other) {
+            name = std::move(other.name);
+            data = std::move(other.data);
+            std::cout << "Move assigned " << name << std::endl;
+        }
+        return *this;
+    }
+};
+
+int main() {
+    BigData obj1("Object1", 1000000);
+    
+    // Copy
+    BigData obj2 = obj1;
+    
+    // Move
+    BigData obj3 = std::move(obj1);
+    // obj1 is now in valid but unspecified state
+    
+    return 0;
+}`,
+            description: 'Efficient resource transfer with move semantics',
+            usage: 'Avoiding unnecessary copies',
+            bestPractices: [
+              'Implement move constructor and assignment for resource-managing classes',
+              'Mark move operations as noexcept',
+              'Use std::move to enable move semantics',
+              'Don\'t access moved-from objects except to destruct or assign',
+              'Follow Rule of Five when implementing special member functions'
+            ]
+          }
+        ]
+      }
+    }
+  },
+  html: {
+    id: 'html',
+    name: 'HTML',
+    icon: '🌐',
+    color: '#E34F26',
+    description: 'Markup language for structuring web content',
+    categories: {
+      basics: {
+        name: 'HTML Basics',
+        items: [
+          {
+            title: 'Basic HTML Structure',
+            code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <meta name="description" content="Website description for SEO">
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="home">
+            <h2>Home Section</h2>
+            <p>This is the main content area.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 My Website. All rights reserved.</p>
+    </footer>
+</body>
+</html>`,
+            description: 'Basic HTML5 document structure',
+            usage: 'Foundation of every web page',
+            bestPractices: [
+              'Always include DOCTYPE declaration',
+              'Use semantic HTML5 elements (header, nav, main, footer)',
+              'Include viewport meta tag for responsive design',
+              'Add description meta tag for SEO',
+              'Set proper language attribute',
+              'Use heading hierarchy correctly (h1 → h2 → h3)'
+            ],
+            commonMistakes: [
+              'Missing DOCTYPE declaration',
+              'Not closing tags properly',
+              'Using div for everything instead of semantic elements',
+              'Multiple h1 tags on one page',
+              'Missing alt attributes on images'
+            ]
+          },
+          {
+            title: 'Text Formatting',
+            code: `<!-- Headings -->
+<h1>Main Heading</h1>
+<h2>Subheading</h2>
+<h3>Section Heading</h3>
+
+<!-- Paragraphs -->
+<p>This is a paragraph with <strong>bold text</strong> and <em>italic text</em>.</p>
+
+<!-- Lists -->
+<ul>
+    <li>Unordered item 1</li>
+    <li>Unordered item 2</li>
+</ul>
+
+<ol>
+    <li>Ordered item 1</li>
+    <li>Ordered item 2</li>
+</ol>
+
+<!-- Links -->
+<a href="https://example.com" target="_blank" rel="noopener noreferrer">
+    External Link
+</a>
+
+<!-- Line breaks and horizontal rule -->
+<p>First line<br>Second line</p>
+<hr>
+
+<!-- Blockquote -->
+<blockquote cite="https://source.com">
+    <p>This is a quoted text.</p>
+    <footer>— Author Name</footer>
+</blockquote>`,
+            description: 'Text formatting and structure',
+            usage: 'Formatting content on web pages',
+            bestPractices: [
+              'Use strong instead of b for semantic emphasis',
+              'Use em instead of i for semantic emphasis',
+              'Add rel="noopener noreferrer" to external links',
+              'Use cite attribute in blockquotes',
+              'Keep heading hierarchy logical'
+            ]
+          },
+          {
+            title: 'Forms & Input',
+            code: `<form action="/submit" method="POST">
+    <!-- Text Input -->
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" 
+           required minlength="3" maxlength="20"
+           placeholder="Enter username">
+    
+    <!-- Email Input -->
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    
+    <!-- Password -->
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" 
+           required minlength="8">
+    
+    <!-- Select Dropdown -->
+    <label for="country">Country:</label>
+    <select id="country" name="country">
+        <option value="">Select a country</option>
+        <option value="us">United States</option>
+        <option value="uk">United Kingdom</option>
+        <option value="de">Germany</option>
+    </select>
+    
+    <!-- Radio Buttons -->
+    <fieldset>
+        <legend>Gender:</legend>
+        <label>
+            <input type="radio" name="gender" value="male"> Male
+        </label>
+        <label>
+            <input type="radio" name="gender" value="female"> Female
+        </label>
+    </fieldset>
+    
+    <!-- Checkboxes -->
+    <label>
+        <input type="checkbox" name="terms" required>
+        I agree to the terms
+    </label>
+    
+    <!-- Textarea -->
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" rows="4" cols="50"></textarea>
+    
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+</form>`,
+            description: 'HTML forms and input elements',
+            usage: 'Collecting user input',
+            bestPractices: [
+              'Always use label elements with for attribute',
+              'Use appropriate input types (email, tel, url, etc.)',
+              'Add required attribute for mandatory fields',
+              'Use placeholder for hints, not instructions',
+              'Group related inputs with fieldset',
+              'Use button instead of input for submit buttons'
+            ]
+          }
+        ]
+      },
+      semantic: {
+        name: 'Semantic HTML',
+        items: [
+          {
+            title: 'Semantic Elements',
+            code: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Semantic HTML Example</title>
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header>
+        <h1>Website Title</h1>
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Main content area -->
+    <main>
+        <!-- Article (self-contained content) -->
+        <article>
+            <header>
+                <h2>Article Title</h2>
+                <p>Posted on <time datetime="2026-01-09">January 9, 2026</time></p>
+            </header>
+            
+            <p>Article content goes here...</p>
+            
+            <footer>
+                <p>Tags: <a href="#html">HTML</a>, <a href="#web">Web</a></p>
+            </footer>
+        </article>
+        
+        <!-- Section (thematic grouping) -->
+        <section id="features">
+            <h2>Features</h2>
+            <p>Description of features...</p>
+        </section>
+        
+        <!-- Aside (tangentially related content) -->
+        <aside>
+            <h3>Related Links</h3>
+            <ul>
+                <li><a href="#link1">Related Article 1</a></li>
+                <li><a href="#link2">Related Article 2</a></li>
+            </ul>
+        </aside>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Company Name</p>
+        <address>
+            Contact: <a href="mailto:info@example.com">info@example.com</a>
+        </address>
+    </footer>
+</body>
+</html>`,
+            description: 'Semantic HTML5 elements for better structure',
+            usage: 'Improving accessibility and SEO',
+            bestPractices: [
+              'Use semantic elements instead of generic divs',
+              'One main element per page',
+              'Use article for self-contained content',
+              'Use section for thematic grouping',
+              'Use aside for tangentially related content',
+              'Use time element for dates and times',
+              'Add ARIA labels for better accessibility'
+            ]
+          },
+          {
+            title: 'Multimedia Elements',
+            code: `<!-- Images with responsive attributes -->
+<figure>
+    <img src="image.jpg" 
+         alt="Descriptive text for screen readers"
+         width="800" 
+         height="600"
+         loading="lazy">
+    <figcaption>Image caption explaining the content</figcaption>
+</figure>
+
+<!-- Responsive images -->
+<picture>
+    <source media="(min-width: 800px)" srcset="large.jpg">
+    <source media="(min-width: 400px)" srcset="medium.jpg">
+    <img src="small.jpg" alt="Responsive image">
+</picture>
+
+<!-- Video with controls -->
+<video controls width="640" height="360" poster="thumbnail.jpg">
+    <source src="video.mp4" type="video/mp4">
+    <source src="video.webm" type="video/webm">
+    <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English">
+    Your browser doesn't support video.
+</video>
+
+<!-- Audio -->
+<audio controls>
+    <source src="audio.mp3" type="audio/mpeg">
+    <source src="audio.ogg" type="audio/ogg">
+    Your browser doesn't support audio.
+</audio>
+
+<!-- SVG inline -->
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="40" fill="blue" />
+</svg>`,
+            description: 'Images, video, audio and SVG elements',
+            usage: 'Adding multimedia content to web pages',
+            bestPractices: [
+              'Always include alt text for images',
+              'Use loading="lazy" for images below the fold',
+              'Specify width and height to prevent layout shift',
+              'Use figure and figcaption for images with captions',
+              'Provide multiple source formats for video/audio',
+              'Include fallback text for unsupported browsers',
+              'Add subtitles/captions for accessibility'
+            ]
+          }
+        ]
+      },
+      accessibility: {
+        name: 'Accessibility (a11y)',
+        items: [
+          {
+            title: 'ARIA Attributes',
+            code: `<!-- Landmarks -->
+<nav aria-label="Main navigation">
+    <ul>
+        <li><a href="#home">Home</a></li>
+    </ul>
+</nav>
+
+<!-- Button states -->
+<button aria-pressed="false" aria-label="Toggle dark mode">
+    🌙
+</button>
+
+<!-- Alert messages -->
+<div role="alert" aria-live="polite">
+    Form submitted successfully!
+</div>
+
+<!-- Expandable sections -->
+<button aria-expanded="false" aria-controls="content">
+    Show More
+</button>
+<div id="content" hidden>
+    Hidden content here
+</div>
+
+<!-- Custom components -->
+<div role="tablist">
+    <button role="tab" aria-selected="true" aria-controls="panel1">
+        Tab 1
+    </button>
+    <button role="tab" aria-selected="false" aria-controls="panel2">
+        Tab 2
+    </button>
+</div>
+<div id="panel1" role="tabpanel">Content 1</div>
+<div id="panel2" role="tabpanel" hidden>Content 2</div>
+
+<!-- Skip to main content -->
+<a href="#main-content" class="skip-link">
+    Skip to main content
+</a>`,
+            description: 'ARIA attributes for accessibility',
+            usage: 'Making web content accessible to all users',
+            bestPractices: [
+              'Use ARIA only when native HTML doesn\'t suffice',
+              'Add aria-label for icon-only buttons',
+              'Use aria-live for dynamic content updates',
+              'Implement keyboard navigation',
+              'Test with screen readers',
+              'Maintain focus management',
+              'Use semantic HTML first, ARIA second'
+            ]
+          }
+        ]
+      }
+    }
+  },
+  css: {
+    id: 'css',
+    name: 'CSS',
+    icon: '🎨',
+    color: '#1572B6',
+    description: 'Style sheet language for designing web pages',
+    categories: {
+      basics: {
+        name: 'CSS Basics',
+        items: [
+          {
+            title: 'Selectors',
+            code: `/* Element selector */
+p {
+    color: blue;
+}
+
+/* Class selector */
+.highlight {
+    background-color: yellow;
+}
+
+/* ID selector */
+#header {
+    font-size: 24px;
+}
+
+/* Attribute selector */
+input[type="text"] {
+    border: 1px solid gray;
+}
+
+/* Descendant selector */
+div p {
+    margin: 10px;
+}
+
+/* Child selector */
+ul > li {
+    list-style: none;
+}
+
+/* Adjacent sibling */
+h1 + p {
+    font-weight: bold;
+}
+
+/* Pseudo-classes */
+a:hover {
+    color: red;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+input:focus {
+    outline: 2px solid blue;
+}
+
+li:first-child {
+    font-weight: bold;
+}
+
+li:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+
+/* Pseudo-elements */
+p::first-letter {
+    font-size: 2em;
+}
+
+p::before {
+    content: "→ ";
+}`,
+            description: 'CSS selector types and usage',
+            usage: 'Targeting HTML elements for styling',
+            bestPractices: [
+              'Prefer classes over IDs for styling',
+              'Keep selectors simple and maintainable',
+              'Use specific selectors to avoid over-specificity',
+              'Avoid !important unless absolutely necessary',
+              'Use semantic class names',
+              'Group related selectors together'
+            ]
+          },
+          {
+            title: 'Box Model',
+            code: `/* Box model properties */
+.box {
+    /* Content */
+    width: 300px;
+    height: 200px;
+    
+    /* Padding (inside border) */
+    padding: 20px;
+    /* or */
+    padding: 10px 20px; /* top/bottom left/right */
+    padding: 10px 15px 20px 25px; /* top right bottom left */
+    
+    /* Border */
+    border: 2px solid #333;
+    /* or */
+    border-width: 2px;
+    border-style: solid;
+    border-color: #333;
+    border-radius: 8px;
+    
+    /* Margin (outside border) */
+    margin: 20px;
+    margin: 10px auto; /* centered horizontally */
+    
+    /* Box sizing */
+    box-sizing: border-box; /* includes padding and border in width */
+}
+
+/* Different display types */
+.block {
+    display: block; /* Takes full width */
+}
+
+.inline {
+    display: inline; /* Takes only content width */
+}
+
+.inline-block {
+    display: inline-block; /* Inline but with width/height */
+}
+
+.hidden {
+    display: none; /* Removes from layout */
+}`,
+            description: 'Understanding the CSS box model',
+            usage: 'Controlling element sizing and spacing',
+            bestPractices: [
+              'Use box-sizing: border-box globally',
+              'Understand padding vs margin',
+              'Use margin: auto for horizontal centering',
+              'Avoid mixing units in one property',
+              'Use shorthand properties when appropriate'
+            ]
+          },
+          {
+            title: 'Colors & Typography',
+            code: `/* Color formats */
+.colors {
+    /* Named colors */
+    color: red;
+    
+    /* Hex */
+    color: #ff0000;
+    color: #f00; /* Shorthand */
+    
+    /* RGB */
+    color: rgb(255, 0, 0);
+    
+    /* RGBA (with transparency) */
+    color: rgba(255, 0, 0, 0.5);
+    
+    /* HSL */
+    color: hsl(0, 100%, 50%);
+    
+    /* HSLA */
+    color: hsla(0, 100%, 50%, 0.5);
+}
+
+/* Typography */
+.typography {
+    /* Font family */
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    
+    /* Font size */
+    font-size: 16px;
+    font-size: 1rem; /* Relative to root */
+    font-size: 1.2em; /* Relative to parent */
+    
+    /* Font weight */
+    font-weight: 400; /* Normal */
+    font-weight: 700; /* Bold */
+    font-weight: bold;
+    
+    /* Font style */
+    font-style: italic;
+    
+    /* Line height */
+    line-height: 1.5;
+    line-height: 24px;
+    
+    /* Text alignment */
+    text-align: left;
+    text-align: center;
+    text-align: right;
+    text-align: justify;
+    
+    /* Text decoration */
+    text-decoration: underline;
+    text-decoration: none; /* Remove underline from links */
+    
+    /* Text transform */
+    text-transform: uppercase;
+    text-transform: lowercase;
+    text-transform: capitalize;
+    
+    /* Letter and word spacing */
+    letter-spacing: 2px;
+    word-spacing: 4px;
+}`,
+            description: 'Colors and typography in CSS',
+            usage: 'Styling text and defining color schemes',
+            bestPractices: [
+              'Use CSS variables for color schemes',
+              'Prefer rem over px for font sizes',
+              'Set line-height to 1.5-1.6 for readability',
+              'Include fallback fonts',
+              'Use web-safe fonts or @font-face',
+              'Consider color contrast for accessibility'
+            ]
+          }
+        ]
+      },
+      layout: {
+        name: 'Layout',
+        items: [
+          {
+            title: 'Flexbox',
+            code: `/* Flex container */
+.container {
+    display: flex;
+    
+    /* Direction */
+    flex-direction: row; /* default */
+    flex-direction: column;
+    flex-direction: row-reverse;
+    flex-direction: column-reverse;
+    
+    /* Wrapping */
+    flex-wrap: nowrap; /* default */
+    flex-wrap: wrap;
+    
+    /* Justify content (main axis) */
+    justify-content: flex-start;
+    justify-content: center;
+    justify-content: space-between;
+    justify-content: space-around;
+    justify-content: space-evenly;
+    
+    /* Align items (cross axis) */
+    align-items: stretch; /* default */
+    align-items: flex-start;
+    align-items: center;
+    align-items: flex-end;
+    
+    /* Gap between items */
+    gap: 20px;
+    gap: 10px 20px; /* row-gap column-gap */
+}
+
+/* Flex items */
+.item {
+    /* Grow */
+    flex-grow: 1; /* Take up remaining space */
+    
+    /* Shrink */
+    flex-shrink: 1; /* Allow shrinking */
+    
+    /* Basis */
+    flex-basis: 200px; /* Initial size */
+    
+    /* Shorthand */
+    flex: 1; /* grow shrink basis */
+    flex: 0 1 auto; /* default */
+    
+    /* Align individual item */
+    align-self: center;
+}
+
+/* Common patterns */
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}`,
+            description: 'Flexible box layout',
+            usage: 'Creating flexible one-dimensional layouts',
+            bestPractices: [
+              'Use flexbox for one-dimensional layouts',
+              'Use gap instead of margins between items',
+              'Understand flex-grow, flex-shrink, flex-basis',
+              'Combine with min-width/max-width for responsiveness',
+              'Use align-items: stretch for equal heights'
+            ]
+          },
+          {
+            title: 'CSS Grid',
+            code: `/* Grid container */
+.grid {
+    display: grid;
+    
+    /* Define columns */
+    grid-template-columns: 200px 1fr 200px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    
+    /* Define rows */
+    grid-template-rows: 100px auto 100px;
+    grid-template-rows: repeat(3, 1fr);
+    
+    /* Gap */
+    gap: 20px;
+    gap: 20px 10px; /* row-gap column-gap */
+    
+    /* Template areas */
+    grid-template-areas:
+        "header header header"
+        "sidebar main main"
+        "footer footer footer";
+}
+
+/* Grid items */
+.header {
+    grid-area: header;
+}
+
+.sidebar {
+    grid-area: sidebar;
+}
+
+.main {
+    grid-area: main;
+}
+
+/* Alternative: position by lines */
+.item {
+    grid-column: 1 / 3; /* Start at line 1, end at line 3 */
+    grid-row: 2 / 4;
+    
+    /* Shorthand */
+    grid-column: span 2; /* Span 2 columns */
+    grid-row: span 3; /* Span 3 rows */
+}
+
+/* Alignment */
+.grid-centered {
+    justify-items: center; /* Horizontal */
+    align-items: center; /* Vertical */
+    
+    /* Or for individual items */
+    justify-self: center;
+    align-self: center;
+}
+
+/* Responsive grid */
+.responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}`,
+            description: 'CSS Grid layout system',
+            usage: 'Creating complex two-dimensional layouts',
+            bestPractices: [
+              'Use Grid for two-dimensional layouts',
+              'Use repeat() for repetitive patterns',
+              'Use auto-fit/auto-fill for responsive grids',
+              'Use minmax() for flexible sizing',
+              'Name grid lines and areas for clarity',
+              'Use fr units for fractional sizing'
+            ]
+          },
+          {
+            title: 'Positioning',
+            code: `/* Static (default) */
+.static {
+    position: static;
+}
+
+/* Relative - positioned relative to normal position */
+.relative {
+    position: relative;
+    top: 20px;
+    left: 10px;
+}
+
+/* Absolute - positioned relative to nearest positioned ancestor */
+.absolute {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* Fixed - positioned relative to viewport */
+.fixed {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Sticky - toggles between relative and fixed */
+.sticky {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 100;
+}
+
+/* Z-index controls stacking */
+.layer1 {
+    position: relative;
+    z-index: 1;
+}
+
+.layer2 {
+    position: relative;
+    z-index: 2; /* Appears on top */
+}
+
+/* Common patterns */
+.centered-absolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.full-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}`,
+            description: 'CSS positioning schemes',
+            usage: 'Controlling element positioning',
+            bestPractices: [
+              'Use relative positioning for small adjustments',
+              'Use absolute for overlays and dropdowns',
+              'Use fixed for headers and floating buttons',
+              'Use sticky for scroll-aware headers',
+              'Always set z-index on positioned elements',
+              'Avoid excessive absolute positioning'
+            ]
+          }
+        ]
+      },
+      responsive: {
+        name: 'Responsive Design',
+        items: [
+          {
+            title: 'Media Queries',
+            code: `/* Mobile-first approach */
+.container {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+        padding: 20px;
+    }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+    .container {
+        width: 1000px;
+    }
+}
+
+/* Large desktop */
+@media (min-width: 1440px) {
+    .container {
+        width: 1200px;
+    }
+}
+
+/* Orientation */
+@media (orientation: portrait) {
+    .sidebar {
+        display: none;
+    }
+}
+
+@media (orientation: landscape) {
+    .sidebar {
+        display: block;
+    }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #1a1a1a;
+        color: #ffffff;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none;
+    }
+}`,
+            description: 'Media queries for responsive design',
+            usage: 'Adapting layouts to different screen sizes',
+            bestPractices: [
+              'Use mobile-first approach',
+              'Use min-width instead of max-width',
+              'Define breakpoints based on content',
+              'Test on real devices',
+              'Use em/rem for breakpoints',
+              'Consider accessibility preferences'
+            ]
+          },
+          {
+            title: 'CSS Variables',
+            code: `/* Define variables in :root */
+:root {
+    /* Colors */
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --text-color: #333;
+    --bg-color: #ffffff;
+    
+    /* Spacing */
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    
+    /* Typography */
+    --font-size-base: 16px;
+    --font-size-lg: 20px;
+    --font-family: 'Arial', sans-serif;
+    
+    /* Borders */
+    --border-radius: 8px;
+    --border-color: #ddd;
+}
+
+/* Dark mode variables */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #ffffff;
+        --bg-color: #1a1a1a;
+        --border-color: #444;
+    }
+}
+
+/* Using variables */
+.button {
+    background: var(--primary-color);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-base);
+}
+
+/* Fallback values */
+.text {
+    color: var(--text-color, #333);
+}
+
+/* Scoped variables */
+.card {
+    --card-padding: 20px;
+    padding: var(--card-padding);
+}
+
+/* Calculations */
+.container {
+    padding: calc(var(--spacing-md) * 2);
+}`,
+            description: 'CSS custom properties (variables)',
+            usage: 'Creating reusable and maintainable styles',
+            bestPractices: [
+              'Define global variables in :root',
+              'Use naming conventions (--category-property)',
+              'Group related variables together',
+              'Provide fallback values',
+              'Use variables for theming',
+              'Update variables with JavaScript for dynamic themes'
+            ]
+          }
+        ]
+      },
+      animations: {
+        name: 'Animations & Transitions',
+        items: [
+          {
+            title: 'Transitions',
+            code: `/* Simple transition */
+.button {
+    background: blue;
+    transition: background 0.3s ease;
+}
+
+.button:hover {
+    background: darkblue;
+}
+
+/* Multiple properties */
+.card {
+    transform: scale(1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
+    transition: 
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* All properties */
+.item {
+    transition: all 0.3s ease;
+}
+
+/* Timing functions */
+.easing {
+    transition: transform 0.3s ease;        /* Slow start and end */
+    transition: transform 0.3s ease-in;     /* Slow start */
+    transition: transform 0.3s ease-out;    /* Slow end */
+    transition: transform 0.3s ease-in-out; /* Very slow start and end */
+    transition: transform 0.3s linear;      /* Constant speed */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Custom */
+}
+
+/* Delay */
+.delayed {
+    transition: opacity 0.3s ease 0.1s; /* 0.1s delay */
+}`,
+            description: 'CSS transitions for smooth changes',
+            usage: 'Animating property changes',
+            bestPractices: [
+              'Transition specific properties, not all',
+              'Use transform and opacity for best performance',
+              'Keep transitions under 300ms for responsiveness',
+              'Use ease or ease-out for most transitions',
+              'Avoid transitioning layout properties (width, height)',
+              'Test performance on mobile devices'
+            ]
+          },
+          {
+            title: 'Keyframe Animations',
+            code: `/* Define keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Apply animations */
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Multiple animations */
+.complex {
+    animation: 
+        fadeIn 0.5s ease,
+        slideIn 0.3s ease-out;
+}
+
+/* Animation properties */
+.animated {
+    animation-name: bounce;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+    
+    /* Shorthand */
+    animation: bounce 1s ease-in-out 0.5s infinite alternate forwards;
+}
+
+/* Pause on hover */
+.pausable {
+    animation: bounce 2s infinite;
+}
+
+.pausable:hover {
+    animation-play-state: paused;
+}`,
+            description: 'CSS keyframe animations',
+            usage: 'Creating complex animations',
+            bestPractices: [
+              'Use animation for complex, multi-state changes',
+              'Prefer transform and opacity for performance',
+              'Use will-change for performance hints',
+              'Avoid animating layout properties',
+              'Set animation-fill-mode appropriately',
+              'Respect prefers-reduced-motion'
+            ]
+          }
+        ]
+      }
+    }
   }
 };
 

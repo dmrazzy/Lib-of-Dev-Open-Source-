@@ -60,6 +60,12 @@ export default function SettingsScreen() {
     frontend: false,
     database: false,
     devops: false,
+    ai: false,
+    blockchain: false,
+    iot: false,
+    gamedev: false,
+    security: false,
+    cloud: false,
   });
 
   const [selectedLanguages, setSelectedLanguages] = useState({
@@ -68,13 +74,18 @@ export default function SettingsScreen() {
     python: false,
     java: false,
     csharp: false,
+    cpp: false,
     go: false,
     rust: false,
     swift: false,
     kotlin: false,
+    dart: false,
     ruby: false,
     php: false,
+    r: false,
     sql: false,
+    html: false,
+    css: false,
   });
 
   // Survey time window: 08.01.2026 00:01 CET to 14.01.2026 23:29 CET
@@ -651,6 +662,12 @@ function getInterestEmoji(key) {
     frontend: '🎨',
     database: '🗄️',
     devops: '🚀',
+    ai: '🤖',
+    blockchain: '⛓️',
+    iot: '🔌',
+    gamedev: '🎮',
+    security: '🔒',
+    cloud: '☁️',
   };
   return emojis[key] || '💡';
 }
@@ -662,13 +679,18 @@ function getLanguageEmoji(key) {
     python: '🐍',
     java: '☕',
     csharp: '🔷',
+    cpp: '⚙️',
     go: '🐹',
     rust: '🦀',
     swift: '🦅',
     kotlin: '🅺',
+    dart: '🎯',
     ruby: '💎',
     php: '🐘',
+    r: '📊',
     sql: '🗄️',
+    html: '🌐',
+    css: '🎨',
   };
   return emojis[key] || '💻';
 }
@@ -680,13 +702,18 @@ function getLanguageName(key) {
     python: 'Python',
     java: 'Java',
     csharp: 'C#',
+    cpp: 'C++',
     go: 'Go',
     rust: 'Rust',
     swift: 'Swift',
     kotlin: 'Kotlin',
+    dart: 'Dart',
     ruby: 'Ruby',
     php: 'PHP',
+    r: 'R',
     sql: 'SQL',
+    html: 'HTML',
+    css: 'CSS',
   };
   return names[key] || key;
 }

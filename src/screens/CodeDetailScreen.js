@@ -45,8 +45,8 @@ export default function CodeDetailScreen({ route }) {
   
   item = category.items[itemIndex];
 
-  const copyToClipboard = () => {
-    Clipboard.setString(item.code);
+  const copyToClipboard = async () => {
+    await Clipboard.setStringAsync(item.code);
     Alert.alert(t('codeDetail.copied'), t('codeDetail.copiedMessage'));
   };
 

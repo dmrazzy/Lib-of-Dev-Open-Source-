@@ -1202,7 +1202,193 @@ export const quickTips = [
     answer: 'Use Prettier + ESLint → Consistent code style',
     category: 'Tools',
   },
+  {
+    id: 'quick-tips-list',
+    title: 'Quick Tips List',
+    category: 'Quick Tips',
+    icon: '⚡',
+    color: '#10B981',
+    quickTips: quickTips,
+  },
 ];
+
+// GitHub & Version Control section
+export const githubAndGit = {
+  id: 'github-git',
+  category: 'Git & GitHub',
+  icon: '🐙',
+  color: '#6366F1',
+  title: 'Git & GitHub Mastery',
+  sections: [
+    {
+      title: 'Git Essentials',
+      description: 'Master fundamental Git commands and workflows',
+      tips: [
+        {
+          command: 'git init / git clone <url>',
+          description: 'Initialize new repo or clone existing one',
+          example: 'git clone https://github.com/user/repo.git',
+        },
+        {
+          command: 'git status',
+          description: 'Check current state of your working directory',
+          tip: 'Use this before committing to see what\'s staged',
+        },
+        {
+          command: 'git add . / git commit -m "message"',
+          description: 'Stage and commit your changes',
+          tip: 'Write clear, descriptive commit messages',
+        },
+        {
+          command: 'git checkout -b feature-name',
+          description: 'Create and switch to new branch',
+          tip: 'Always work in feature branches, never directly on main',
+        },
+        {
+          command: 'git pull / git push',
+          description: 'Sync with remote repository',
+          tip: 'Always pull before push to avoid conflicts',
+        },
+      ],
+    },
+    {
+      title: 'Advanced Git Techniques',
+      description: 'Level up with powerful Git operations',
+      tips: [
+        {
+          command: 'git rebase -i HEAD~3',
+          description: 'Interactive rebase to clean up commit history',
+          tip: 'Use squash to combine multiple commits into one',
+        },
+        {
+          command: 'git stash / git stash pop',
+          description: 'Temporarily save work without committing',
+          tip: 'Perfect when switching contexts quickly',
+        },
+        {
+          command: 'git cherry-pick <commit-hash>',
+          description: 'Apply specific commit to current branch',
+          tip: 'Great for picking specific fixes from other branches',
+        },
+        {
+          command: 'git blame <file>',
+          description: 'See who last modified each line',
+          tip: 'Useful for understanding code history',
+        },
+        {
+          command: 'git bisect',
+          description: 'Binary search to find bug-introducing commit',
+          tip: 'Efficiently find when a bug was introduced',
+        },
+      ],
+    },
+    {
+      title: 'GitHub Collaboration',
+      description: 'Professional workflow for teams',
+      tips: [
+        {
+          scenario: 'Contributing to open source',
+          workflow: '1. Fork repo → 2. Clone fork → 3. Add upstream remote → 4. Create feature branch → 5. Make changes → 6. Push to fork → 7. Create Pull Request',
+          tip: 'Keep your fork synced with: git fetch upstream && git merge upstream/main',
+        },
+        {
+          scenario: 'Pull Request best practices',
+          recommendations: [
+            'Keep PRs small and focused (< 400 lines)',
+            'Write clear description of changes',
+            'Link related issues',
+            'Add screenshots for UI changes',
+            'Request specific reviewers',
+          ],
+        },
+        {
+          scenario: 'Code review guidelines',
+          recommendations: [
+            'Review code thoroughly but kindly',
+            'Ask questions instead of making demands',
+            'Suggest improvements, don\'t just criticize',
+            'Approve promptly if code is good',
+            'Test locally when possible',
+          ],
+        },
+      ],
+    },
+    {
+      title: 'GitHub Actions & CI/CD',
+      description: 'Automate testing and deployment',
+      examples: [
+        {
+          name: 'Basic CI Workflow',
+          description: 'Run tests on every push',
+          useCase: 'Catch bugs early, ensure code quality',
+          setup: 'Create .github/workflows/ci.yml with test jobs',
+        },
+        {
+          name: 'Auto-deployment',
+          description: 'Deploy to production on merge to main',
+          useCase: 'Continuous deployment, faster releases',
+          setup: 'Use Vercel/Netlify GitHub Actions',
+        },
+        {
+          name: 'Security scanning',
+          description: 'Check dependencies for vulnerabilities',
+          useCase: 'Keep dependencies secure',
+          setup: 'npm audit in workflow + Dependabot',
+        },
+      ],
+    },
+    {
+      title: 'GitHub Pro Tips',
+      description: 'Productivity hacks and hidden features',
+      tips: [
+        {
+          shortcut: 'Press . on any repo',
+          description: 'Open repo in github.dev (web VS Code)',
+          benefit: 'Quick edits without cloning',
+        },
+        {
+          shortcut: 'Press t',
+          description: 'File finder',
+          benefit: 'Quickly navigate large repositories',
+        },
+        {
+          shortcut: 'Press ?',
+          description: 'See all keyboard shortcuts',
+          benefit: '10x faster navigation',
+        },
+        {
+          feature: 'GitHub CLI (gh)',
+          description: 'Manage repos, PRs, issues from terminal',
+          example: 'gh pr create, gh issue list, gh repo view',
+        },
+        {
+          feature: 'Search operators',
+          description: 'Find code across GitHub',
+          example: 'language:javascript stars:>1000 topic:react',
+        },
+      ],
+    },
+    {
+      title: 'Conventional Commits',
+      description: 'Write better commit messages',
+      format: 'type(scope): subject',
+      types: [
+        { type: 'feat', emoji: '✨', description: 'New feature' },
+        { type: 'fix', emoji: '🐛', description: 'Bug fix' },
+        { type: 'docs', emoji: '📝', description: 'Documentation' },
+        { type: 'style', emoji: '🎨', description: 'Formatting' },
+        { type: 'refactor', emoji: '♻️', description: 'Code restructuring' },
+        { type: 'test', emoji: '✅', description: 'Tests' },
+        { type: 'chore', emoji: '🔧', description: 'Maintenance' },
+      ],
+      examples: [
+        'feat(auth): Add Google OAuth login',
+        'fix(api): Handle null response gracefully',
+        'docs(readme): Update installation steps',
+      ],
+    },
+  ],
+};
 
 // Decision tree helper
 export const decisionTrees = {

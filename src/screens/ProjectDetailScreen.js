@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
-import AdBanner from '../components/AdBanner';
 
 export default function ProjectDetailScreen({ route, navigation }) {
   const { project } = route.params;
@@ -81,9 +80,6 @@ export default function ProjectDetailScreen({ route, navigation }) {
           </View>
         </View>
 
-        {/* Ad Banner */}
-        <AdBanner />
-
         {/* Progress Info */}
         <View style={styles.progressCard}>
           <Text style={styles.progressIcon}>📋</Text>
@@ -104,84 +100,86 @@ export default function ProjectDetailScreen({ route, navigation }) {
             const isCompleted = false; // You can add state management for completion
 
             return (
-              <View key={step.id} style={styles.stepCard}>
-                {/* Step Header */}
-                <TouchableOpacity
-                  style={styles.stepHeader}
-                  onPress={() => toggleStep(index)}
-                  activeOpacity={0.7}
-                >
-                  <View style={styles.stepHeaderLeft}>
-                    <View
-                      style={[
-                        styles.stepNumber,
-                        isCompleted && styles.stepNumberCompleted,
-                      ]}
-                    >
-                      <Text style={styles.stepNumberText}>{index + 1}</Text>
-                    </View>
-                    <View style={styles.stepHeaderText}>
-                      <Text style={styles.stepTitle}>{step.title}</Text>
-                      <Text style={styles.stepDuration}>⏱️ {step.duration}</Text>
-                    </View>
-                  </View>
-                  <Text style={styles.expandIcon}>{isExpanded ? '▼' : '▶'}</Text>
-                </TouchableOpacity>
-
-                {/* Step Content */}
-                {isExpanded && (
-                  <View style={styles.stepContent}>
-                    {/* Description */}
-                    <Text style={styles.contentText}>{step.content}</Text>
-
-                    {/* Code Block */}
-                    {step.code && (
-                      <View style={styles.codeContainer}>
-                        <View style={styles.codeHeader}>
-                          <Text style={styles.codeTitle}>💻 Code</Text>
-                        </View>
-                        <ScrollView
-                          horizontal
-                          showsHorizontalScrollIndicator={true}
-                          style={styles.codeScrollView}
-                        >
-                          <Text style={styles.codeText}>{step.code}</Text>
-                        </ScrollView>
+              <React.Fragment key={step.id}>
+                <View style={styles.stepCard}>
+                  {/* Step Header */}
+                  <TouchableOpacity
+                    style={styles.stepHeader}
+                    onPress={() => toggleStep(index)}
+                    activeOpacity={0.7}
+                  >
+                    <View style={styles.stepHeaderLeft}>
+                      <View
+                        style={[
+                          styles.stepNumber,
+                          isCompleted && styles.stepNumberCompleted,
+                        ]}
+                      >
+                        <Text style={styles.stepNumberText}>{index + 1}</Text>
                       </View>
-                    )}
+                      <View style={styles.stepHeaderText}>
+                        <Text style={styles.stepTitle}>{step.title}</Text>
+                        <Text style={styles.stepDuration}>⏱️ {step.duration}</Text>
+                      </View>
+                    </View>
+                    <Text style={styles.expandIcon}>{isExpanded ? '▼' : '▶'}</Text>
+                  </TouchableOpacity>
 
-                    {/* Tips */}
-                    {step.tips && step.tips.length > 0 && (
-                      <View style={styles.tipsContainer}>
-                        <Text style={styles.sectionTitle}>💡 Tips</Text>
-                        {step.tips.map((tip, tipIndex) => (
-                          <View key={tipIndex} style={styles.tipItem}>
-                            <Text style={styles.tipBullet}>•</Text>
-                            <Text style={styles.tipText}>{tip}</Text>
+                  {/* Step Content */}
+                  {isExpanded && (
+                    <View style={styles.stepContent}>
+                      {/* Description */}
+                      <Text style={styles.contentText}>{step.content}</Text>
+
+                      {/* Code Block */}
+                      {step.code && (
+                        <View style={styles.codeContainer}>
+                          <View style={styles.codeHeader}>
+                            <Text style={styles.codeTitle}>💻 Code</Text>
                           </View>
-                        ))}
-                      </View>
-                    )}
-
-                    {/* Resources */}
-                    {step.resources && step.resources.length > 0 && (
-                      <View style={styles.resourcesContainer}>
-                        <Text style={styles.sectionTitle}>🔗 Resources</Text>
-                        {step.resources.map((resource, resIndex) => (
-                          <TouchableOpacity
-                            key={resIndex}
-                            style={styles.resourceItem}
-                            onPress={() => openURL(resource.url)}
+                          <ScrollView
+                            horizontal
+                            showsHorizontalScrollIndicator={true}
+                            style={styles.codeScrollView}
                           >
-                            <Text style={styles.resourceTitle}>{resource.title}</Text>
-                            <Text style={styles.resourceUrl}>→</Text>
-                          </TouchableOpacity>
+                            <Text style={styles.codeText}>{step.code}</Text>
+                          </ScrollView>
+                        </View>
+                      )}
+
+                      {/* Tips */}
+                      {step.tips && step.tips.length > 0 && (
+                        <View style={styles.tipsContainer}>
+                          <Text style={styles.sectionTitle}>💡 Tips</Text>
+                          {step.tips.map((tip, tipIndex) => (
+                            <View key={tipIndex} style={styles.tipItem}>
+                              <Text style={styles.tipBullet}>•</Text>
+                              <Text style={styles.tipText}>{tip}</Text>
+                            </View>
+                          ))}
+                        </View>
+                      )}
+
+                      {/* Resources */}
+                      {step.resources && step.resources.length > 0 && (
+                        <View style={styles.resourcesContainer}>
+                          <Text style={styles.sectionTitle}>🔗 Resources</Text>
+                          {step.resources.map((resource, resIndex) => (
+                            <TouchableOpacity
+                              key={resIndex}
+                              style={styles.resourceItem}
+                              onPress={() => openURL(resource.url)}
+                            >
+                              <Text style={styles.resourceTitle}>{resource.title}</Text>
+                              <Text style={styles.resourceUrl}>→</Text>
+                            </TouchableOpacity>
                         ))}
                       </View>
                     )}
                   </View>
                 )}
-              </View>
+                </View>
+              </React.Fragment>
             );
           })}
         </View>

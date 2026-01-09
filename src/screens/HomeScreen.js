@@ -209,6 +209,17 @@ export default function HomeScreen({ navigation }) {
             
             <TouchableOpacity
               style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('HowToGuides')}
+              accessible={true}
+              accessibilityLabel="How-to guides"
+              accessibilityRole="button"
+            >
+              <Text style={styles.quickAccessIcon}>🎯</Text>
+              <Text style={styles.quickAccessText}>How-To</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.quickAccessCard}
               onPress={() => navigation.navigate('SpecializedTopics')}
               accessible={true}
               accessibilityLabel="Specialized topics"
