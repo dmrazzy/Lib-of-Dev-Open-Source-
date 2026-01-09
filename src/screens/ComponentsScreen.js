@@ -91,6 +91,11 @@ import { Field } from '../components/Field';`}
   onChangeText={setEmail}
   error="Please enter a valid email address"
 />`}
+          installation={`# Error state is built into Field component
+import { Field } from '../components/Field';
+
+# Add error prop to show validation errors
+<Field error="Error message" />`}
         />
 
         {/* Required Field */}
@@ -115,6 +120,11 @@ import { Field } from '../components/Field';`}
   onChangeText={setName}
   required
 />`}
+          installation={`# Required indicator is built-in
+import { Field } from '../components/Field';
+
+# Add required prop to mark fields
+<Field required />`}
         />
 
         {/* Multiline Field */}
@@ -144,6 +154,15 @@ import { Field } from '../components/Field';`}
   numberOfLines={4}
   maxLength={200}
   description="Write a short bio. Max 200 characters."
+/>`}
+          installation={`# Multiline support built-in
+import { Field } from '../components/Field';
+
+# Add multiline and numberOfLines props
+<Field 
+  multiline 
+  numberOfLines={4} 
+  maxLength={200} 
 />`}
         />
 
@@ -199,6 +218,14 @@ import { Field } from '../components/Field';`}
     keyboardType="email-address"
   />
 </FieldGroup>`}
+          installation={`# Group multiple fields together
+import { Field, FieldGroup } from '../components/Field';
+
+<FieldGroup>
+  <Field label="First Name" />
+  <Field label="Last Name" />
+  <Field label="Email" />
+</FieldGroup>`}
         />
 
         {/* Button Component */}
@@ -249,6 +276,13 @@ import { Button } from '../components/Button';`}
           code={`<Button title="Small" onPress={() => {}} size="small" />
 <Button title="Medium" onPress={() => {}} size="medium" />
 <Button title="Large" onPress={() => {}} size="large" />`}
+          installation={`# Button sizes are built-in
+import { Button } from '../components/Button';
+
+# Available sizes: small, medium (default), large
+<Button size="small" title="Small Button" onPress={() => {}} />
+<Button size="medium" title="Medium Button" onPress={() => {}} />
+<Button size="large" title="Large Button" onPress={() => {}} />`}
         />
 
         {/* Complete Form Example */}
@@ -349,6 +383,24 @@ export default function SignUpForm() {
     </View>
   );
 }`}
+          installation={`# Complete form with validation pattern
+import { Field, FieldGroup } from '../components/Field';
+import { Button } from '../components/Button';
+import { useState } from 'react';
+
+const [name, setName] = useState('');
+const [errors, setErrors] = useState({});
+
+<FieldGroup>
+  <Field
+    label="Name"
+    value={name}
+    onChangeText={setName}
+    error={errors.name}
+    required
+  />
+  <Button title="Submit" onPress={handleSubmit} />
+</FieldGroup>`}
         />
 
         {/* SECTION: Feedback Components */}
@@ -412,6 +464,17 @@ export default function SignUpForm() {
   title="Error"
   description="Something went wrong. Please try again."
 />`}
+          installation={`# 1. Copy the Alert component to your project
+# File: components/Alert.js
+
+# 2. Import and use
+import { Alert } from '../components/Alert';
+
+# Available variants:
+# - info (blue)
+# - success (green)
+# - warning (yellow)
+# - error (red)`}
         />
 
         {/* Badge Component */}
@@ -454,6 +517,18 @@ export default function SignUpForm() {
           code={`<Badge variant="primary" size="small">Small</Badge>
 <Badge variant="primary" size="medium">Medium</Badge>
 <Badge variant="primary" size="large">Large</Badge>`}
+          installation={`# 1. Copy the Badge component to your project
+# File: components/Badge.js
+
+# 2. Import and use
+import { Badge } from '../components/Badge';
+
+# Available variants:
+# - default, primary, secondary
+# - success, warning, error, outline
+
+# Available sizes:
+# - small, medium, large`}
         />
 
         {/* Progress Component */}
@@ -486,6 +561,16 @@ export default function SignUpForm() {
 <Progress value={50} />
 <Progress value={75} color={colors.warning} />
 <Progress value={100} color={colors.success} />`}
+          installation={`# 1. Copy the Progress component
+# File: components/UIComponents.js
+
+# 2. Import and use
+import { Progress } from '../components/UIComponents';
+
+# Props:
+# - value: 0-100 (percentage)
+# - color: custom color (optional)
+# - height: custom height (default: 8)`}
         />
 
         {/* SECTION: Layout Components */}
@@ -543,6 +628,23 @@ export default function SignUpForm() {
     <Button title="Action" onPress={() => {}} />
   </CardFooter>
 </CardComponent>`}
+          installation={`# 1. Copy the Card components
+# File: components/CardComponents.js
+
+# 2. Import and use
+import { 
+  CardComponent, 
+  CardHeader, 
+  CardTitle, 
+  CardDescription, 
+  CardContent, 
+  CardFooter 
+} from '../components/CardComponents';
+
+# Available variants:
+# - default (border + shadow)
+# - elevated (larger shadow)
+# - outline (border only)`}
         />
 
         {/* Card Variants */}
@@ -580,6 +682,17 @@ export default function SignUpForm() {
           code={`<CardComponent variant="default">...</CardComponent>
 <CardComponent variant="elevated">...</CardComponent>
 <CardComponent variant="outline">...</CardComponent>`}
+          installation={`# Card variants are built-in
+import { CardComponent } from '../components/CardComponents';
+
+# Available variants:
+# - default: Border + shadow (default styling)
+# - elevated: Larger shadow for prominence
+# - outline: Border only, no shadow
+
+<CardComponent variant="default">
+  <CardContent>...</CardContent>
+</CardComponent>`}
         />
 
         {/* Divider Component */}
@@ -598,6 +711,14 @@ export default function SignUpForm() {
 <Text>Content above</Text>
 <Divider />
 <Text>Content below</Text>`}
+          installation={`# 1. Copy the Divider component
+# File: components/UIComponents.js
+
+# 2. Import and use
+import { Divider } from '../components/UIComponents';
+
+# Usage:
+<Divider />`}
         />
 
         {/* SECTION: Data Display */}
@@ -626,6 +747,16 @@ export default function SignUpForm() {
 <Avatar size={40} label="Jane Smith" />
 <Avatar size={48} label="Bob Johnson" />
 <Avatar size={56} label="Alice Williams" />`}
+          installation={`# 1. Copy the Avatar component
+# File: components/UIComponents.js
+
+# 2. Import and use
+import { Avatar } from '../components/UIComponents';
+
+# Props:
+# - label: Full name (generates initials)
+# - size: 32, 40, 48, 56, etc.
+# - backgroundColor: custom color`}
         />
 
         {/* Chip Component */}
@@ -648,6 +779,17 @@ export default function SignUpForm() {
 <Chip label="JavaScript" icon="💛" />
 <Chip label="Trending" icon="🔥" variant="outlined" />
 <Chip label="New" icon="✨" variant="outlined" />`}
+          installation={`# 1. Copy the Chip component
+# File: components/UIComponents.js
+
+# 2. Import and use
+import { Chip } from '../components/UIComponents';
+
+# Props:
+# - label: Text to display
+# - icon: Emoji or icon (optional)
+# - variant: "filled" | "outlined"
+# - onPress: Function (optional)`}
         />
 
         {/* Skeleton Loader */}
@@ -689,6 +831,17 @@ export default function SignUpForm() {
 <Skeleton width="100%" height={12} />
 <Skeleton width="90%" height={12} />
 <Skeleton width="80%" height={12} />`}
+          installation={`# 1. Copy the Skeleton component
+# File: components/UIComponents.js
+
+# 2. Import and use
+import { Skeleton } from '../components/UIComponents';
+
+# Props:
+# - width: number or percentage string
+# - height: number
+# - variant: "rectangular" | "circular" | "text"
+# - style: custom styles (optional)`}
         />
 
         {/* Real-world Example - User Card */}
@@ -779,6 +932,23 @@ import { Button } from '../components/Button';
       <Button title="Message" variant="primary" />
       <Button title="Follow" variant="outline" />
     </View>
+  </CardFooter>
+</CardComponent>`}
+          installation={`# Combine multiple components for rich UIs
+import { CardComponent, CardContent, CardFooter } from '../components/CardComponents';
+import { Avatar, Divider, Progress, Chip } from '../components/UIComponents';
+import { Badge } from '../components/Badge';
+import { Button } from '../components/Button';
+
+# Build complex cards by composing simple components:
+<CardComponent>
+  <CardContent>
+    <Avatar /> + <Badge /> + <Text />
+    <Divider />
+    <Progress /> + <Chip />
+  </CardContent>
+  <CardFooter>
+    <Button />
   </CardFooter>
 </CardComponent>`}
         />
