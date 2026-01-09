@@ -70,6 +70,16 @@ const [enabled, setEnabled] = useState(false);
   value={enabled} 
   onValueChange={setEnabled} 
 />`}
+          installation={`# 1. Copy the Switch component
+# File: components/FormControls.js
+
+# 2. Import and use
+import { Switch } from '../components/FormControls';
+import { useState } from 'react';
+
+const [enabled, setEnabled] = useState(false);
+
+<Switch value={enabled} onValueChange={setEnabled} />`}
         />
 
         {/* Checkbox Component */}
@@ -92,6 +102,16 @@ const [checked, setChecked] = useState(false);
   onChange={setChecked} 
   label="Accept terms and conditions" 
 />`}
+          installation={`# 1. Copy the Checkbox component
+# File: components/FormControls.js
+
+# 2. Import and use
+import { Checkbox } from '../components/FormControls';
+import { useState } from 'react';
+
+const [checked, setChecked] = useState(false);
+
+<Checkbox checked={checked} onChange={setChecked} label="Label" />`}
         />
 
         {/* Radio Button */}
@@ -122,6 +142,23 @@ const [selected, setSelected] = useState('option1');
   value={selected}
   onChange={setSelected}
 />`}
+          installation={`# 1. Copy the RadioGroup component
+# File: components/FormControls.js
+
+# 2. Import and use
+import { RadioGroup } from '../components/FormControls';
+import { useState } from 'react';
+
+const [selected, setSelected] = useState('option1');
+
+<RadioGroup
+  options={[
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+  ]}
+  value={selected}
+  onChange={setSelected}
+/>`}
         />
 
         {/* Slider */}
@@ -143,6 +180,16 @@ const [value, setValue] = useState(50);
   max={100} 
   onChange={setValue} 
 />`}
+          installation={`# 1. Copy the Slider component
+# File: components/AdvancedComponents.js
+
+# 2. Import and use
+import { Slider } from '../components/AdvancedComponents';
+import { useState } from 'react';
+
+const [value, setValue] = useState(50);
+
+<Slider value={value} min={0} max={100} onChange={setValue} />`}
         />
 
         {/* SECTION: Navigation */}
@@ -192,6 +239,24 @@ const [activeTab, setActiveTab] = useState('home');
   activeTab={activeTab}
   onTabChange={setActiveTab}
 />`}
+          installation={`# 1. Copy the Tabs component
+# File: components/AdvancedComponents.js
+
+# 2. Import and use
+import { Tabs } from '../components/AdvancedComponents';
+import { useState } from 'react';
+
+const [activeTab, setActiveTab] = useState('home');
+
+<Tabs
+  tabs={[
+    { value: 'home', label: 'Home', icon: '🏠' },
+    { value: 'profile', label: 'Profile', icon: '👤' },
+    { value: 'messages', label: 'Messages', icon: '💬', badge: '3' },
+  ]}
+  activeTab={activeTab}
+  onTabChange={setActiveTab}
+/>`}
         />
 
         {/* Accordion */}
@@ -225,6 +290,20 @@ const [activeTab, setActiveTab] = useState('home');
 
 <Accordion title="Expanded by Default" defaultExpanded>
   <Text>This section is open initially</Text>
+</Accordion>`}
+          installation={`# 1. Copy the Accordion component
+# File: components/AdvancedComponents.js
+
+# 2. Import and use
+import { Accordion } from '../components/AdvancedComponents';
+
+<Accordion title="Section Title">
+  <Text>Content goes here</Text>
+</Accordion>
+
+# Optional defaultExpanded prop:
+<Accordion title="Open by Default" defaultExpanded>
+  <Text>Content</Text>
 </Accordion>`}
         />
 
@@ -269,6 +348,23 @@ const [visible, setVisible] = useState(false);
 />
 
 // Types: 'info' | 'success' | 'warning' | 'error'`}
+          installation={`# 1. Copy the Toast component
+# File: components/AdvancedComponents.js
+
+# 2. Import and use
+import { Toast } from '../components/AdvancedComponents';
+import { useState } from 'react';
+
+const [visible, setVisible] = useState(false);
+
+<Toast
+  message="Successfully saved!"
+  type="success"
+  visible={visible}
+  onDismiss={() => setVisible(false)}
+/>
+
+# Available types: 'info', 'success', 'warning', 'error'`}
         />
 
         {/* Tags */}
@@ -291,6 +387,20 @@ const [visible, setVisible] = useState(false);
 <Tag color={colors.primary} onClose={() => handleRemove()}>
   Removable
 </Tag>`}
+          installation={`# 1. Copy the Tag component
+# File: components/AdvancedComponents.js
+
+# 2. Import and use
+import { Tag } from '../components/AdvancedComponents';
+
+<Tag>React Native</Tag>
+<Tag color={colors.primary}>Custom Color</Tag>
+<Tag onClose={() => handleRemove()}>Removable</Tag>
+
+# Props:
+# - children: Tag text
+# - color: Background color (optional)
+# - onClose: Function to handle close (optional)`}
         />
 
         {/* SECTION: Dashboard & Business */}
@@ -361,6 +471,24 @@ const [visible, setVisible] = useState(false);
   trendValue="+12.5%"
   color={colors.primary}
 />`}
+          installation={`# 1. Copy the StatsCard component
+# File: components/ComplexComponents.js
+
+# 2. Import and use
+import { StatsCard } from '../components/ComplexComponents';
+
+<StatsCard
+  title="Total Users"
+  value="12,345"
+  icon="👥"
+  trend="up"
+  trendValue="+12.5%"
+  color={colors.primary}
+/>
+
+# Props:
+# - trend: 'up' | 'down' (optional)
+# - color: Custom accent color`}
         />
 
         {/* Pricing Card */}
@@ -411,6 +539,27 @@ const [visible, setVisible] = useState(false);
   ]}
   onSelect={() => handleSelect()}
 />`}
+          installation={`# 1. Copy the PricingCard component
+# File: components/ComplexComponents.js
+
+# 2. Import and use
+import { PricingCard } from '../components/ComplexComponents';
+
+<PricingCard
+  title="Pro"
+  price="29"
+  period="/month"
+  recommended
+  features={[
+    'Unlimited Projects',
+    '100 GB Storage',
+    'Priority Support',
+  ]}
+  onSelect={() => handleSelect()}
+/>
+
+# Props:
+# - recommended: Highlight as recommended plan (boolean)`}
         />
 
         {/* Feature Card */}
@@ -460,6 +609,19 @@ const [visible, setVisible] = useState(false);
   title="Fast Performance"
   description="Optimized for speed and efficiency"
 />`}
+          installation={`# 1. Copy the FeatureCard component
+# File: components/ComplexComponents.js
+
+# 2. Import and use
+import { FeatureCard } from '../components/ComplexComponents';
+
+<FeatureCard
+  icon="⚡"
+  title="Fast Performance"
+  description="Optimized for speed and efficiency"
+/>
+
+# Great for landing pages and feature showcases`}
         />
 
         {/* Testimonial */}
@@ -486,6 +648,23 @@ const [visible, setVisible] = useState(false);
   avatar="JD"
   rating={5}
 />`}
+          installation={`# 1. Copy the TestimonialCard component
+# File: components/ComplexComponents.js
+
+# 2. Import and use
+import { TestimonialCard } from '../components/ComplexComponents';
+
+<TestimonialCard
+  quote="Amazing product! Highly recommended."
+  author="John Doe"
+  role="CEO at StartupXYZ"
+  avatar="JD"
+  rating={5}
+/>
+
+# Props:
+# - avatar: Initials for avatar (e.g., "JD")
+# - rating: Number from 1-5 (optional)`}
         />
 
         {/* Timeline */}
@@ -536,6 +715,28 @@ const [visible, setVisible] = useState(false);
   icon="🎨"
   isLast
 />`}
+          installation={`# 1. Copy the TimelineItem component
+# File: components/ComplexComponents.js
+
+# 2. Import and use
+import { TimelineItem } from '../components/ComplexComponents';
+
+<TimelineItem
+  time="09:00 AM"
+  title="Project Kickoff"
+  description="Initial meeting with the team"
+  icon="🚀"
+/>
+<TimelineItem
+  time="11:30 AM"
+  title="Design Review"
+  description="Review mockups"
+  icon="🎨"
+  isLast
+/>
+
+# Props:
+# - isLast: Hide connector line (boolean)`}
         />
 
         <View style={{ height: spacing.xxxl }} />
