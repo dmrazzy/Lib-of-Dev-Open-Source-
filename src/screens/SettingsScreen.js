@@ -57,6 +57,8 @@ export default function SettingsScreen({ navigation }) {
   const [showProjectsModal, setShowProjectsModal] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [apiKeyInput, setApiKeyInput] = useState('');
+  const [apiKeyValidationError, setApiKeyValidationError] = useState('');
+  const [isTestingApiKey, setIsTestingApiKey] = useState(false);
   const [interests, setInterests] = useState({
     web: false,
     mobile: false,
@@ -119,14 +121,88 @@ export default function SettingsScreen({ navigation }) {
   };
 
   const saveApiKey = async () => {
-    try {
-      await AsyncStorage.setItem(GROQ_API_KEY_STORAGE, apiKeyInput.trim());
-      setApiKey(apiKeyInput.trim());
-      setShowApiKeyModal(false);
-      Alert.alert(t('common.success'), t('settings.apiKeySaved'));
-    } catch (error) {
-      Alert.alert(t('common.error'), t('settings.apiKeySaveError'));
+    const trimmedKey = apiKeyInput.trim();
+    
+    // Validate key format
+    if (!trimmedKey) {
+      setApiKeyValidationError(t('settings.apiKeyEmpty'));
+      return;
     }
+    
+    // Groq API keys typically start with 'gsk_'
+    if (!trimmedKey.startsWith('gsk_')) {
+      setApiKeyValidationError(t('settings.apiKeyInvalidFormat'));
+      return;
+    }
+    
+    if (trimmedKey.length < 40) {
+      setApiKeyValidationError(t('settings.apiKeyTooShort'));
+      return;
+    }
+    
+    // Test the API key
+    setIsTestingApiKey(true);
+    setApiKeyValidationError('');
+    
+    try {
+      const response = await fetch('https://api.groq.com/openai/v1/models', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${trimmedKey}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        if (response.status === 401) {
+          setApiKeyValidationError(t('settings.apiKeyInvalid'));
+        } else {
+          setApiKeyValidationError(t('settings.apiKeyTestFailed'));
+        }
+        setIsTestingApiKey(false);
+        return;
+      }
+      
+      // Key is valid, save it
+      await AsyncStorage.setItem(GROQ_API_KEY_STORAGE, trimmedKey);
+      setApiKey(trimmedKey);
+      setShowApiKeyModal(false);
+      setApiKeyValidationError('');
+      Alert.alert(
+        t('common.success'), 
+        t('settings.apiKeySaved'),
+        [{ text: 'OK' }]
+      );
+    } catch (error) {
+      setApiKeyValidationError(t('settings.apiKeyNetworkError'));
+    } finally {
+      setIsTestingApiKey(false);
+    }
+  };
+  
+  const deleteApiKey = async () => {
+    Alert.alert(
+      t('settings.deleteApiKeyTitle'),
+      t('settings.deleteApiKeyMessage'),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('common.delete'),
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await AsyncStorage.removeItem(GROQ_API_KEY_STORAGE);
+              setApiKey('');
+              setApiKeyInput('');
+              setShowApiKeyModal(false);
+              Alert.alert(t('common.success'), t('settings.apiKeyDeleted'));
+            } catch (error) {
+              Alert.alert(t('common.error'), t('settings.apiKeyDeleteError'));
+            }
+          },
+        },
+      ]
+    );
   };
 
   const showSupportAd = async () => {
@@ -693,6 +769,14 @@ export default function SettingsScreen({ navigation }) {
                   {t('settings.groqApiKeyDescription')}
                 </Text>
                 
+                {/* Step-by-step guide */}
+                <View style={styles.stepsContainer}>
+                  <Text style={styles.stepsTitle}>{t('settings.apiKeySteps')}</Text>
+                  <Text style={styles.stepText}>1️⃣ {t('settings.apiKeyStep1')}</Text>
+                  <Text style={styles.stepText}>2️⃣ {t('settings.apiKeyStep2')}</Text>
+                  <Text style={styles.stepText}>3️⃣ {t('settings.apiKeyStep3')}</Text>
+                </View>
+                
                 <TouchableOpacity 
                   style={styles.helpButton}
                   onPress={() => Linking.openURL('https://console.groq.com/keys')}
@@ -702,33 +786,64 @@ export default function SettingsScreen({ navigation }) {
                   </Text>
                 </TouchableOpacity>
 
-                <TextInput
-                  style={styles.modalInput}
-                  value={apiKeyInput}
-                  onChangeText={setApiKeyInput}
-                  placeholder={t('settings.enterApiKey')}
-                  placeholderTextColor={colors.textMuted}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  secureTextEntry={false}
-                />
+                <View style={styles.inputWrapper}>
+                  <TextInput
+                    style={[styles.modalInput, apiKeyValidationError && styles.modalInputError]}
+                    value={apiKeyInput}
+                    onChangeText={(text) => {
+                      setApiKeyInput(text);
+                      setApiKeyValidationError('');
+                    }}
+                    placeholder={t('settings.enterApiKey')}
+                    placeholderTextColor={colors.textMuted}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    secureTextEntry={false}
+                    editable={!isTestingApiKey}
+                  />
+                  {apiKeyInput.trim().length > 0 && (
+                    <Text style={styles.keyLengthIndicator}>
+                      {apiKeyInput.trim().length} {t('settings.characters')}
+                    </Text>
+                  )}
+                </View>
+                
+                {apiKeyValidationError ? (
+                  <Text style={styles.validationError}>⚠️ {apiKeyValidationError}</Text>
+                ) : null}
+                
+                {isTestingApiKey && (
+                  <Text style={styles.testingText}>🔄 {t('settings.testingApiKey')}</Text>
+                )}
 
                 <View style={styles.modalButtons}>
+                  {apiKey && (
+                    <TouchableOpacity
+                      style={[styles.modalButton, styles.modalButtonDelete]}
+                      onPress={deleteApiKey}
+                      disabled={isTestingApiKey}
+                    >
+                      <Text style={styles.modalButtonText}>🗑️</Text>
+                    </TouchableOpacity>
+                  )}
                   <TouchableOpacity
-                    style={[styles.modalButton, styles.modalButtonCancel]}
+                    style={[styles.modalButton, styles.modalButtonCancel, apiKey ? styles.modalButtonSmaller : null]}
                     onPress={() => {
                       setApiKeyInput(apiKey);
+                      setApiKeyValidationError('');
                       setShowApiKeyModal(false);
                     }}
+                    disabled={isTestingApiKey}
                   >
                     <Text style={styles.modalButtonText}>{t('common.cancel')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    style={[styles.modalButton, styles.modalButtonSave]}
+                    style={[styles.modalButton, styles.modalButtonSave, apiKey ? styles.modalButtonSmaller : null, isTestingApiKey && styles.modalButtonDisabled]}
                     onPress={saveApiKey}
+                    disabled={isTestingApiKey}
                   >
                     <Text style={[styles.modalButtonText, styles.modalButtonTextSave]}>
-                      {t('common.save')}
+                      {isTestingApiKey ? '⏳' : '✓'} {t('common.save')}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -1141,6 +1256,29 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
+  stepsContainer: {
+    backgroundColor: colors.backgroundCard,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    marginBottom: spacing.md,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.primary,
+  },
+  stepsTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: spacing.sm,
+  },
+  stepText: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    marginBottom: spacing.xs,
+    lineHeight: 18,
+  },
+  inputWrapper: {
+    width: '100%',
+  },
   modalInput: {
     backgroundColor: colors.background,
     borderRadius: borderRadius.md,
@@ -1149,7 +1287,34 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 1,
     borderColor: colors.border,
-    marginBottom: spacing.md,
+    marginBottom: spacing.xs,
+  },
+  modalInputError: {
+    borderColor: '#FF4444',
+    borderWidth: 2,
+  },
+  keyLengthIndicator: {
+    fontSize: 12,
+    color: colors.textMuted,
+    marginBottom: spacing.sm,
+    textAlign: 'right',
+  },
+  validationError: {
+    fontSize: 13,
+    color: '#FF4444',
+    marginBottom: spacing.sm,
+    padding: spacing.sm,
+    backgroundColor: '#FF444420',
+    borderRadius: borderRadius.sm,
+  },
+  testingText: {
+    fontSize: 13,
+    color: colors.primary,
+    marginBottom: spacing.sm,
+    padding: spacing.sm,
+    backgroundColor: colors.primaryAlpha,
+    borderRadius: borderRadius.sm,
+    textAlign: 'center',
   },
   modalButtons: {
     flexDirection: 'row',
@@ -1161,6 +1326,9 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.md,
     alignItems: 'center',
   },
+  modalButtonSmaller: {
+    flex: 0.75,
+  },
   modalButtonCancel: {
     backgroundColor: colors.backgroundCard,
     borderWidth: 1,
@@ -1168,6 +1336,13 @@ const styles = StyleSheet.create({
   },
   modalButtonSave: {
     backgroundColor: colors.primary,
+  },
+  modalButtonDelete: {
+    backgroundColor: '#FF4444',
+    flex: 0.3,
+  },
+  modalButtonDisabled: {
+    opacity: 0.5,
   },
   modalButtonText: {
     fontSize: 16,
