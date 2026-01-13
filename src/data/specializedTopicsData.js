@@ -3903,6 +3903,223 @@ services:
       }
     }
   },
+
+  ai: {
+    id: 'ai',
+    name: 'AI & Machine Learning',
+    icon: '🤖',
+    color: '#8B5CF6',
+    description: 'Artificial Intelligence, Large Language Models (LLMs), and Machine Learning with Ollama',
+    categories: {
+      ollama: {
+        name: 'Ollama - Local LLMs',
+        items: [
+          {
+            title: 'Ollama Installation & Setup',
+            code: `# Ollama - Run LLMs locally
+# Linux
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# Run server
+ollama serve
+
+# Pull models
+ollama pull llama2
+ollama pull mistral
+ollama pull neural-chat
+
+# Run model
+ollama run mistral "What is AI?"
+
+# Docker
+docker run -it ollama/ollama`,
+            description: 'Install and run LLMs locally with Ollama',
+            usage: 'Run AI models on your own hardware without cloud costs',
+            technologies: ['Ollama', 'LLM', 'Local AI'],
+          },
+          {
+            title: 'Ollama Models Comparison',
+            code: `# Popular Ollama Models
+
+## Lightweight & Fast
+- mistral: 7B, fast, 32K context
+- neural-chat: 7B, optimized for chat
+- orca-mini: 3-7B, very fast
+- tinyllama: 2B, minimal resources
+
+## Balanced
+- llama2: 7-13B, general purpose
+- dolphin-mixtral: 47B MoE, reasoning
+
+## Specialized
+- codellama: 7-34B, excellent at programming
+- medllama: Medical domain specific
+
+## Hardware Guide
+- CPU only: mistral, orca-mini
+- 8GB GPU: llama2-7B, mistral
+- 16GB+ GPU: llama2-13B, codellama-34B
+- 24GB+ GPU: dolphin-mixtral, llama2-70B`,
+            description: 'Choose the right Ollama model for your needs',
+            usage: 'Select models based on speed, accuracy, and hardware',
+            technologies: ['Ollama', 'LLM', 'Model Selection'],
+          },
+        ],
+      },
+      buildingAI: {
+        name: 'Building Your Own AI',
+        items: [
+          {
+            title: 'Creating & Training AI Models',
+            code: `# Basic AI Model Training with Python
+
+import tensorflow as tf
+from tensorflow import keras
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# Load data
+data = pd.read_csv('data.csv')
+X = data[['feature1', 'feature2']].values
+y = data['target'].values
+
+# Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Create model
+model = keras.Sequential([
+    keras.layers.Dense(128, activation='relu', input_shape=(X.shape[1],)),
+    keras.layers.Dropout(0.2),
+    keras.layers.Dense(64, activation='relu'),
+    keras.layers.Dense(1)
+])
+
+# Train
+model.compile(optimizer='adam', loss='mse')
+model.fit(X_train, y_train, epochs=50, batch_size=32, validation_split=0.2)
+
+# Evaluate
+loss = model.evaluate(X_test, y_test)
+predictions = model.predict(X_test)`,
+            description: 'Build and train your own machine learning models',
+            usage: 'Create custom AI models for your specific problems',
+            technologies: ['TensorFlow', 'Python', 'Machine Learning'],
+          },
+          {
+            title: 'Transfer Learning & Fine-tuning',
+            code: `# Transfer Learning - Use Pre-trained Models
+
+from transformers import pipeline
+
+# Pre-trained models (no training needed!)
+classifier = pipeline("sentiment-analysis")
+result = classifier("I love this!")
+print(result)
+
+# Object detection
+detector = pipeline("object-detection")
+objects = detector("image.jpg")
+
+# Question answering
+qa = pipeline("question-answering",
+    model="distilbert-base-cased-distilled-squad")
+answer = qa(question="What is AI?",
+    context="AI is artificial intelligence")
+
+# Fine-tune for your data
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+
+model = AutoModelForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=2)
+# Train with your data...
+model.save_pretrained("./my-model")`,
+            description: 'Use pre-trained models and adapt them for your use case',
+            usage: 'Faster and easier than training from scratch',
+            technologies: ['Hugging Face', 'Transfer Learning', 'PyTorch'],
+          },
+        ],
+      },
+      llmGuide: {
+        name: 'Large Language Models (LLMs)',
+        items: [
+          {
+            title: 'LLM Models Overview',
+            code: `# LLM Model Comparison 2024
+
+## Lightweight (2-7B)
+✓ Mistral-7B: Fast, versatile
+✓ Neural-Chat: Great for conversation
+✓ TinyLlama: Minimal resources
+
+## Medium (13-34B)
+✓ Llama-2-13B: Good balance
+✓ Mistral-Medium: Strong reasoning
+✓ CodeLlama-34B: Excellent coding
+
+## Large (70B+)
+✓ Llama-2-70B: Best reasoning
+✓ Claude (API): Excellent safety
+✓ GPT-4 (API): Highest quality
+
+## Local vs Cloud
+Local (Ollama):
+- Free (electricity only)
+- Privacy - data stays home
+- Slower inference
+- No internet needed
+
+Cloud (API):
+- Faster responses
+- Pay per token
+- Better models available
+- Privacy concerns`,
+            description: 'Compare different LLM models and their characteristics',
+            usage: 'Choose right model for your use case and resources',
+            technologies: ['LLM', 'Ollama', 'API', 'AI'],
+          },
+          {
+            title: 'Building AI Apps with LLMs',
+            code: `# AI Chatbot with FastAPI + Ollama
+
+from fastapi import FastAPI
+import requests
+import json
+
+app = FastAPI()
+
+@app.post("/chat")
+async def chat(message: str):
+    response = requests.post('http://localhost:11434/api/generate',
+        json={
+            'model': 'mistral',
+            'prompt': message,
+            'stream': False,
+        }
+    )
+    return {"response": response.json()['response']}
+
+# Document Summarization
+def summarize_text(text):
+    prompt = f"Summarize this in 2 sentences: {text}"
+    response = requests.post('http://localhost:11434/api/generate',
+        json={'model': 'mistral', 'prompt': prompt, 'stream': False}
+    )
+    return response.json()['response']
+
+# Code Generation
+def generate_code(description):
+    prompt = f"Write Python code for: {description}"
+    response = requests.post('http://localhost:11434/api/generate',
+        json={'model': 'codellama', 'prompt': prompt, 'stream': False}
+    )
+    return response.json()['response']`,
+            description: 'Build practical applications powered by LLMs',
+            usage: 'Create chatbots, summarizers, code generators, and more',
+            technologies: ['FastAPI', 'Ollama', 'Python', 'LLM'],
+          },
+        ],
+      },
+    },
+  },
 };
 
 // Export individual topic categories for easier access
@@ -3917,3 +4134,4 @@ export const blockchainTopics = specializedTopics.blockchain;
 export const securityTopics = specializedTopics.security;
 export const testingTopics = specializedTopics.testing;
 export const homeServerTopics = specializedTopics.homeserver;
+export const aiTopics = specializedTopics.ai;

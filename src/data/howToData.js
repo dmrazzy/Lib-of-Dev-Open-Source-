@@ -2258,6 +2258,377 @@ test('search filter works', () => {
           ]
         }
       ]
+    },
+
+    aiMachineLearning: {
+      name: 'AI & Machine Learning',
+      items: [
+        {
+          title: 'How to Build Your Own AI Model',
+          code: `# Complete Guide: Building Your First AI Model
+
+## Step 1: Set Up Environment
+pip install tensorflow pandas scikit-learn numpy matplotlib
+
+## Step 2: Get Your Data
+# Option A: Use public dataset (Kaggle)
+# Download from kaggle.com/datasets/
+
+# Option B: Create your own data
+# CSV format: feature1,feature2,target
+# Example: height,weight,age
+
+import pandas as pd
+data = pd.read_csv('your_data.csv')
+print(data.head())
+
+## Step 3: Prepare Data
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+# Separate features and target
+X = data[['feature1', 'feature2', 'feature3']]
+y = data['target']
+
+# Split into training/testing
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Normalize data (important!)
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+## Step 4: Create Your Model
+from tensorflow import keras
+
+model = keras.Sequential([
+    keras.layers.Dense(128, activation='relu', input_shape=(X_train.shape[1],)),
+    keras.layers.Dropout(0.2),  # Prevent overfitting
+    keras.layers.Dense(64, activation='relu'),
+    keras.layers.Dense(32, activation='relu'),
+    keras.layers.Dense(1)  # Output layer
+])
+
+## Step 5: Compile Model
+model.compile(
+    optimizer='adam',  # How to update weights
+    loss='mse',        # What to minimize
+    metrics=['mae']    # What to display
+)
+
+## Step 6: Train Model
+history = model.fit(
+    X_train, y_train,
+    epochs=100,
+    batch_size=32,
+    validation_split=0.2,  # Use 20% for validation
+    verbose=1
+)
+
+## Step 7: Evaluate Performance
+test_loss, test_mae = model.evaluate(X_test, y_test)
+print(f'Test Loss: {test_loss}')
+print(f'Test MAE: {test_mae}')
+
+## Step 8: Make Predictions
+predictions = model.predict(X_test[:5])
+print("Predictions:", predictions.flatten())
+print("Actual:", y_test[:5].values)
+
+## Step 9: Save Your Model
+model.save('my_ai_model.h5')
+
+## Step 10: Load and Use Later
+loaded_model = keras.models.load_model('my_ai_model.h5')
+new_predictions = loaded_model.predict(new_data)
+
+## Visualization (Optional)
+import matplotlib.pyplot as plt
+
+# Plot training history
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.legend()
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Model Training Progress')
+plt.show()
+
+## Common Issues & Solutions
+
+Problem: Model accuracy not improving
+Solution: 
+  - Add more data
+  - Increase model complexity (more layers)
+  - Train for more epochs
+  - Check data quality
+
+Problem: Overfitting (train acc high, test acc low)
+Solution:
+  - Add dropout layers
+  - Use regularization (L1/L2)
+  - Reduce model size
+  - Get more training data
+
+Problem: Underfitting (both accuracies low)
+Solution:
+  - Make model bigger (more neurons)
+  - Train longer
+  - Use more complex architecture
+  - Extract better features
+
+## Next Steps: Transfer Learning (Faster!)
+
+# Instead of training from scratch, use pre-trained models
+from transformers import pipeline
+
+# Sentiment analysis (already trained!)
+classifier = pipeline("sentiment-analysis")
+result = classifier("I love this!")
+print(result)  # {'label': 'POSITIVE', 'score': 0.9999}
+
+# Text classification
+classifier = pipeline("text-classification", model="distilbert-base-uncased-finetuned-sst-2-english")
+
+# Named entity recognition
+ner = pipeline("ner")
+entities = ner("My name is John and I work at Google")
+
+## Deployment Options
+
+1. Save as file (my_model.h5)
+   - Load when needed
+   - Offline predictions
+
+2. API (FastAPI)
+   @app.post("/predict")
+   def predict(data: dict):
+       result = model.predict([data['features']])
+       return {"prediction": float(result[0][0])}
+
+3. Cloud (Google Cloud, AWS)
+   - Scalable
+   - Pay per use
+   - Easy to manage
+
+## Resources for Learning More
+- Fast.ai (free courses)
+- TensorFlow tutorials
+- Kaggle competitions
+- Papers with Code`,
+          description: 'Step-by-step guide to creating your first AI model',
+          tips: [
+            '💡 Start with clean, well-organized data',
+            '💡 Always split data into train/test sets',
+            '💡 Normalize your data before training',
+            '💡 Use dropout to prevent overfitting',
+            '💡 Monitor training and validation loss',
+            '💡 Save your trained model for reuse',
+            '💡 Use transfer learning for faster results',
+            '💡 Test on completely new data'
+          ]
+        },
+        {
+          title: 'Running Local LLMs with Ollama',
+          code: `# Complete Guide: Local AI with Ollama
+
+## Step 1: Install Ollama
+# Linux
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# macOS
+# Download from https://ollama.ai/download
+
+# Windows
+# Download from https://ollama.ai/download
+
+## Step 2: Start Ollama Server
+ollama serve
+
+# Server runs on http://localhost:11434
+
+## Step 3: Download Models
+# In another terminal:
+
+# Lightweight & Fast
+ollama pull mistral         # 7B, 5GB, very fast
+ollama pull neural-chat     # 7B, 4GB, conversation optimized
+ollama pull orca-mini       # 3B, 2GB, ultra light
+
+# Balanced
+ollama pull llama2          # 7B, 4GB, general purpose
+ollama pull llama2:13b      # 13B, 8GB, more powerful
+
+# Coding
+ollama pull codellama       # 7B, 4GB, code generation
+
+## Step 4: Run Models Interactively
+ollama run mistral
+
+# Type your questions:
+> What is artificial intelligence?
+> Explain quantum computing
+> Write a Python function to...
+
+Press Ctrl+D to exit
+
+## Step 5: Use in Python
+import requests
+import json
+
+def chat_with_ai(prompt):
+    response = requests.post('http://localhost:11434/api/generate',
+        json={
+            'model': 'mistral',
+            'prompt': prompt,
+            'stream': False
+        }
+    )
+    return response.json()['response']
+
+# Test it
+answer = chat_with_ai("What is machine learning?")
+print(answer)
+
+## Step 6: Web UI with Open WebUI
+# Easy-to-use interface
+
+# Option A: Docker (recommended)
+docker run -d -p 3000:8080 \\
+  --name open-webui \\
+  --restart always \\
+  -v open-webui:/app/backend/data \\
+  ghcr.io/open-webui/open-webui:latest
+
+# Then visit: http://localhost:3000
+
+# Option B: Direct installation
+git clone https://github.com/open-webui/open-webui.git
+cd open-webui
+npm install
+npm run dev
+
+## Step 7: API Integration
+# Create a simple chat API
+
+from fastapi import FastAPI
+import requests
+
+app = FastAPI()
+
+@app.post("/chat")
+async def chat_endpoint(message: str):
+    response = requests.post('http://localhost:11434/api/generate',
+        json={
+            'model': 'mistral',
+            'prompt': message,
+            'stream': False
+        }
+    )
+    return {"response": response.json()['response']}
+
+# Run: uvicorn app:app --reload
+# Test: curl -X POST "http://localhost:8000/chat?message=Hello"
+
+## Step 8: Advanced - Using Different Models
+
+# Code generation
+ollama run codellama "Write a Python function to sort an array"
+
+# Summarization
+text = "Long document here..."
+ollama run mistral f"Summarize: {text}"
+
+# Translation
+ollama run mistral "Translate to Spanish: Hello, how are you?"
+
+# Problem solving
+ollama run mistral "Solve: 15 * 3 + 7"
+
+## Performance Tips
+
+# 1. Use smaller models for speed
+ollama pull orca-mini  # 2GB, very fast
+
+# 2. Run on GPU (if available)
+# NVIDIA GPU support: automatic
+# Mac M1/M2: automatic
+# Check CUDA installation for Linux
+
+# 3. Adjust parameters
+requests.post('http://localhost:11434/api/generate',
+    json={
+        'model': 'mistral',
+        'prompt': "Hello",
+        'temperature': 0.5,  # Lower = more focused
+        'num_ctx': 2048,     # Context size
+        'top_k': 40,         # Diversity
+        'top_p': 0.9
+    }
+)
+
+## Comparing Models
+
+Mistral-7B:
+✓ Fastest
+✓ 32K context
+✓ Great for coding
+✓ 5GB storage
+
+Llama2-7B:
+✓ Balanced
+✓ Great quality
+✓ 4K context
+✓ 4GB storage
+
+Neural-Chat-7B:
+✓ Conversation focused
+✓ Very friendly
+✓ 4GB storage
+
+## Use Cases
+
+Customer Service Bot:
+models/chat_assistant.py
+→ ollama run neural-chat
+
+Code Helper:
+models/code_helper.py
+→ ollama run codellama
+
+Content Writer:
+models/writer.py
+→ ollama run mistral
+
+## Troubleshooting
+
+Problem: "Connection refused"
+Solution: Make sure ollama serve is running
+
+Problem: "Out of memory"
+Solution: Use smaller model or limit context size
+
+Problem: "Very slow responses"
+Solution: Use mistral or orca-mini for speed
+
+## Next Steps
+- Combine multiple models
+- Fine-tune models for your domain
+- Deploy as microservice
+- Create web interface`,
+          description: 'Run powerful AI models on your own computer',
+          tips: [
+            '💡 Start with mistral for best balance',
+            '💡 Ollama runs locally - no internet needed',
+            '💡 Use Open WebUI for easy interface',
+            '💡 Choose model size based on your hardware',
+            '💡 Save API responses for caching',
+            '💡 Combine multiple models for complex tasks',
+            '💡 Monitor GPU/CPU usage with htop',
+            '💡 Use temperature parameter to control creativity'
+          ]
+        }
+      ]
     }
   }
 };

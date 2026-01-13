@@ -396,20 +396,29 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.sectionTitle}>✨ What's Inside</Text>
           <View style={styles.featuresList}>
             <View style={styles.featureItem}>
-              <Text style={styles.featureIcon}>📖</Text>
+              <Text style={styles.featureIcon}>🤖</Text>
               <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>20+ Programming Languages</Text>
+                <Text style={styles.featureTitle}>AI & Machine Learning</Text>
                 <Text style={styles.featureDescription}>
-                  In-depth syntax, examples & best practices for JavaScript, Python, Java, TypeScript & more
+                  Build AI models, run LLMs locally with Ollama, fine-tune models & deploy AI apps
                 </Text>
               </View>
             </View>
             <View style={styles.featureItem}>
-              <Text style={styles.featureIcon}>💻</Text>
+              <Text style={styles.featureIcon}>📖</Text>
               <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>200+ Code Examples</Text>
+                <Text style={styles.featureTitle}>20+ Programming Languages</Text>
                 <Text style={styles.featureDescription}>
-                  Copy-paste ready snippets with explanations and real-world use cases
+                  Complete syntax guides, 200+ code examples & real-world best practices
+                </Text>
+              </View>
+            </View>
+            <View style={styles.featureItem}>
+              <Text style={styles.featureIcon}>🔧</Text>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>DevOps & Home Servers</Text>
+                <Text style={styles.featureDescription}>
+                  Docker, Kubernetes, Linux admin, Proxmox, networking, security & infrastructure
                 </Text>
               </View>
             </View>
@@ -418,34 +427,25 @@ export default function HomeScreen({ navigation }) {
               <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Step-by-Step How-To Guides</Text>
                 <Text style={styles.featureDescription}>
-                  Deploy websites, build APIs, monetize apps & publish to stores
+                  Deploy websites, build APIs, create AI models, host your own servers & more
                 </Text>
               </View>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>🎨</Text>
               <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>UI Components & Design</Text>
+                <Text style={styles.featureTitle}>Full-Stack Development</Text>
                 <Text style={styles.featureDescription}>
-                  33+ interactive components with live previews & installation guides
+                  React, Node.js, databases, APIs, UI components, design systems & cloud deployment
                 </Text>
               </View>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>🚀</Text>
               <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>Developer Tools</Text>
+                <Text style={styles.featureTitle}>Specialized Topics</Text>
                 <Text style={styles.featureDescription}>
-                  Master Expo, Vercel, shadcn/ui, Tailwind CSS, Radix UI & cloud platforms
-                </Text>
-              </View>
-            </View>
-            <View style={styles.featureItem}>
-              <Text style={styles.featureIcon}>🎓</Text>
-              <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>Learning Resources</Text>
-                <Text style={styles.featureDescription}>
-                  Tutorials, certifications, developer hints & career guidance
+                  IoT, blockchain, security, e-commerce, testing, DevOps & advanced architecture
                 </Text>
               </View>
             </View>
