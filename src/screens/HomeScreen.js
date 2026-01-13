@@ -79,13 +79,18 @@ export default function HomeScreen({ navigation }) {
       >
         {/* Hero Section */}
         <View style={styles.header}>
-          <Text style={styles.title}>💻 {t('home.title')}</Text>
-          <Text style={styles.subtitle}>
-            {t('home.subtitle')}
-          </Text>
-          <Text style={styles.description}>
-            {t('home.description')}
-          </Text>
+          <View style={styles.headerContent}>
+            <Text style={styles.headerEmoji}>💻</Text>
+            <View style={styles.headerText}>
+              <Text style={styles.title}>{t('home.title')}</Text>
+              <Text style={styles.subtitle}>
+                {t('home.subtitle')}
+              </Text>
+              <Text style={styles.description}>
+                {t('home.description')}
+              </Text>
+            </View>
+          </View>
         </View>
 
         {/* Search Bar */}
@@ -212,7 +217,7 @@ export default function HomeScreen({ navigation }) {
               accessibilityRole="button"
             >
               <Text style={styles.quickAccessIcon}>🔌</Text>
-              <Text style={styles.quickAccessText}>{t('quickAccess.iotMore')}</Text>
+              <Text style={styles.quickAccessText}>Specialized Topics</Text>
             </TouchableOpacity>
             
             <TouchableOpacity
@@ -469,16 +474,30 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: colors.backgroundElevated,
-    padding: spacing.lg,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    backgroundColor: colors.background,
+    paddingVertical: spacing.xl,
+    paddingHorizontal: spacing.lg,
+    borderBottomWidth: 2,
+    borderBottomColor: colors.primary + '20',
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: spacing.md,
+  },
+  headerEmoji: {
+    fontSize: 48,
+    marginTop: spacing.xs,
+  },
+  headerText: {
+    flex: 1,
   },
   title: {
-    fontSize: 32,
-    fontWeight: '700',
+    fontSize: 28,
+    fontWeight: '800',
     color: colors.text,
     marginBottom: spacing.xs,
+    letterSpacing: -0.5,
   },
   subtitle: {
     fontSize: 16,
@@ -491,19 +510,20 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     padding: spacing.md,
-    backgroundColor: colors.backgroundElevated,
+    backgroundColor: colors.background,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: colors.border + '40',
   },
   searchBox: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.backgroundCard,
-    borderRadius: borderRadius.md,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-    borderWidth: 1,
+    borderRadius: borderRadius.lg,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderWidth: 1.5,
     borderColor: colors.border,
+    elevation: 2,
   },
   searchIcon: {
     fontSize: 18,
@@ -521,37 +541,42 @@ const styles = StyleSheet.create({
     padding: spacing.xs,
   },
   quickAccessContainer: {
-    padding: spacing.md,
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.md,
   },
   quickAccessGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.sm,
+    gap: spacing.md,
     marginTop: spacing.sm,
   },
   quickAccessCard: {
     flex: 1,
     minWidth: '22%',
     backgroundColor: colors.backgroundCard,
-    borderRadius: borderRadius.md,
+    borderRadius: borderRadius.lg,
     padding: spacing.md,
     alignItems: 'center',
-    borderWidth: 1,
+    justifyContent: 'center',
+    borderWidth: 1.5,
     borderColor: colors.border,
     ...shadows.small,
+    elevation: 3,
   },
   quickAccessIcon: {
-    fontSize: 32,
-    marginBottom: spacing.xs,
+    fontSize: 36,
+    marginBottom: spacing.sm,
   },
   quickAccessText: {
     fontSize: 12,
     color: colors.text,
-    fontWeight: '600',
+    fontWeight: '700',
     textAlign: 'center',
   },
   languagesContainer: {
-    padding: spacing.md,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.lg,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -560,9 +585,10 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: '800',
     color: colors.text,
+    letterSpacing: -0.3,
   },
   sectionCount: {
     fontSize: 14,
@@ -570,8 +596,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   sectionSubtitle: {
-    fontSize: 14,
-    color: colors.textSecondary,
+    fontSize: 13,
+    color: colors.textMuted,
     marginBottom: spacing.md,
   },
   languagesList: {
@@ -632,34 +658,38 @@ const styles = StyleSheet.create({
   },
   quickTipsContainer: {
     paddingHorizontal: spacing.md,
-    marginBottom: spacing.lg,
+    paddingVertical: spacing.lg,
+    marginBottom: spacing.md,
   },
   tipsScroll: {
-    marginTop: spacing.sm,
+    marginTop: spacing.md,
   },
   tipCard: {
     backgroundColor: colors.backgroundCard,
-    borderRadius: borderRadius.md,
+    borderRadius: borderRadius.lg,
     padding: spacing.md,
-    marginRight: spacing.sm,
-    width: 180,
-    borderWidth: 1,
+    marginRight: spacing.md,
+    width: 200,
+    borderWidth: 1.5,
     borderColor: colors.border,
     ...shadows.small,
+    elevation: 2,
   },
   tipIcon: {
-    fontSize: 28,
-    marginBottom: spacing.xs,
+    fontSize: 32,
+    marginBottom: spacing.sm,
   },
   tipTitle: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '600',
-    color: colors.textSecondary,
+    color: colors.textMuted,
     marginBottom: spacing.xs,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   tipAnswer: {
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: '800',
     color: colors.text,
     marginBottom: spacing.sm,
     lineHeight: 20,
@@ -701,14 +731,15 @@ const styles = StyleSheet.create({
   infoBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#E8F4FD',
-    borderRadius: borderRadius.md,
-    paddingVertical: spacing.sm,
+    backgroundColor: colors.primary + '15',
+    borderRadius: borderRadius.lg,
+    paddingVertical: spacing.md,
     paddingHorizontal: spacing.md,
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.md,
-    borderLeftWidth: 3,
-    borderLeftColor: '#2196F3',
+    marginHorizontal: spacing.md,
+    marginBottom: spacing.lg,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.primary,
+    elevation: 1,
   },
   adContainer: {
     alignItems: 'center',
@@ -717,18 +748,18 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
   },
   bannerIcon: {
-    fontSize: 20,
+    fontSize: 22,
     marginRight: spacing.sm,
   },
   bannerText: {
     flex: 1,
     fontSize: 13,
-    color: '#37474F',
+    color: colors.textSecondary,
     lineHeight: 18,
   },
   bannerBold: {
-    fontWeight: '600',
-    color: '#1565C0',
+    fontWeight: '700',
+    color: colors.primary,
   },
   surveyBanner: {
     marginHorizontal: spacing.lg,
@@ -807,14 +838,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.backgroundCard,
     padding: spacing.md,
-    borderRadius: borderRadius.md,
-    marginBottom: spacing.sm,
-    borderWidth: 1,
+    borderRadius: borderRadius.lg,
+    marginBottom: spacing.md,
+    borderWidth: 1.5,
     borderColor: colors.border,
     ...shadows.small,
+    elevation: 2,
   },
   communityIcon: {
-    fontSize: 28,
+    fontSize: 32,
     marginRight: spacing.md,
   },
   communityLinkContent: {
@@ -822,13 +854,13 @@ const styles = StyleSheet.create({
   },
   communityLinkTitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
     color: colors.text,
-    marginBottom: 2,
+    marginBottom: 4,
   },
   communityLinkSubtext: {
     fontSize: 13,
-    color: colors.textSecondary,
+    color: colors.textMuted,
   },
   communityArrow: {
     fontSize: 20,
