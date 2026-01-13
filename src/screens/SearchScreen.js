@@ -16,13 +16,15 @@ import { specializedTopics } from '../data/specializedTopicsData';
 import { getAllCertificationCategories } from '../data/certificationsData';
 import { developerHints, quickTips } from '../data/developerHintsData';
 import { getTutorialsByLanguage } from '../data/tutorialsData';
+import { howToGuides } from '../data/howToData';
+import { resourceLinks } from '../data/resourceLinksData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 export default function SearchScreen({ navigation }) {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [filter, setFilter] = useState('all'); // all, languages, patterns, platforms, topics, tutorials, tools, hints, certifications
+  const [filter, setFilter] = useState('all'); // all, languages, patterns, platforms, topics, tutorials, tools, hints, certifications, howto, resources
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -191,6 +193,44 @@ export default function SearchScreen({ navigation }) {
       });
     }
 
+    // Search in how-to guides
+    if (filter === 'all' || filter === 'howto') {
+      Object.entries(howToGuides.categories).forEach(([categoryId, category]) => {
+        category.items.forEach((guide, guideIndex) => {
+          const searchableText = `${guide.title} ${guide.description} ${guide.usage} ${(guide.technologies || []).join(' ')} ${category.name}`.toLowerCase();
+          
+          if (searchableText.includes(lowerQuery)) {
+            results.push({
+              type: 'howto',
+              category,
+              categoryId,
+              guide,
+              guideIndex,
+            });
+          }
+        });
+      });
+    }
+
+    // Search in resource links
+    if (filter === 'all' || filter === 'resources') {
+      Object.entries(resourceLinks).forEach(([categoryId, category]) => {
+        category.links.forEach((link, linkIndex) => {
+          const searchableText = `${link.name} ${link.description} ${category.name}`.toLowerCase();
+          
+          if (searchableText.includes(lowerQuery)) {
+            results.push({
+              type: 'resource',
+              category,
+              categoryId,
+              link,
+              linkIndex,
+            });
+          }
+        });
+      });
+    }
+
     setSearchResults(results);
   };
 
@@ -287,7 +327,7 @@ export default function SearchScreen({ navigation }) {
           key={index}
           style={styles.resultCard}
           onPress={() =>
-            navigation.navigate('Learn', {
+            navigation.navigate('Browse', {
               screen: 'TutorialDetail',
               params: {
                 tutorial: result.tutorial,
@@ -405,7 +445,7 @@ export default function SearchScreen({ navigation }) {
           key={index}
           style={styles.resultCard}
           onPress={() =>
-            navigation.navigate('Learn', {
+            navigation.navigate('Browse', {
               screen: 'Certifications',
             })
           }
@@ -436,6 +476,15 @@ export default function SearchScreen({ navigation }) {
         <TouchableOpacity
           key={index}
           style={styles.resultCard}
+          onPress={() =>
+            navigation.navigate('Browse', {
+              screen: 'ComponentsScreen',
+              params: {
+                patternId: result.pattern.id,
+                pattern: result.pattern,
+              },
+            })
+          }
         >
           <View style={styles.resultHeader}>
             <View style={[styles.typeBadge, { backgroundColor: colors.accent + '30' }]}>
@@ -460,6 +509,12 @@ export default function SearchScreen({ navigation }) {
         <TouchableOpacity
           key={index}
           style={styles.resultCard}
+          onPress={() =>
+            navigation.navigate('Browse', {
+              screen: 'ToolDetail',
+              params: { tool: result.platform },
+            })
+          }
         >
           <View style={styles.resultHeader}>
             <View style={[styles.typeBadge, { backgroundColor: colors.secondary + '30' }]}>
@@ -474,6 +529,71 @@ export default function SearchScreen({ navigation }) {
           </View>
           <Text style={styles.resultDescription} numberOfLines={3}>
             {result.platform.description}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+
+    if (result.type === 'howto') {
+      return (
+        <TouchableOpacity
+          key={index}
+          style={styles.resultCard}
+          onPress={() =>
+            navigation.navigate('Browse', {
+              screen: 'HowToGuides',
+              params: {
+                categoryId: result.categoryId,
+                itemIndex: result.guideIndex,
+                guide: result.guide,
+              },
+            })
+          }
+        >
+          <View style={styles.resultHeader}>
+            <View style={[styles.typeBadge, { backgroundColor: '#3498DB' + '30' }]}>
+              <Text style={[styles.typeBadgeText, { color: '#3498DB' }]}>GUIDE</Text>
+            </View>
+            <Text style={styles.resultLanguage}>
+              {result.category.name}
+            </Text>
+          </View>
+          <Text style={styles.resultTitle}>{result.guide.title}</Text>
+          <Text style={styles.resultDescription} numberOfLines={2}>
+            {result.guide.description}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+
+    if (result.type === 'resource') {
+      return (
+        <TouchableOpacity
+          key={index}
+          style={styles.resultCard}
+          onPress={() => {
+            // Resource links navigate to Resources screen
+            navigation.navigate('Browse', {
+              screen: 'Resources',
+              params: {
+                initialCategory: result.categoryId,
+              },
+            });
+          }}
+        >
+          <View style={styles.resultHeader}>
+            <View style={[styles.typeBadge, { backgroundColor: '#27AE60' + '30' }]}>
+              <Text style={[styles.typeBadgeText, { color: '#27AE60' }]}>RESOURCE</Text>
+            </View>
+            <Text style={styles.resultLanguage}>
+              {result.link.name}
+            </Text>
+            <Text style={styles.resultCategory}>
+              {result.category.name}
+            </Text>
+          </View>
+          <Text style={styles.resultDescription} numberOfLines={2}>
+            {result.link.description}
           </Text>
         </TouchableOpacity>
       );
@@ -575,6 +695,22 @@ export default function SearchScreen({ navigation }) {
           >
             <Text style={[styles.filterButtonText, filter === 'platforms' && styles.filterButtonTextActive]}>
               🚀 {t('search.filterPlatforms')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'howto' && styles.filterButtonActive]}
+            onPress={() => { setFilter('howto'); handleSearch(searchQuery); }}
+          >
+            <Text style={[styles.filterButtonText, filter === 'howto' && styles.filterButtonTextActive]}>
+              📖 How-To
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'resources' && styles.filterButtonActive]}
+            onPress={() => { setFilter('resources'); handleSearch(searchQuery); }}
+          >
+            <Text style={[styles.filterButtonText, filter === 'resources' && styles.filterButtonTextActive]}>
+              🔗 Resources
             </Text>
           </TouchableOpacity>
         </ScrollView>
