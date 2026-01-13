@@ -13,6 +13,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
+  Share,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -284,6 +285,33 @@ export default function SettingsScreen({ navigation }) {
 
   const openGitHub = () => {
     Linking.openURL(GITHUB_URL);
+  };
+
+  const shareApp = async () => {
+    try {
+      const message = t('settings.shareMessage');
+      const androidLink = `Android: ${PLAY_STORE_URL}`;
+      const iosLink = APP_STORE_URL.includes('placeholder') 
+        ? 'iOS: Coming soon' 
+        : `iOS: ${APP_STORE_URL}`;
+      
+      const result = await Share.share({
+        message: `${message}\n\n${androidLink}\n${iosLink}`,
+        title: t('settings.shareTitle'),
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      Alert.alert(t('common.error'), t('settings.shareError'));
+    }
   };
 
   // Check if app should prompt for rating (after 3 days)
@@ -563,6 +591,19 @@ export default function SettingsScreen({ navigation }) {
               <Text style={styles.linkTitle}>{t('settings.rateThisApp')}</Text>
               <Text style={styles.linkDescription}>
                 {t('settings.loveApp')}
+              </Text>
+            </View>
+            <Text style={styles.arrow}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.linkCard} onPress={shareApp}>
+            <View style={styles.linkIcon}>
+              <Text style={styles.linkIconText}>📤</Text>
+            </View>
+            <View style={styles.linkContent}>
+              <Text style={styles.linkTitle}>{t('settings.shareApp')}</Text>
+              <Text style={styles.linkDescription}>
+                {t('settings.shareAppDescription')}
               </Text>
             </View>
             <Text style={styles.arrow}>›</Text>
