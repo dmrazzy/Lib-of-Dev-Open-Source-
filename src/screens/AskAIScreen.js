@@ -124,16 +124,32 @@ export default function AskAIScreen({ navigation }) {
       let maxTokens = 2048;
 
       if (responseMode === 'short') {
-        systemPrompt = 'You are a helpful programming assistant. Be extremely concise and direct. Answer in 2-3 sentences maximum or use bullet points. Focus only on the core answer without explanations unless critical. Prioritize brevity while maintaining accuracy.';
+        systemPrompt = `You are an expert programming assistant for Lib of Dev, a comprehensive developer learning app covering 20+ languages, AI/ML, IoT, DevOps, and more.
+
+**Response style:** Ultra-concise. Answer in 2-3 sentences max or bullet points. Focus on the core solution without lengthy explanations.
+**Code:** Only include code if absolutely essential (keep under 10 lines).
+**Tone:** Direct, practical, no fluff.`;
         temperature = 0.3;
         maxTokens = 512;
       } else if (responseMode === 'detailed') {
-        systemPrompt = 'You are a helpful programming assistant. Provide comprehensive, detailed explanations. Include multiple examples, best practices, edge cases, and additional context. Explain the "why" behind concepts, not just the "how".';
+        systemPrompt = `You are an expert programming assistant for Lib of Dev, a comprehensive developer learning app covering 20+ languages, AI/ML, IoT, DevOps, and more.
+
+**Response style:** Comprehensive and educational. Provide detailed explanations, multiple examples, best practices, common pitfalls, and real-world use cases.
+**Code:** Include complete, production-ready examples with comments.
+**Structure:** Use clear headings, bullet points, and logical flow.
+**Context:** Explain the "why" behind concepts, trade-offs, and alternatives.
+**Tone:** Patient, thorough, educational.`;
         temperature = 0.7;
         maxTokens = 4096;
       } else {
-        systemPrompt = 'You are a helpful programming assistant. Provide clear, balanced answers with practical examples. Include key points and a brief code example when relevant.';
-        temperature: 0.7;
+        systemPrompt = `You are an expert programming assistant for Lib of Dev, a comprehensive developer learning app covering 20+ languages, AI/ML, IoT, DevOps, and more.
+
+**Response style:** Balanced and practical. Provide clear explanations with working code examples.
+**Code:** Include a concise, tested example (10-30 lines) when relevant.
+**Structure:** Start with a brief answer, then provide code + explanation.
+**Best practices:** Mention 1-2 key best practices or common mistakes.
+**Tone:** Friendly, professional, helpful.`;
+        temperature = 0.7;
         maxTokens = 2048;
       }
 
@@ -325,6 +341,65 @@ export default function AskAIScreen({ navigation }) {
               <Text style={styles.emptyDescription}>
                 {t('askAI.emptyDescription')}
               </Text>
+
+              {/* AI Limitations Notice */}
+              <View style={styles.limitationsCard}>
+                <Text style={styles.limitationsIcon}>⚠️</Text>
+                <Text style={styles.limitationsTitle}>{t('askAI.limitationsTitle')}</Text>
+                <Text style={styles.limitationsText}>
+                  {t('askAI.limitationsText')}
+                </Text>
+              </View>
+
+              {/* Quick Actions */}
+              <View style={styles.quickActionsContainer}>
+                <Text style={styles.quickActionsTitle}>{t('askAI.quickActions')}</Text>
+                <View style={styles.quickActionsGrid}>
+                  <TouchableOpacity
+                    style={styles.quickActionButton}
+                    onPress={() => setInputText('Explain this code: [paste your code here]')}
+                  >
+                    <Text style={styles.quickActionIcon}>🔍</Text>
+                    <Text style={styles.quickActionText}>{t('askAI.actionExplainCode')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.quickActionButton}
+                    onPress={() => setInputText('Find bugs in: [paste your code here]')}
+                  >
+                    <Text style={styles.quickActionIcon}>🐛</Text>
+                    <Text style={styles.quickActionText}>{t('askAI.actionFindBugs')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.quickActionButton}
+                    onPress={() => setInputText('Optimize this code: [paste your code here]')}
+                  >
+                    <Text style={styles.quickActionIcon}>⚡</Text>
+                    <Text style={styles.quickActionText}>{t('askAI.actionOptimize')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.quickActionButton}
+                    onPress={() => setInputText('Convert this code to [language]: [paste code here]')}
+                  >
+                    <Text style={styles.quickActionIcon}>🔄</Text>
+                    <Text style={styles.quickActionText}>{t('askAI.actionConvert')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.quickActionButton}
+                    onPress={() => setInputText('Add comments to: [paste your code here]')}
+                  >
+                    <Text style={styles.quickActionIcon}>💬</Text>
+                    <Text style={styles.quickActionText}>{t('askAI.actionAddComments')}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.quickActionButton}
+                    onPress={() => setInputText('Write unit tests for: [paste your code here]')}
+                  >
+                    <Text style={styles.quickActionIcon}>✅</Text>
+                    <Text style={styles.quickActionText}>{t('askAI.actionWriteTests')}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
               <View style={styles.examplesContainer}>
                 <Text style={styles.examplesTitle}>{t('askAI.examples')}</Text>
                 <TouchableOpacity
@@ -470,26 +545,25 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
   },
   emptyState: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: spacing.xxl,
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.xxl,
   },
   emptyIcon: {
-    fontSize: 80,
-    marginBottom: spacing.md,
+    fontSize: 64,
+    marginBottom: spacing.sm,
   },
   emptyTitle: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     color: colors.text,
     marginBottom: spacing.xs,
   },
   emptyDescription: {
-    fontSize: 16,
+    fontSize: 15,
     color: colors.textSecondary,
     textAlign: 'center',
-    marginBottom: spacing.xl,
+    marginBottom: spacing.md,
     paddingHorizontal: spacing.lg,
   },
   examplesContainer: {
@@ -497,7 +571,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
   },
   examplesTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     color: colors.text,
     marginBottom: spacing.sm,
@@ -513,6 +587,66 @@ const styles = StyleSheet.create({
   exampleText: {
     fontSize: 14,
     color: colors.textSecondary,
+  },
+  limitationsCard: {
+    backgroundColor: colors.backgroundCard,
+    borderLeftWidth: 4,
+    borderLeftColor: '#FFA500',
+    padding: spacing.md,
+    borderRadius: borderRadius.md,
+    marginVertical: spacing.md,
+    width: '100%',
+  },
+  limitationsIcon: {
+    fontSize: 20,
+    marginBottom: spacing.xs,
+  },
+  limitationsTitle: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: spacing.xs,
+  },
+  limitationsText: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    lineHeight: 18,
+  },
+  quickActionsContainer: {
+    width: '100%',
+    marginTop: spacing.md,
+    marginBottom: spacing.md,
+  },
+  quickActionsTitle: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: spacing.sm,
+  },
+  quickActionsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+  },
+  quickActionButton: {
+    width: '48%',
+    backgroundColor: colors.backgroundElevated,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: borderRadius.md,
+    padding: spacing.sm,
+    alignItems: 'center',
+    ...shadows.small,
+  },
+  quickActionIcon: {
+    fontSize: 24,
+    marginBottom: spacing.xs,
+  },
+  quickActionText: {
+    fontSize: 12,
+    color: colors.text,
+    textAlign: 'center',
+    fontWeight: '500',
   },
   messageContainer: {
     marginBottom: spacing.md,

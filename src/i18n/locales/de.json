@@ -406,6 +406,15 @@
     "errorMessage": "Antwort konnte nicht abgerufen werden. Bitte überprüfe deinen API-Schlüssel und versuche es erneut.",
     "modeShort": "Kurz",
     "modeNormal": "Normal",
-    "modeDetailed": "Ausführlich"
+    "modeDetailed": "Ausführlich",
+    "limitationsTitle": "KI-Einschränkungen",
+    "limitationsText": "KI-Antworten können Fehler oder veraltete Infos enthalten. Überprüfe kritischen Code immer, teste gründlich und nutze dein Urteilsvermögen. Die KI hat keinen Echtzeit-Zugriff auf Daten oder deine lokalen Dateien.",
+    "quickActions": "Schnellaktionen",
+    "actionExplainCode": "Code erklären",
+    "actionFindBugs": "Bugs finden",
+    "actionOptimize": "Optimieren",
+    "actionConvert": "Code konvertieren",
+    "actionAddComments": "Kommentare hinzufügen",
+    "actionWriteTests": "Tests schreiben"
   }
 }

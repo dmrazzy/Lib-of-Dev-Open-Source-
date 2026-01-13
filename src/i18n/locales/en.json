@@ -409,6 +409,15 @@
     "errorMessage": "Failed to get response. Please check your API key and try again.",
     "modeShort": "Short",
     "modeNormal": "Normal",
-    "modeDetailed": "Detailed"
+    "modeDetailed": "Detailed",
+    "limitationsTitle": "AI Limitations",
+    "limitationsText": "AI responses may contain errors or outdated info. Always verify critical code, test thoroughly, and use your judgment. The AI doesn't have real-time data or access to your local files.",
+    "quickActions": "Quick Actions",
+    "actionExplainCode": "Explain Code",
+    "actionFindBugs": "Find Bugs",
+    "actionOptimize": "Optimize",
+    "actionConvert": "Convert Code",
+    "actionAddComments": "Add Comments",
+    "actionWriteTests": "Write Tests"
   }
 }
