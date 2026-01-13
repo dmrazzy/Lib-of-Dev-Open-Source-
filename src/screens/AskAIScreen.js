@@ -32,10 +32,58 @@ export default function AskAIScreen({ navigation }) {
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const [apiKey, setApiKey] = useState('');
   const [responseMode, setResponseMode] = useState('normal'); // short, normal, detailed
+  const [currentExampleIndex, setCurrentExampleIndex] = useState(0);
+  const [countdown, setCountdown] = useState(20);
   const scrollViewRef = useRef();
   const responseModeRef = useRef(null);
+  const exampleRotationInterval = useRef(null);
+  const countdownInterval = useRef(null);
 
   const { setScreenScrollRef, setOnboardingRefs } = useOnboardingContext();
+
+  // All available examples that will rotate
+  const allExamples = [
+    { icon: '💡', text: 'Explain async/await in JavaScript' },
+    { icon: '⚛️', text: 'How do I create a React component?' },
+    { icon: '🐍', text: 'What are Python decorators?' },
+    { icon: '☕', text: 'Explain Java interfaces vs abstract classes' },
+    { icon: '🦀', text: 'What is ownership in Rust?' },
+    { icon: '🎯', text: 'How do TypeScript generics work?' },
+    { icon: '🔧', text: 'What is dependency injection?' },
+    { icon: '🗄️', text: 'Explain SQL JOIN types with examples' },
+    { icon: '🔐', text: 'How to implement JWT authentication?' },
+    { icon: '⚙️', text: 'What are design patterns in software?' },
+    { icon: '🌐', text: 'Explain RESTful API best practices' },
+    { icon: '🎨', text: 'What is the difference between Grid and Flexbox?' },
+    { icon: '📱', text: 'How to handle state in React Native?' },
+    { icon: '🚀', text: 'What are React hooks and when to use them?' },
+    { icon: '💾', text: 'Explain database normalization' },
+    { icon: '🔄', text: 'What is the difference between Git merge and rebase?' },
+    { icon: '🧪', text: 'How to write effective unit tests?' },
+    { icon: '🏗️', text: 'What is microservices architecture?' },
+    { icon: '⚡', text: 'How to optimize React app performance?' },
+    { icon: '🔒', text: 'What is CORS and how to handle it?' },
+    { icon: '📊', text: 'Explain time complexity in algorithms' },
+    { icon: '🎭', text: 'What is polymorphism in OOP?' },
+    { icon: '🌊', text: 'How do Promises work in JavaScript?' },
+    { icon: '🔍', text: 'What is the difference between var, let, and const?' },
+    { icon: '🧩', text: 'Explain middleware in Express.js' },
+    { icon: '🎪', text: 'What are React context and props drilling?' },
+    { icon: '🔮', text: 'How to use async generators in Python?' },
+    { icon: '🎯', text: 'What is lazy loading and code splitting?' },
+    { icon: '🛡️', text: 'How to prevent SQL injection attacks?' },
+    { icon: '🎬', text: 'Explain the React component lifecycle' },
+  ];
+
+  // Get current set of 3 examples based on rotation index
+  const getCurrentExamples = () => {
+    const startIndex = currentExampleIndex * 3;
+    return [
+      allExamples[startIndex % allExamples.length],
+      allExamples[(startIndex + 1) % allExamples.length],
+      allExamples[(startIndex + 2) % allExamples.length],
+    ];
+  };
 
   useEffect(() => {
     loadChatHistory();
@@ -46,6 +94,31 @@ export default function AskAIScreen({ navigation }) {
     setOnboardingRefs('AskAI', {
       responseModes: responseModeRef,
     });
+
+    // Start countdown timer (1 second intervals)
+    countdownInterval.current = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          return 20; // Reset to 20 when it hits 0
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    // Start example rotation (20 second intervals)
+    exampleRotationInterval.current = setInterval(() => {
+      setCurrentExampleIndex((prevIndex) => (prevIndex + 1) % Math.ceil(allExamples.length / 3));
+      setCountdown(20); // Reset countdown when rotating
+    }, 20000); // Rotate every 20 seconds
+
+    return () => {
+      if (exampleRotationInterval.current) {
+        clearInterval(exampleRotationInterval.current);
+      }
+      if (countdownInterval.current) {
+        clearInterval(countdownInterval.current);
+      }
+    };
   }, [setScreenScrollRef, setOnboardingRefs]);
 
   // Reload API key when screen comes into focus
@@ -401,25 +474,22 @@ export default function AskAIScreen({ navigation }) {
               </View>
 
               <View style={styles.examplesContainer}>
-                <Text style={styles.examplesTitle}>{t('askAI.examples')}</Text>
-                <TouchableOpacity
-                  style={styles.exampleCard}
-                  onPress={() => setInputText('Explain async/await in JavaScript')}
-                >
-                  <Text style={styles.exampleText}>💡 Explain async/await in JavaScript</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.exampleCard}
-                  onPress={() => setInputText('How do I create a React component?')}
-                >
-                  <Text style={styles.exampleText}>⚛️ How do I create a React component?</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.exampleCard}
-                  onPress={() => setInputText('What are Python decorators?')}
-                >
-                  <Text style={styles.exampleText}>🐍 What are Python decorators?</Text>
-                </TouchableOpacity>
+                <View style={styles.examplesHeader}>
+                  <Text style={styles.examplesTitle}>{t('askAI.examples')}</Text>
+                  <View style={styles.countdownBadge}>
+                    <Text style={styles.countdownIcon}>🔄</Text>
+                    <Text style={styles.countdownText}>{countdown}s</Text>
+                  </View>
+                </View>
+                {getCurrentExamples().map((example, index) => (
+                  <TouchableOpacity
+                    key={`${currentExampleIndex}-${index}`}
+                    style={styles.exampleCard}
+                    onPress={() => setInputText(example.text)}
+                  >
+                    <Text style={styles.exampleText}>{example.icon} {example.text}</Text>
+                  </TouchableOpacity>
+                ))}
               </View>
             </View>
           ) : (
@@ -570,11 +640,33 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: spacing.md,
   },
+  examplesHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
   examplesTitle: {
     fontSize: 15,
     fontWeight: '600',
     color: colors.text,
-    marginBottom: spacing.sm,
+  },
+  countdownBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.primaryAlpha,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 4,
+    borderRadius: borderRadius.sm,
+  },
+  countdownIcon: {
+    fontSize: 12,
+    marginRight: 4,
+  },
+  countdownText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.primary,
   },
   exampleCard: {
     backgroundColor: colors.backgroundElevated,
