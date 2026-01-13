@@ -18,6 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as StoreReview from 'expo-store-review';
+import * as Clipboard from 'expo-clipboard';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 import { useOnboardingContext } from '../context/OnboardingContext';
 
@@ -774,28 +775,41 @@ export default function SettingsScreen({ navigation }) {
                     secureTextEntry={false}
                     editable={!isTestingApiKey}
                   />
-                  <TouchableOpacity
-                    style={styles.pasteButton}
-                    onPress={async () => {
-                      try {
-                        const clipboardText = await Clipboard.getStringAsync();
-                        if (clipboardText) {
-                          setApiKeyInput(clipboardText);
-                          setApiKeyValidationError('');
-                        }
-                      } catch (error) {
-                        console.log('Error reading clipboard:', error);
-                      }
-                    }}
-                    disabled={isTestingApiKey}
-                  >
-                    <Text style={styles.pasteButtonText}>📋</Text>
-                  </TouchableOpacity>
                   {apiKeyInput.trim().length > 0 && (
                     <Text style={styles.keyLengthIndicator}>
                       {apiKeyInput.trim().length} {t('settings.characters')}
                     </Text>
                   )}
+                  <TouchableOpacity
+                    style={[styles.pasteButton, isTestingApiKey && styles.pasteButtonDisabled]}
+                    onPress={async () => {
+                      try {
+                        const clipboardText = await Clipboard.getStringAsync();
+                        if (clipboardText && clipboardText.trim()) {
+                          setApiKeyInput(clipboardText.trim());
+                          setApiKeyValidationError('');
+                        } else {
+                          Alert.alert(
+                            t('common.error') || 'Error',
+                            'Keine Daten in der Zwischenablage gefunden.',
+                            [{ text: 'OK' }]
+                          );
+                        }
+                      } catch (error) {
+                        console.log('Error reading clipboard:', error);
+                        Alert.alert(
+                          t('common.error') || 'Error',
+                          'Fehler beim Lesen der Zwischenablage.',
+                          [{ text: 'OK' }]
+                        );
+                      }
+                    }}
+                    disabled={isTestingApiKey}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.pasteButtonIcon}>📋</Text>
+                    <Text style={styles.pasteButtonText}>{t('settings.pasteFromClipboard') || 'Einfügen'}</Text>
+                  </TouchableOpacity>
                 </View>
                 
                 {apiKeyValidationError ? (
@@ -1268,13 +1282,11 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     width: '100%',
-    position: 'relative',
   },
   modalInput: {
     backgroundColor: colors.background,
     borderRadius: borderRadius.md,
     padding: spacing.sm,
-    paddingRight: 48,
     color: colors.text,
     fontSize: 16,
     borderWidth: 1,
@@ -1282,19 +1294,27 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xs,
   },
   pasteButton: {
-    position: 'absolute',
-    right: 8,
-    top: 8,
-    width: 36,
-    height: 36,
     backgroundColor: colors.primary,
     borderRadius: borderRadius.md,
-    justifyContent: 'center',
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: spacing.sm,
     ...shadows.small,
   },
+  pasteButtonDisabled: {
+    opacity: 0.5,
+  },
+  pasteButtonIcon: {
+    fontSize: 20,
+    marginRight: spacing.xs,
+  },
   pasteButtonText: {
-    fontSize: 18,
+    color: colors.text,
+    fontSize: 15,
+    fontWeight: '600',
   },
   modalInputError: {
     borderColor: '#FF4444',

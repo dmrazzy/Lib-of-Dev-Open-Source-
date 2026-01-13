@@ -166,6 +166,7 @@
     "deleteApiKeyMessage": "Möchtest du deinen API-Schlüssel wirklich entfernen? Du musst ihn erneut eingeben, um KI-Funktionen zu nutzen.",
     "apiKeyDeleted": "API-Schlüssel erfolgreich gelöscht",
     "apiKeyDeleteError": "Fehler beim Löschen des API-Schlüssels",
+    "pasteFromClipboard": "Aus Zwischenablage einfügen",
     "communityFeedback": "Community Feedback",
     "surveyTitle": "📋 Kurze Umfrage",
     "surveyDescription": "Hilf uns zu verbessern! Teile deine Meinung (2 Min)",
