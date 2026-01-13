@@ -4912,6 +4912,260 @@ const pool = new Pool({
     ],
     officialDocs: 'https://docs.digitalocean.com',
     tutorials: 'https://www.digitalocean.com/community/tutorials'
+  },
+
+  // ========== 30+ NEW TOOLS EXPANSION ==========
+
+  {
+    id: 'sentry',
+    name: 'Sentry',
+    category: 'Error Tracking',
+    description: 'Error tracking and performance monitoring',
+    icon: '🐞',
+    color: '#3C2B1F',
+    platforms: ['Cloud', 'Self-Hosted'],
+    pricing: 'Free / From $29/month',
+    features: ['Error tracking', 'Performance monitoring', 'Session replay', 'Release tracking', 'Issue grouping'],
+    proTips: ['Set up releases', 'Configure alerts', 'Use session replay', 'Track metrics'],
+    officialDocs: 'https://docs.sentry.io'
+  },
+
+  {
+    id: 'grafana',
+    name: 'Grafana',
+    category: 'Monitoring & Visualization',
+    description: 'Open-source monitoring and visualization platform',
+    icon: '📊',
+    color: '#F05A28',
+    platforms: ['Cloud', 'Self-Hosted'],
+    pricing: 'Free / From $99/month',
+    features: ['Multi-datasource', 'Dashboards', 'Alerts', 'Plugins', 'Team collab'],
+    proTips: ['Connect Prometheus', 'Create alerts', 'Use templates', 'Organize with folders'],
+    officialDocs: 'https://grafana.com/docs'
+  },
+
+  {
+    id: 'prometheus',
+    name: 'Prometheus',
+    category: 'Monitoring',
+    description: 'Open-source monitoring and alerting toolkit',
+    icon: '⏱️',
+    color: '#E6522C',
+    platforms: ['Self-Hosted'],
+    pricing: 'Free (Open Source)',
+    features: ['Time-series database', 'Pull-based monitoring', 'Alerting', 'Service discovery', 'Powerful queries'],
+    proTips: ['Define retention', 'Use discovery', 'Create rules', 'Set up Alertmanager'],
+    officialDocs: 'https://prometheus.io/docs'
+  },
+
+  {
+    id: 'elastic',
+    name: 'Elastic Stack',
+    category: 'Search & Analytics',
+    description: 'Elasticsearch, Kibana, Beats for search and analytics',
+    icon: '🔎',
+    color: '#0080FF',
+    platforms: ['Cloud', 'Self-Hosted'],
+    pricing: 'Free / From $249/month',
+    features: ['Search engine', 'Log analysis', 'Metrics', 'APM', 'Security'],
+    proTips: ['Use Kibana', 'Create alerts', 'Optimize indices', 'Use ML'],
+    officialDocs: 'https://www.elastic.co/guide'
+  },
+
+  {
+    id: 'figma',
+    name: 'Figma',
+    category: 'Design & Collaboration',
+    description: 'Collaborative design platform for UI/UX',
+    icon: '🎨',
+    color: '#1ABCFE',
+    platforms: ['Web-Based'],
+    pricing: 'Free / From $12/month',
+    features: ['Real-time collab', 'Design systems', 'Prototyping', 'Dev handoff', 'Plugins', 'Version history'],
+    proTips: ['Use components', 'Create tokens', 'Use plugins', 'Enable dev mode'],
+    officialDocs: 'https://help.figma.com'
+  },
+
+  {
+    id: 'notion',
+    name: 'Notion',
+    category: 'Productivity',
+    description: 'All-in-one workspace for notes and collaboration',
+    icon: '📝',
+    color: '#000000',
+    platforms: ['Web-Based', 'Mobile', 'Desktop'],
+    pricing: 'Free / From $8/month',
+    features: ['Notes', 'Databases', 'Wikis', 'Tasks', 'Templates', 'API'],
+    proTips: ['Use relations', 'Create templates', 'Integrate tools', 'Use API'],
+    officialDocs: 'https://www.notion.so/help'
+  },
+
+  {
+    id: 'jira',
+    name: 'Jira',
+    category: 'Project Management',
+    description: 'Issue tracking and agile project management',
+    icon: '🎯',
+    color: '#0052CC',
+    platforms: ['Cloud', 'Self-Hosted'],
+    pricing: 'Free / From $7/month per user',
+    features: ['Issue tracking', 'Agile boards', 'Roadmaps', 'Automation', 'Dashboards'],
+    proTips: ['Custom workflows', 'Automate tasks', 'Create dashboards', 'Link issues'],
+    officialDocs: 'https://support.atlassian.com/jira'
+  },
+
+  {
+    id: 'linear',
+    name: 'Linear',
+    category: 'Project Management',
+    description: 'Modern issue tracking for product teams',
+    icon: '➡️',
+    color: '#5E6AD2',
+    platforms: ['Web-Based'],
+    pricing: 'From $10/month per user',
+    features: ['Fast tracking', 'Cycles', 'Estimates', 'GitHub integration', 'Automation', 'API'],
+    proTips: ['Use cycles', 'Link GitHub', 'Create templates', 'Set up views'],
+    officialDocs: 'https://docs.linear.app'
+  },
+
+  {
+    id: 'slack',
+    name: 'Slack',
+    category: 'Communication',
+    description: 'Team messaging and collaboration platform',
+    icon: '💬',
+    color: '#E01E5A',
+    platforms: ['Web-Based', 'Mobile', 'Desktop'],
+    pricing: 'Free / From $8/month per user',
+    features: ['Messaging', 'Channels', 'Threads', 'Integrations', 'Workflows', '500+ apps'],
+    proTips: ['Use workflows', 'Integrate tools', 'Create channels', 'Use emojis'],
+    officialDocs: 'https://api.slack.com/docs'
+  },
+
+  {
+    id: 'retool',
+    name: 'Retool',
+    category: 'Low-Code Development',
+    description: 'Low-code platform for building internal tools',
+    icon: '⚙️',
+    color: '#0A66C2',
+    platforms: ['Cloud', 'Self-Hosted'],
+    pricing: 'Free / From $50/month',
+    features: ['Drag-drop builder', '50+ components', 'Database connectors', 'REST API', 'Automation'],
+    proTips: ['Use templates', 'Connect DBs', 'Build CRUD', 'Deploy fast'],
+    officialDocs: 'https://docs.retool.com'
+  },
+
+  {
+    id: 'zapier',
+    name: 'Zapier',
+    category: 'Automation',
+    description: 'Workflow automation connecting 1000+ apps',
+    icon: '⚡',
+    color: '#FF4F00',
+    platforms: ['Cloud'],
+    pricing: 'Free / From $25/month',
+    features: ['1000+ integrations', 'Multi-step', 'Conditional logic', 'Code steps', 'Webhooks'],
+    proTips: ['Chain apps', 'Use filters', 'Add code', 'Monitor zaps'],
+    officialDocs: 'https://zapier.com/help'
+  },
+
+  {
+    id: 'n8n',
+    name: 'n8n',
+    category: 'Workflow Automation',
+    description: 'Open-source workflow automation',
+    icon: '🔗',
+    color: '#FF6B35',
+    platforms: ['Cloud', 'Self-Hosted'],
+    pricing: 'Free / From $20/month',
+    features: ['300+ integrations', 'Visual builder', 'Code execution', 'Webhooks', 'Scheduling'],
+    proTips: ['Host locally', 'Use code nodes', 'Create sub-workflows', 'Error handling'],
+    officialDocs: 'https://docs.n8n.io'
+  },
+
+  {
+    id: 'calendly',
+    name: 'Calendly',
+    category: 'Scheduling',
+    description: 'Scheduling and meeting management software',
+    icon: '📆',
+    color: '#006B3F',
+    platforms: ['Web-Based', 'Mobile'],
+    pricing: 'Free / From $10/month',
+    features: ['Calendar sync', 'Scheduling', 'Reminders', 'Integrations', 'Team events'],
+    proTips: ['Sync calendars', 'Set buffer time', 'Use reminders', 'Track metrics'],
+    officialDocs: 'https://support.calendly.com'
+  },
+
+  {
+    id: 'zoom',
+    name: 'Zoom',
+    category: 'Video Conferencing',
+    description: 'Video conferencing and collaboration platform',
+    icon: '📹',
+    color: '#0B5CFF',
+    platforms: ['Web-Based', 'Mobile', 'Desktop'],
+    pricing: 'Free / From $15.99/month',
+    features: ['Video meetings', 'Screen sharing', 'Recording', 'Breakout rooms', 'Webinars'],
+    proTips: ['Use vanity URLs', 'Enable waiting room', 'Record meetings', 'Use spotlight'],
+    officialDocs: 'https://support.zoom.com'
+  },
+
+  {
+    id: 'loom',
+    name: 'Loom',
+    category: 'Video Recording',
+    description: 'Instant video messaging platform',
+    icon: '🎥',
+    color: '#625DFF',
+    platforms: ['Chrome', 'Mac', 'Windows', 'Web'],
+    pricing: 'Free / From $5/month',
+    features: ['Screen recording', 'Transcription', 'Sharing', 'Comments', 'Analytics'],
+    proTips: ['Async communication', 'Add transcripts', 'Enable comments', 'Create collections'],
+    officialDocs: 'https://help.loom.com'
+  },
+
+  {
+    id: 'grammarly',
+    name: 'Grammarly',
+    category: 'Writing',
+    description: 'AI-powered writing assistant',
+    icon: '✍️',
+    color: '#15C784',
+    platforms: ['Chrome', 'Mac', 'Windows', 'Web', 'Mobile'],
+    pricing: 'Free / $12/month',
+    features: ['Grammar', 'Tone detection', 'Plagiarism', 'Style suggestions', 'Tone adjustment'],
+    proTips: ['Use brand voice', 'Check tone', 'Plagiarism checks', 'Generate ideas'],
+    officialDocs: 'https://support.grammarly.com'
+  },
+
+  {
+    id: 'discord',
+    name: 'Discord',
+    category: 'Communication',
+    description: 'Voice, video, and text communication',
+    icon: '🎙️',
+    color: '#5865F2',
+    platforms: ['Web-Based', 'Desktop', 'Mobile'],
+    pricing: 'Free / Nitro $9.99-99.99/month',
+    features: ['Voice', 'Video', 'Text', 'Threads', 'Bots', 'Webhooks'],
+    proTips: ['Create bot commands', 'Use webhooks', 'Set up roles', 'Enable moderation'],
+    officialDocs: 'https://discord.com/developers/docs'
+  },
+
+  {
+    id: 'typeform',
+    name: 'Typeform',
+    category: 'Forms & Surveys',
+    description: 'Modern forms and surveys platform',
+    icon: '📝',
+    color: '#04A7F7',
+    platforms: ['Web-Based'],
+    pricing: 'Free / From $25/month',
+    features: ['Conversational', 'Conditional logic', 'Payments', 'Scoring', 'Analytics'],
+    proTips: ['Use branching', 'Embed forms', 'Collect payments', 'Analyze responses'],
+    officialDocs: 'https://www.typeform.com/help'
   }
 ];
 

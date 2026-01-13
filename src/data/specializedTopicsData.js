@@ -4626,6 +4626,372 @@ def generate_code(description):
           },
         ],
       },
+      rag: {
+        name: 'Retrieval-Augmented Generation (RAG)',
+        items: [
+          {
+            title: 'RAG with LangChain + Postgres/pgvector',
+            code: `# Ingest docs -> store embeddings -> query
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.vectorstores import PGVector
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain.chains import RetrievalQA
+
+CONNECTION_STRING = "postgresql+psycopg2://user:pass@localhost:5432/ai"
+
+# 1) Split documents
+splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=120)
+docs = splitter.create_documents([open('docs.pdf', 'rb').read().decode('utf-8')])
+
+# 2) Embed + store
+embeddings = OpenAIEmbeddings()
+store = PGVector.from_documents(
+    documents=docs,
+    embedding=embeddings,
+    connection_string=CONNECTION_STRING,
+    collection_name="product-docs",
+)
+
+# 3) Build retriever + chain
+retriever = store.as_retriever(search_kwargs={"k": 4})
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+qa = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
+
+answer = qa.run("What are the warranty terms?")
+print(answer)`,
+            description: 'Full RAG pipeline: chunking, embeddings, pgvector store, and retrieval QA.',
+            usage: 'Use for product manuals, policy docs, or internal knowledge bases where data must stay in Postgres.',
+            technologies: ['LangChain', 'Postgres', 'pgvector', 'OpenAI'],
+          },
+          {
+            title: 'RAG API with Next.js Route Handlers',
+            code: `// app/api/rag/route.ts (Next.js 14+)
+import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+import OpenAI from 'openai';
+
+const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_KEY!);
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+export async function POST(request: Request) {
+  const { query } = await request.json();
+
+  // 1) Vector search
+  const { data: matches } = await supabase.rpc('match_vectors', {
+    query_embedding: await embed(query),
+    match_count: 5,
+  });
+
+  const context = matches?.map((m: any) => m.content).join('\n\n') ?? '';
+
+  // 2) Generate answer
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    temperature: 0,
+    messages: [
+      { role: 'system', content: 'Answer using the supplied context only.' },
+      { role: 'user', content: 'Context:\n' + context + '\n\nQuestion:' + query },
+    ],
+  });
+
+  return NextResponse.json({ answer: completion.choices[0].message.content });
+}
+
+async function embed(text: string) {
+  const { data } = await openai.embeddings.create({
+    input: text,
+    model: 'text-embedding-3-small',
+  });
+  return data[0].embedding;
+}`,
+            description: 'Server-side RAG API with Supabase vectors and OpenAI generation.',
+            usage: 'Drop into a Next.js project to expose a /api/rag endpoint for your app or chatbot.',
+            technologies: ['Next.js', 'Supabase', 'OpenAI', 'TypeScript'],
+          },
+        ],
+      },
+      agents: {
+        name: 'AI Agents & Tooling',
+        items: [
+          {
+            title: 'LangChain Agent with Tools',
+            code: `# Agent that can search, do math, and call APIs
+from langchain.agents import initialize_agent, AgentType
+from langchain.tools import DuckDuckGoSearchRun
+from langchain_openai import ChatOpenAI
+
+search = DuckDuckGoSearchRun()
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+tools = [search]
+agent = initialize_agent(
+    tools,
+    llm,
+    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+    verbose=True,
+)
+
+response = agent.run("Find the latest React Native version and summarize key changes.")
+print(response)`,
+            description: 'Tool-using agent with ReAct prompting for multi-step reasoning.',
+            usage: 'Great for research assistants, operational runbooks, or scripted automation.',
+            technologies: ['LangChain', 'Agents', 'ReAct'],
+          },
+          {
+            title: 'Structured Function Calling (OpenAI + Pydantic)',
+            code: `from pydantic import BaseModel, Field
+from openai import OpenAI
+
+client = OpenAI()
+
+class WeatherRequest(BaseModel):
+  city: str = Field(description="City to fetch weather for")
+  units: str = Field(default="metric")
+
+tools = [
+  {
+    "type": "function",
+    "function": {
+      "name": "get_weather",
+      "description": "Fetch weather for a city",
+      "parameters": WeatherRequest.model_json_schema(),
+    },
+  }
+]
+
+messages = [
+  {"role": "user", "content": "What is the weather in Berlin?"},
+]
+
+res = client.chat.completions.create(
+  model="gpt-4o-mini",
+  messages=messages,
+  tools=tools,
+  tool_choice="auto",
+)
+
+print(res.choices[0].message.tool_calls)`,
+            description: 'Use strict function schemas so LLM outputs are predictable and type-safe.',
+            usage: 'Use for API orchestration, data extraction, or any workflow that needs structured tool calls.',
+            technologies: ['OpenAI', 'Function Calling', 'Pydantic'],
+          },
+        ],
+      },
+      mlops: {
+        name: 'MLOps & Deployment',
+        items: [
+          {
+            title: 'CI/CD for Models with GitHub Actions + Docker',
+            code: `# .github/workflows/ml-api.yml
+name: ml-api
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: pytest
+      - name: Build image
+        run: docker build -t ghcr.io/owner/ml-api:$GITHUB_SHA .
+      - name: Push image
+        run: |
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+          docker push ghcr.io/owner/ml-api:$GITHUB_SHA
+      - name: Deploy
+        run: curl -X POST $DEPLOY_HOOK
+`,
+            description: 'Ship model-backed APIs with automated tests, Docker builds, and registry publishing.',
+            usage: 'Trigger builds on every push; deploy via webhook to your platform (Fly.io, Render, K8s).',
+            technologies: ['GitHub Actions', 'Docker', 'CI/CD'],
+          },
+          {
+            title: 'Model Monitoring with FastAPI + Prometheus',
+            code: `# main.py
+from fastapi import FastAPI
+from prometheus_client import Counter, Histogram, generate_latest
+from starlette.responses import Response
+
+app = FastAPI()
+requests_total = Counter('inference_requests_total', 'Total inference requests')
+latency = Histogram('inference_latency_seconds', 'Latency')
+
+@app.post('/predict')
+def predict(payload: dict):
+    import time
+    start = time.time()
+    requests_total.inc()
+    # ... run model prediction ...
+    latency.observe(time.time() - start)
+    return {"prediction": "class_a"}
+
+@app.get('/metrics')
+def metrics():
+    return Response(generate_latest(), media_type='text/plain')
+`,
+            description: 'Expose Prometheus metrics for inference traffic and latency.',
+            usage: 'Scrape with Prometheus and visualize in Grafana for production model health.',
+            technologies: ['FastAPI', 'Prometheus', 'Observability'],
+          },
+        ],
+      },
+      evaluation: {
+        name: 'AI Evaluation & Quality',
+        items: [
+          {
+            title: 'LLM Answer Evaluation with Ragas',
+            code: `# Evaluate LLM outputs against reference answers
+from ragas import evaluate
+from ragas.metrics import faithfulness, answer_relevancy
+
+questions = [
+    "What is vector search?",
+    "How to secure API keys?",
+]
+
+answers = [
+    "Vector search finds similar vectors using cosine distance.",
+    "Store keys in env vars and secret managers, never in code.",
+]
+
+contexts = [
+    ["Vector search uses embeddings and distance functions."],
+    ["Use Vault, KMS, or .env files; rotate keys regularly."],
+]
+
+result = evaluate(
+    questions=questions,
+    answers=answers,
+    contexts=contexts,
+    metrics=[faithfulness, answer_relevancy],
+)
+
+print(result)
+` ,
+            description: 'Add automated quality checks for LLM outputs using reference answers and contexts.',
+            usage: 'Run in CI to catch regressions in retrieval quality or prompt changes.',
+            technologies: ['Ragas', 'LLM Evaluation', 'Python'],
+          },
+          {
+            title: 'Prompt Unit Tests (JavaScript)',
+            code: `// Jest-style prompt tests
+import { strict as assert } from 'assert';
+import { callLLM } from './llmClient';
+
+test('answers include compliance note', async () => {
+  const question = 'How do I store passwords?';
+  const answer = await callLLM(question);
+  assert.match(answer.toLowerCase(), /hash|bcrypt|argon/);
+  assert.match(answer.toLowerCase(), /never store plain text/);
+});
+` ,
+            description: 'Treat prompts like code: write unit tests to enforce safety and correctness.',
+            usage: 'Run with your test runner so prompt changes remain safe over time.',
+            technologies: ['Jest', 'LLM Testing', 'JavaScript'],
+          },
+        ],
+      },
+      safety: {
+        name: 'AI Safety & Guardrails',
+        items: [
+          {
+            title: 'Input Sanitization & Allowlist',
+            code: `// Simple allowlist filter before sending to LLM
+const allowedTopics = ['docs', 'product', 'support'];
+
+function isAllowed(query) {
+  return allowedTopics.some(topic => query.toLowerCase().includes(topic));
+}
+
+function guardrail(query) {
+  if (!isAllowed(query)) {
+    return 'Request blocked: outside allowed topics.';
+  }
+  return query;
+}
+` ,
+            description: 'Block prompt-injection and off-topic abuse with lightweight allowlists.',
+            usage: 'Run guardrail checks before calling your model or RAG chain.',
+            technologies: ['Guardrails', 'Security', 'JavaScript'],
+          },
+          {
+            title: 'PII Redaction Middleware',
+            code: `import re
+
+PII_PATTERNS = [
+    re.compile(r"\\b\d{3}-\d{2}-\d{4}\b"),  # SSN-like
+    re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}"),
+]
+
+def redact(text):
+    redacted = text
+    for pattern in PII_PATTERNS:
+        redacted = pattern.sub('[REDACTED]', redacted)
+    return redacted
+
+def safe_query(user_input):
+    return redact(user_input)
+` ,
+            description: 'Strip sensitive data before it reaches the model to reduce leakage risk.',
+            usage: 'Wrap all user input through this middleware in chat apps or RAG pipelines.',
+            technologies: ['Python', 'Regex', 'PII'],
+          },
+        ],
+      },
+      costOptimization: {
+        name: 'AI Cost Optimization',
+        items: [
+          {
+            title: 'Token Budgeting Helper',
+            code: `// Rough token estimator (4 chars ≈ 1 token)
+function estimateTokens(text) {
+  return Math.ceil(text.length / 4);
+}
+
+function pickModel(prompt) {
+  const tokens = estimateTokens(prompt);
+  if (tokens < 1500) return 'gpt-4o-mini';
+  if (tokens < 6000) return 'gpt-4o';
+  return 'gpt-4o-large';
+}
+` ,
+            description: 'Choose cheaper models automatically based on prompt size.',
+            usage: 'Call before LLM requests to route to the right model tier.',
+            technologies: ['JavaScript', 'Cost Control'],
+          },
+          {
+            title: 'Caching LLM Responses',
+            code: `import crypto from 'crypto';
+const cache = new Map();
+
+function hashPrompt(prompt) {
+  return crypto.createHash('sha256').update(prompt).digest('hex');
+}
+
+async function cachedCall(prompt, llmCall) {
+  const key = hashPrompt(prompt);
+  if (cache.has(key)) return cache.get(key);
+  const result = await llmCall(prompt);
+  cache.set(key, result);
+  return result;
+}
+` ,
+            description: 'Memoize frequent prompts to reduce token spend.',
+            usage: 'Wrap your chat/completion calls with a simple hash-based cache.',
+            technologies: ['Node.js', 'Caching', 'LLM'],
+          },
+        ],
+      },
     },
   },
 };

@@ -778,6 +778,144 @@ export const developerHints = {
       },
     ],
   },
+
+  architecture: {
+    id: 'architecture',
+    category: 'System Architecture',
+    icon: '🏗️',
+    color: '#EC4899',
+    title: 'System Architecture & Design Patterns',
+    hints: [
+      {
+        scenario: 'Building scalable web application?',
+        recommendation: 'Use microservices with containerization',
+        reason: 'Independent scaling, easier deployment, better fault isolation.',
+        technologies: ['Kubernetes', 'Docker', 'Docker Compose', 'Helm'],
+        whenToUse: 'Large teams, multiple deployment targets, independent scaling needs.',
+      },
+      {
+        scenario: 'Need high availability system?',
+        recommendation: 'Use load balancing + auto-scaling',
+        reason: 'Distributes traffic, handles failures, maintains performance.',
+        technologies: ['Nginx', 'HAProxy', 'AWS ELB', 'Kubernetes'],
+        whenToUse: 'Production systems, critical applications, handling peaks.',
+      },
+      {
+        scenario: 'Decoupling components?',
+        recommendation: 'Use message queues or event streaming',
+        reason: 'Loose coupling, asynchronous processing, better resilience.',
+        technologies: ['RabbitMQ', 'Kafka', 'Redis', 'AWS SQS', 'Google Pub/Sub'],
+        whenToUse: 'Microservices, event-driven apps, asynchronous workflows.',
+      },
+      {
+        scenario: 'Need real-time updates?',
+        recommendation: 'Use WebSockets or Server-Sent Events',
+        reason: 'Persistent connection allows instant data push to clients.',
+        technologies: ['WebSocket', 'Socket.io', 'SignalR', 'gRPC', 'Server-Sent Events'],
+        whenToUse: 'Live notifications, collaborative editing, real-time dashboards.',
+      },
+    ],
+  },
+
+  cloudServices: {
+    id: 'cloud-services',
+    category: 'Cloud & Infrastructure',
+    icon: '☁️',
+    color: '#06B6D4',
+    title: 'Cloud Services Selection',
+    hints: [
+      {
+        scenario: 'Choosing cloud provider?',
+        recommendation: 'AWS for variety, Azure for enterprise, GCP for ML',
+        reason: 'AWS has broadest service portfolio, Azure integrates with Microsoft, GCP best for data/ML.',
+        technologies: ['AWS', 'Azure', 'GCP', 'DigitalOcean'],
+        whenToUse: 'Always evaluate based on: services needed, team expertise, cost, compliance.',
+      },
+      {
+        scenario: 'Need serverless functions?',
+        recommendation: 'AWS Lambda, Azure Functions, or Google Cloud Functions',
+        reason: 'Pay per execution, auto-scaling, no server management.',
+        technologies: ['AWS Lambda', 'Azure Functions', 'Google Cloud Functions', 'Firebase'],
+        whenToUse: 'Event handlers, scheduled tasks, API backends, webhooks.',
+      },
+      {
+        scenario: 'Choosing database?',
+        recommendation: 'SQL for relational, NoSQL for flexible schemas',
+        reason: 'Choose based on data structure, scaling needs, query patterns.',
+        technologies: ['PostgreSQL', 'MongoDB', 'DynamoDB', 'Firestore', 'Redis'],
+        whenToUse: 'Relational: structured data. NoSQL: flexible schema, rapid scaling.',
+      },
+    ],
+  },
+
+  securityBest: {
+    id: 'security-best',
+    category: 'Security Best Practices',
+    icon: '🔐',
+    color: '#EF4444',
+    title: 'Security Best Practices',
+    hints: [
+      {
+        scenario: 'Handling secrets?',
+        recommendation: 'Use secret management service, never commit secrets',
+        reason: 'Prevents credential leaks, enables rotation, audit trails.',
+        technologies: ['HashiCorp Vault', 'AWS Secrets Manager', 'Azure Key Vault', 'Env files'],
+        whenToUse: 'All applications, database credentials, API keys, certificates.',
+      },
+      {
+        scenario: 'Need user authentication?',
+        recommendation: 'Use OAuth 2.0 or SAML for enterprise',
+        reason: 'Industry standard, secure, supports single sign-on.',
+        technologies: ['Auth0', 'Okta', 'Firebase Auth', 'Keycloak', 'AWS Cognito'],
+        whenToUse: 'Web apps, mobile apps, API authentication, enterprise access.',
+      },
+      {
+        scenario: 'Securing APIs?',
+        recommendation: 'Use API keys, OAuth, or mutual TLS',
+        reason: 'Different levels of security for different scenarios.',
+        technologies: ['JWT', 'OAuth 2.0', 'mTLS', 'API Gateway'],
+        whenToUse: 'Public APIs: keys. Internal: mTLS. User-facing: OAuth.',
+      },
+      {
+        scenario: 'Need data encryption?',
+        recommendation: 'Encrypt in transit (TLS) and at rest (AES-256)',
+        reason: 'Protects data from interception and unauthorized access.',
+        technologies: ['TLS 1.3', 'AES-256', 'HTTPS everywhere', 'Database encryption'],
+        whenToUse: 'Always: HTTPS. Sensitive data: encryption at rest.',
+      },
+    ],
+  },
+
+  performanceOpt: {
+    id: 'performance-opt',
+    category: 'Performance Optimization',
+    icon: '⚡',
+    color: '#FBBF24',
+    title: 'Performance Optimization Strategies',
+    hints: [
+      {
+        scenario: 'Application running slow?',
+        recommendation: 'Profile first: identify bottleneck before optimizing',
+        reason: 'Optimization without profiling wastes time on wrong issues.',
+        technologies: ['Chrome DevTools', 'Java JProfiler', 'Python cProfile', 'Load testing'],
+        whenToUse: 'Before any optimization: measure, identify, then fix.',
+      },
+      {
+        scenario: 'Database queries slow?',
+        recommendation: 'Add indexes, query optimization, consider caching',
+        reason: 'Most performance issues are database-related.',
+        technologies: ['Database indexing', 'Query optimization', 'Redis', 'Memcached'],
+        whenToUse: 'Profile queries first. Add indexes for frequently queried columns.',
+      },
+      {
+        scenario: 'Frontend sluggish?',
+        recommendation: 'Code splitting, lazy loading, minification, compression',
+        reason: 'Reduces bundle size and improves initial load.',
+        technologies: ['Webpack', 'Vite', 'Tree shaking', 'Gzip', 'Brotli'],
+        whenToUse: 'Always: bundle optimization, compression. Large apps: code splitting.',
+      },
+    ],
+  },
 };
 
 // Quick tips by scenario

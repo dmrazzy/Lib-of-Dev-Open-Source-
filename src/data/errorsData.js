@@ -3387,6 +3387,253 @@ export function getErrorsByCategory(category) {
   return getAllErrors().filter(error => error.category === category);
 }
 
+// ========== EXPANDED ERROR CATEGORIES ==========
+
+// React Query Errors
+errorsData.reactquery = {
+  id: 'react-query',
+  name: 'React Query',
+  icon: '🔄',
+  color: '#FF6B6B',
+  commonErrors: [
+    {
+      id: 'rq-stale-data',
+      error: 'Stale Data Not Updating',
+      cause: 'React Query cache not invalidating after mutations',
+      solution: `// ✅ Invalidate cache after mutation
+const { mutate } = useMutation(updateUser, {
+  onSuccess: () => {
+    queryClient.invalidateQueries('user');
+  }
+});
+
+// Or use setQueryData
+const { mutate } = useMutation(updateUser, {
+  onSuccess: (data) => {
+    queryClient.setQueryData('user', data);
+  }
+});`,
+      explanation: 'Invalidate or update cache after mutations',
+      prevention: ['Always invalidate related queries', 'Use setQueryData for optimistic updates', 'Set proper staleTime']
+    },
+    {
+      id: 'rq-infinite-loop',
+      error: 'Infinite Query Loop',
+      cause: 'pageParam not properly incremented',
+      solution: `// ✅ Correct infinite query setup
+const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+  'posts',
+  ({ pageParam = 0 }) => fetchPosts(pageParam),
+  { getNextPageParam: (lastPage) => lastPage.nextPage }
+);`,
+      explanation: 'Proper pageParam management',
+      prevention: ['Ensure getNextPageParam returns undefined when no more pages']
+    }
+  ]
+};
+
+// GraphQL Errors
+errorsData.graphql = {
+  id: 'graphql',
+  name: 'GraphQL',
+  icon: '⚡',
+  color: '#E10098',
+  commonErrors: [
+    {
+      id: 'graphql-n-plus-one',
+      error: 'N+1 Query Problem',
+      cause: 'Querying database in loop for each parent item',
+      solution: `// ✅ Use DataLoader for batch loading
+const DataLoader = require('dataloader');
+const authorLoader = new DataLoader(async (userIds) => {
+  return User.find({ _id: { $in: userIds } });
+});
+
+// In resolver
+Post: {
+  author: (post) => authorLoader.load(post.authorId)
+}`,
+      explanation: 'Use DataLoader or batch queries',
+      prevention: ['Batch load related data', 'Use query analysis tools']
+    },
+    {
+      id: 'graphql-null-error',
+      error: 'Null in Non-Null Field',
+      cause: 'Resolver returning null for non-nullable field',
+      solution: `// ✅ Ensure resolvers handle all cases
+const resolvers = {
+  User: {
+    email: (user) => user.email || throw new Error('Email required')
+  }
+};
+
+// Or make field nullable
+type User {
+  email: String  // Not required
+  id: ID!        // Required
+}`,
+      explanation: 'Handle nullable vs non-nullable fields correctly',
+      prevention: ['Validate resolver return values', 'Test edge cases']
+    }
+  ]
+};
+
+// Tailwind CSS Errors
+errorsData.tailwindcss = {
+  id: 'tailwind',
+  name: 'Tailwind CSS',
+  icon: '🎨',
+  color: '#06B6D4',
+  commonErrors: [
+    {
+      id: 'tailwind-not-applied',
+      error: 'Tailwind Styles Not Applied',
+      cause: 'Template files not in purge/content paths',
+      solution: `// ✅ tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html"
+  ]
+};`,
+      explanation: 'Configure content paths correctly',
+      prevention: ['Verify content paths match', 'Rebuild after adding files']
+    },
+    {
+      id: 'tailwind-dynamic-classes',
+      error: 'Dynamic Classes Removed in Production',
+      cause: 'Tailwind purging dynamically generated class names',
+      solution: `// ✅ Use static class names
+className={color === 'red' ? 'bg-red-500' : 'bg-blue-500'}
+
+// ✅ Or safelist
+module.exports = {
+  safelist: [
+    { pattern: /^(bg|text)-(red|blue|green)-(100|500|900)$/ }
+  ]
+};`,
+      explanation: 'Avoid dynamic class generation',
+      prevention: ['Use static classes', 'Safelist dynamic patterns']
+    }
+  ]
+};
+
+// Prisma ORM Errors
+errorsData.prisma = {
+  id: 'prisma',
+  name: 'Prisma ORM',
+  icon: '🔷',
+  color: '#2D3748',
+  commonErrors: [
+    {
+      id: 'prisma-select-include',
+      error: 'Cannot use include and select together',
+      cause: 'Using both include and select on same query',
+      solution: `// ✅ Use select with nested fields
+const user = await prisma.user.findUnique({
+  where: { id: 1 },
+  select: {
+    email: true,
+    posts: true
+  }
+});`,
+      explanation: 'Use either include or select, not both',
+      prevention: ['Choose one approach', 'Understand the difference']
+    },
+    {
+      id: 'prisma-foreign-key',
+      error: 'Foreign key constraint failed',
+      cause: 'Creating/updating with non-existent foreign key',
+      solution: `// ✅ Verify relationship exists
+const author = await prisma.user.findUnique({ where: { id } });
+if (!author) throw new Error('Author not found');
+
+const post = await prisma.post.create({
+  data: { title: "Post", authorId: author.id }
+});`,
+      explanation: 'Verify foreign keys before creating',
+      prevention: ['Validate relationships', 'Use transactions']
+    }
+  ]
+};
+
+// Authentication Errors
+errorsData.authentication = {
+  id: 'auth',
+  name: 'Authentication & Authorization',
+  icon: '🔑',
+  color: '#FF6B9D',
+  commonErrors: [
+    {
+      id: 'jwt-expired',
+      error: 'JWT Token Expired',
+      cause: 'Using expired token without refresh',
+      solution: `// ✅ Refresh token flow
+try {
+  jwt.verify(token, SECRET);
+} catch (error) {
+  if (error.name === 'TokenExpiredError') {
+    const newToken = jwt.sign(payload, SECRET, { expiresIn: '15m' });
+    return newToken;
+  }
+}`,
+      explanation: 'Implement refresh token mechanism',
+      prevention: ['Use short-lived tokens', 'Implement refresh rotation']
+    },
+    {
+      id: 'cors-credentials',
+      error: 'CORS Error with Credentials',
+      cause: 'Missing credentials flag in CORS',
+      solution: `// ✅ Server
+app.use(cors({ origin: URL, credentials: true }));
+
+// ✅ Client
+fetch('api/data', { credentials: 'include' });`,
+      explanation: 'Enable CORS with credentials',
+      prevention: ['Set credentials: true', 'Specify exact origin']
+    }
+  ]
+};
+
+// Performance Errors
+errorsData.performance_issues = {
+  id: 'performance',
+  name: 'Performance Issues',
+  icon: '⚡',
+  color: '#FFD700',
+  commonErrors: [
+    {
+      id: 'memory-leak',
+      error: 'Memory Leak',
+      cause: 'Event listeners not removed',
+      solution: `// ✅ Clean up listeners
+useEffect(() => {
+  const handler = () => {};
+  element.addEventListener('click', handler);
+  return () => element.removeEventListener('click', handler);
+}, []);`,
+      explanation: 'Always clean up event listeners',
+      prevention: ['Use cleanup functions', 'Test with profilers']
+    },
+    {
+      id: 'slow-render',
+      error: 'React Component Rendering Slowly',
+      cause: 'Missing React.memo or useMemo',
+      solution: `// ✅ Memoize expensive component
+const UserCard = React.memo(({ user }) => (
+  <div>{user.name}</div>
+));
+
+// ✅ Memoize values
+const expensiveValue = useMemo(() => {
+  return computeExpensive(data);
+}, [data]);`,
+      explanation: 'Optimize component rendering',
+      prevention: ['Profile components', 'Use memo strategically']
+    }
+  ]
+};
+
 export function getErrorStats() {
   const allErrors = getAllErrors();
   return {

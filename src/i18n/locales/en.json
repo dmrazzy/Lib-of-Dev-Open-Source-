@@ -140,7 +140,15 @@
     "communityFeedback": "Community Feedback",
     "surveyTitle": "📋 Quick Survey",
     "surveyDescription": "Help us improve! Share your thoughts (2 min)",
-    "takeSurvey": "Take Survey"
+    "takeSurvey": "Take Survey",
+    "privacySecurityTitle": "🔒 Privacy & Security",
+    "privacySecurityCardTitle": "Your Data, Your Device",
+    "privacySecurityDescription": "• Offline-first: content lives on your device.\n• No trackers: we do not collect personal data or analytics.\n• API keys: stored locally via AsyncStorage; never sent to our servers.\n• Release safety: every change is reviewed and tested before it goes live.\n• Open Source: audit the code on GitHub to ensure nothing malicious ships.",
+    "privacySecurityCta": "View source & privacy details on GitHub ↗",
+    "adsInfoTitle": "🧠 Why We Show Ads",
+    "adsInfoCardTitle": "Keeping Lib of Dev Free",
+    "adsInfoDescription": "• Light ads only: we keep placements minimal so the app stays clean.\n• Purpose: cover fixed costs (Google Play, infra/dev tools, GitHub, Apple soon).\n• No wage: ads do not pay us a salary—they only offset bills.\n• Reality check: 500 users over a week → 837 impressions → $2.76 earned.",
+    "adsInfoThanks": "Thanks for helping keep this project free for everyone!"
   },
   "languages": {
     "javascript": "JavaScript",

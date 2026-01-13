@@ -847,3 +847,438 @@ export const searchCertifications = (query) => {
     cert.topics.some(topic => topic.toLowerCase().includes(lowerQuery))
   );
 };
+
+// Additional certification categories - EXPANSION PACK
+
+const advancedCategories = {
+  webDevelopment: {
+    id: 'webdev',
+    name: 'Web Development',
+    icon: '🌐',
+    color: '#F39C12',
+    certifications: [
+      {
+        id: 'w3c-web-standards',
+        provider: 'W3C',
+        name: 'Web Content Accessibility Guidelines',
+        description: 'Learn web accessibility standards (WCAG)',
+        level: 'Intermediate',
+        duration: '20-25 hours',
+        url: 'https://www.w3.org/WAI/WCAG21/quickref/',
+        topics: ['Web Accessibility', 'WCAG', 'Inclusive Design'],
+        free: true,
+        language: 'EN'
+      },
+      {
+        id: 'wordpress-certified',
+        provider: 'WordPress',
+        name: 'WordPress Developer Certification',
+        description: 'Build and customize WordPress sites',
+        level: 'Intermediate',
+        duration: '30-40 hours',
+        url: 'https://www.wpengine.com/blog/wordpress-certification/',
+        topics: ['WordPress', 'PHP', 'Themes', 'Plugins'],
+        free: false,
+        price: '$199',
+        language: 'EN'
+      },
+      {
+        id: 'sap-developer',
+        provider: 'SAP',
+        name: 'SAP Developer Associate',
+        description: 'SAP software development',
+        level: 'Intermediate',
+        duration: '60-80 hours',
+        url: 'https://open.sap.com/',
+        topics: ['SAP', 'Backend Development', 'Enterprise'],
+        free: true,
+        language: 'EN'
+      }
+    ]
+  },
+  mobileDevelopment: {
+    id: 'mobile-dev',
+    name: 'Mobile App Development',
+    icon: '📱',
+    color: '#E74C3C',
+    certifications: [
+      {
+        id: 'flutter-certified',
+        provider: 'Google',
+        name: 'Flutter Developer Associate',
+        description: 'Build cross-platform Flutter apps',
+        level: 'Intermediate',
+        duration: '40-50 hours',
+        url: 'https://developers.google.com/certification/flutter',
+        topics: ['Flutter', 'Dart', 'Mobile Development'],
+        free: false,
+        price: '$149',
+        language: 'EN'
+      },
+      {
+        id: 'react-native-expert',
+        provider: 'React Native',
+        name: 'React Native Developer Expert',
+        description: 'Advanced React Native development',
+        level: 'Advanced',
+        duration: '50-60 hours',
+        url: 'https://reactnative.dev/docs/getting-started',
+        topics: ['React Native', 'JavaScript', 'iOS/Android'],
+        free: true,
+        language: 'EN'
+      },
+      {
+        id: 'ios-developer',
+        provider: 'Apple',
+        name: 'App Development with Swift',
+        description: 'Official iOS app development',
+        level: 'Intermediate',
+        duration: '60-80 hours',
+        url: 'https://developer.apple.com/swift/',
+        topics: ['Swift', 'iOS', 'App Development'],
+        free: true,
+        language: 'EN'
+      },
+      {
+        id: 'android-developer',
+        provider: 'Google',
+        name: 'Android Developer Certified',
+        description: 'Professional Android development',
+        level: 'Intermediate',
+        duration: '60-80 hours',
+        url: 'https://developer.android.com/certification',
+        topics: ['Kotlin', 'Android', 'Java'],
+        free: true,
+        language: 'EN'
+      }
+    ]
+  },
+  cybersecurity: {
+    id: 'cybersecurity',
+    name: 'Cybersecurity & Ethical Hacking',
+    icon: '🔐',
+    color: '#E53935',
+    certifications: [
+      {
+        id: 'oscp',
+        provider: 'Offensive Security',
+        name: 'OSCP - Offensive Security Certified Professional',
+        description: 'Hands-on penetration testing',
+        level: 'Advanced',
+        duration: '100+ hours',
+        url: 'https://www.offensive-security.com/pwk-oscp/',
+        topics: ['Penetration Testing', 'Hacking', 'Security'],
+        free: false,
+        price: '$999',
+        language: 'EN'
+      },
+      {
+        id: 'cism',
+        provider: 'ISACA',
+        name: 'CISM - Certified Information Security Manager',
+        description: 'Information security management',
+        level: 'Advanced',
+        duration: '80-100 hours',
+        url: 'https://www.isaca.org/certifications/cism',
+        topics: ['Security Management', 'Risk Assessment', 'Compliance'],
+        free: false,
+        price: '$749',
+        language: 'EN'
+      },
+      {
+        id: 'certified-ethical-hacker',
+        provider: 'EC-Council',
+        name: 'Certified Ethical Hacker (CEH)',
+        description: 'Ethical hacking and penetration testing',
+        level: 'Intermediate',
+        duration: '40-50 hours',
+        url: 'https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/',
+        topics: ['Ethical Hacking', 'Security', 'Penetration Testing'],
+        free: false,
+        price: '$500',
+        language: 'EN'
+      },
+      {
+        id: 'comptia-casp',
+        provider: 'CompTIA',
+        name: 'CompTIA CASP+ (Advanced Security Practitioner)',
+        description: 'Advanced cybersecurity practices',
+        level: 'Advanced',
+        duration: '60-80 hours',
+        url: 'https://www.comptia.org/certifications/casp',
+        topics: ['Enterprise Security', 'Advanced Threats', 'Risk Management'],
+        free: false,
+        price: '$380',
+        language: 'EN'
+      }
+    ]
+  },
+  cloudArchitecture: {
+    id: 'cloud-arch',
+    name: 'Cloud Architecture & Solutions',
+    icon: '☁️',
+    color: '#3498DB',
+    certifications: [
+      {
+        id: 'aws-solutions-architect-pro',
+        provider: 'AWS',
+        name: 'AWS Solutions Architect - Professional',
+        description: 'Advanced AWS architecture design',
+        level: 'Advanced',
+        duration: '80-100 hours',
+        url: 'https://aws.amazon.com/certification/certified-solutions-architect-professional/',
+        topics: ['AWS', 'Architecture', 'Design Patterns'],
+        free: false,
+        price: '$300',
+        language: 'EN'
+      },
+      {
+        id: 'azure-solutions-architect',
+        provider: 'Microsoft',
+        name: 'Azure Solutions Architect Expert',
+        description: 'Microsoft Azure enterprise architecture',
+        level: 'Advanced',
+        duration: '80-100 hours',
+        url: 'https://learn.microsoft.com/en-us/credentials/certifications/azure-solutions-architect/',
+        topics: ['Azure', 'Cloud Architecture', 'Design'],
+        free: false,
+        price: '$165',
+        language: 'EN'
+      },
+      {
+        id: 'gcp-architect',
+        provider: 'Google Cloud',
+        name: 'Professional Cloud Architect',
+        description: 'Google Cloud solutions architecture',
+        level: 'Advanced',
+        duration: '60-80 hours',
+        url: 'https://cloud.google.com/certification/cloud-architect',
+        topics: ['GCP', 'Cloud Design', 'Infrastructure'],
+        free: false,
+        price: '$200',
+        language: 'EN'
+      }
+    ]
+  },
+  aiMachineLearning: {
+    id: 'ai-ml-adv',
+    name: 'Advanced AI & Machine Learning',
+    icon: '🤖',
+    color: '#9B59B6',
+    certifications: [
+      {
+        id: 'nvidia-deeplearning',
+        provider: 'NVIDIA',
+        name: 'NVIDIA Certified Associate - AI & Deep Learning',
+        description: 'Deep learning with GPUs',
+        level: 'Intermediate',
+        duration: '40-50 hours',
+        url: 'https://www.nvidia.com/en-us/training/certification/',
+        topics: ['Deep Learning', 'CUDA', 'GPU Computing'],
+        free: false,
+        price: '$120',
+        language: 'EN'
+      },
+      {
+        id: 'aws-machinelearning',
+        provider: 'AWS',
+        name: 'AWS Certified Machine Learning – Specialty',
+        description: 'AWS machine learning services',
+        level: 'Advanced',
+        duration: '70-90 hours',
+        url: 'https://aws.amazon.com/certification/certified-machine-learning-specialty/',
+        topics: ['Machine Learning', 'AWS ML', 'Data Science'],
+        free: false,
+        price: '$300',
+        language: 'EN'
+      },
+      {
+        id: 'databricks-data-engineer',
+        provider: 'Databricks',
+        name: 'Databricks Certified Data Engineer',
+        description: 'Apache Spark and big data engineering',
+        level: 'Advanced',
+        duration: '60-80 hours',
+        url: 'https://www.databricks.com/learn/certification',
+        topics: ['Spark', 'Big Data', 'Data Engineering'],
+        free: false,
+        price: '$200',
+        language: 'EN'
+      },
+      {
+        id: 'fast-ai-practitioner',
+        provider: 'Fast.AI',
+        name: 'Practical Deep Learning for Coders',
+        description: 'Practical deep learning applications',
+        level: 'Intermediate',
+        duration: '30-40 hours',
+        url: 'https://www.fast.ai',
+        topics: ['Deep Learning', 'PyTorch', 'Computer Vision'],
+        free: true,
+        language: 'EN'
+      }
+    ]
+  },
+  businessTechnology: {
+    id: 'biz-tech',
+    name: 'Business & Technology',
+    icon: '💼',
+    color: '#16A085',
+    certifications: [
+      {
+        id: 'itil-foundation',
+        provider: 'AXELOS',
+        name: 'ITIL Foundation',
+        description: 'IT Service Management basics',
+        level: 'Beginner',
+        duration: '20-30 hours',
+        url: 'https://www.axelos.com/certifications/itil-foundation',
+        topics: ['ITIL', 'IT Service Management', 'Best Practices'],
+        free: false,
+        price: '$250',
+        language: 'EN/DE'
+      },
+      {
+        id: 'lean-six-sigma',
+        provider: 'Six Sigma Global',
+        name: 'Lean Six Sigma Green Belt',
+        description: 'Process improvement methodology',
+        level: 'Intermediate',
+        duration: '40-60 hours',
+        url: 'https://www.sixsigmaglobal.com/certifications/green-belt',
+        topics: ['Lean', 'Six Sigma', 'Process Improvement'],
+        free: false,
+        price: '$300',
+        language: 'EN'
+      },
+      {
+        id: 'sap-certification',
+        provider: 'SAP',
+        name: 'SAP Certified Associate - ERP',
+        description: 'SAP enterprise resource planning',
+        level: 'Intermediate',
+        duration: '60-80 hours',
+        url: 'https://training.sap.com/certification/',
+        topics: ['SAP', 'ERP', 'Business Processes'],
+        free: false,
+        price: '$400',
+        language: 'EN'
+      },
+      {
+        id: 'oracle-applications',
+        provider: 'Oracle',
+        name: 'Oracle Cloud Infrastructure Associate',
+        description: 'Oracle Enterprise systems',
+        level: 'Intermediate',
+        duration: '40-50 hours',
+        url: 'https://education.oracle.com/oracle-cloud-infrastructure-2024-foundations-associate/pexam_1Z0-1085-24',
+        topics: ['Oracle', 'Cloud', 'Enterprise Systems'],
+        free: false,
+        price: '$165',
+        language: 'EN'
+      }
+    ]
+  },
+  qualityAssurance: {
+    id: 'qa-testing',
+    name: 'Quality Assurance & Testing',
+    icon: '✅',
+    color: '#27AE60',
+    certifications: [
+      {
+        id: 'istqb-foundation',
+        provider: 'ISTQB',
+        name: 'ISTQB Certified Tester - Foundation',
+        description: 'Software testing fundamentals',
+        level: 'Beginner',
+        duration: '30-40 hours',
+        url: 'https://www.istqb.org/certifications/certified-tester-foundation-level',
+        topics: ['Software Testing', 'QA', 'Test Management'],
+        free: false,
+        price: '$150',
+        language: 'EN/DE'
+      },
+      {
+        id: 'istqb-advanced',
+        provider: 'ISTQB',
+        name: 'ISTQB Advanced Level Certification',
+        description: 'Advanced software testing practices',
+        level: 'Advanced',
+        duration: '60-80 hours',
+        url: 'https://www.istqb.org/certifications/advanced-level',
+        topics: ['Advanced Testing', 'Test Automation', 'Performance Testing'],
+        free: false,
+        price: '$250',
+        language: 'EN'
+      },
+      {
+        id: 'appium-automation',
+        provider: 'BrowserStack',
+        name: 'Mobile Test Automation with Appium',
+        description: 'Automated mobile testing',
+        level: 'Intermediate',
+        duration: '25-35 hours',
+        url: 'https://www.browserstack.com/guide/appium-tutorial',
+        topics: ['Appium', 'Automation', 'Mobile Testing'],
+        free: true,
+        language: 'EN'
+      },
+      {
+        id: 'selenium-expert',
+        provider: 'Selenium',
+        name: 'Selenium WebDriver Advanced',
+        description: 'Selenium automation testing',
+        level: 'Intermediate',
+        duration: '40-50 hours',
+        url: 'https://www.selenium.dev/documentation/',
+        topics: ['Selenium', 'Web Automation', 'Test Frameworks'],
+        free: true,
+        language: 'EN'
+      }
+    ]
+  },
+  blockchainWeb3: {
+    id: 'blockchain',
+    name: 'Blockchain & Web3',
+    icon: '⛓️',
+    color: '#F39C12',
+    certifications: [
+      {
+        id: 'ethereum-developer',
+        provider: 'Ethereum',
+        name: 'Ethereum Developer Certification',
+        description: 'Smart contract and DApp development',
+        level: 'Advanced',
+        duration: '80-100 hours',
+        url: 'https://ethereum.org/en/developers/',
+        topics: ['Ethereum', 'Solidity', 'Smart Contracts'],
+        free: true,
+        language: 'EN'
+      },
+      {
+        id: 'hyperledger-fabric',
+        provider: 'Linux Foundation',
+        name: 'Hyperledger Fabric Developer',
+        description: 'Enterprise blockchain development',
+        level: 'Intermediate',
+        duration: '60-80 hours',
+        url: 'https://www.hyperledger.org/use/fabric',
+        topics: ['Hyperledger', 'Blockchain', 'Enterprise'],
+        free: true,
+        language: 'EN'
+      },
+      {
+        id: 'web3-js-dev',
+        provider: 'Web3 Foundation',
+        name: 'Web3 JavaScript Developer',
+        description: 'Building Web3 applications',
+        level: 'Intermediate',
+        duration: '50-60 hours',
+        url: 'https://web3js.readthedocs.io/',
+        topics: ['Web3', 'Blockchain', 'JavaScript'],
+        free: true,
+        language: 'EN'
+      }
+    ]
+  }
+};

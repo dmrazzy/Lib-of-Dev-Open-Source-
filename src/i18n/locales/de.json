@@ -140,7 +140,15 @@
     "communityFeedback": "Community Feedback",
     "surveyTitle": "📋 Kurze Umfrage",
     "surveyDescription": "Hilf uns zu verbessern! Teile deine Meinung (2 Min)",
-    "takeSurvey": "Zur Umfrage"
+    "takeSurvey": "Zur Umfrage",
+    "privacySecurityTitle": "🔒 Datenschutz & Sicherheit",
+    "privacySecurityCardTitle": "Deine Daten, dein Gerät",
+    "privacySecurityDescription": "• Offline-first: Inhalte bleiben auf deinem Gerät.\n• Keine Tracker: Wir sammeln keine persönlichen Daten oder Analytics.\n• API-Schlüssel: Lokal in AsyncStorage gespeichert; niemals an unsere Server gesendet.\n• Releases mit Review: Jede Änderung wird geprüft und getestet, bevor sie live geht.\n• Open Source: Prüfe den Code auf GitHub, damit nichts Schadhaftes ausgeliefert wird.",
+    "privacySecurityCta": "Quellcode & Datenschutz auf GitHub ansehen ↗",
+    "adsInfoTitle": "🧠 Warum wir Ads nutzen",
+    "adsInfoCardTitle": "Lib of Dev bleibt kostenlos",
+    "adsInfoDescription": "• Wenige, dezente Ads: wir halten die Platzierung minimal, damit die App sauber bleibt.\n• Zweck: Fixkosten decken (Google Play, Infrastruktur/Tools, GitHub, bald Apple).\n• Kein Gehalt: Ads zahlen uns keinen Lohn – sie gleichen nur Rechnungen aus.\n• Realität: 500 Nutzer in einer Woche → 837 Impressionen → 2,76 USD Einnahmen.",
+    "adsInfoThanks": "Danke, dass du hilfst, das Projekt für alle kostenlos zu halten!"
   },
   "languages": {
     "javascript": "JavaScript",

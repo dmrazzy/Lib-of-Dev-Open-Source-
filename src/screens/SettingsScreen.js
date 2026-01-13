@@ -607,6 +607,34 @@ export default function SettingsScreen({ navigation }) {
             </Text>
           </View>
         </View>
+
+        {/* Privacy & Security Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.privacySecurityTitle')}</Text>
+          <View style={styles.aboutCard}>
+            <Text style={styles.aboutTitle}>{t('settings.privacySecurityCardTitle')}</Text>
+            <Text style={styles.aboutDescription}>
+              {t('settings.privacySecurityDescription')}
+            </Text>
+            <TouchableOpacity onPress={openGitHub} activeOpacity={0.7}>
+              <Text style={[styles.aboutDescription, styles.aboutHighlight]}>{t('settings.privacySecurityCta')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Ads Explanation Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.adsInfoTitle')}</Text>
+          <View style={styles.aboutCard}>
+            <Text style={styles.aboutTitle}>{t('settings.adsInfoCardTitle')}</Text>
+            <Text style={styles.aboutDescription}>
+              {t('settings.adsInfoDescription')}
+            </Text>
+            <Text style={[styles.aboutDescription, styles.aboutHighlight]}>
+              {t('settings.adsInfoThanks')}
+            </Text>
+          </View>
+        </View>
       </ScrollView>
 
       {/* Thank You Modal */}
